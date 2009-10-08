@@ -1,8 +1,30 @@
 <?php
+
+//Clases necesarias
 require_once 'DAO.php';
 
+/**
+ * Clase principal del sistema
+ * @author DISE3320 - 20092
+ */
 class NotAProfile{
 
+//----------------------------------------------------------------------------------------------
+// Constructor
+//----------------------------------------------------------------------------------------------	
+	
+	/**
+	 * Función constructora vacia
+	 * @return No return
+	 */
+	function notAProfile(){
+		//vacio
+	}
+
+//----------------------------------------------------------------------------------------------
+// Funciones relacionadas con el Registro/Login del sistema
+//----------------------------------------------------------------------------------------------	
+	
 	/**
 	 * Función que procesa el inicio (login/registro) al sistema. 
 	 * En caso de encontrar un email, clave y reclave se asume que se esta registrando.
@@ -12,7 +34,7 @@ class NotAProfile{
 	 * @param $reclave
 	 * @return unknown_type
 	 */
-	function procesarInicio($email, $clave, $reclave = ''){
+	public static function procesarInicio($email, $clave, $reclave = ''){
 	 if ($reclave == ''){
 	 	validarUsuario($email, $clave);
 	 } else{
@@ -27,9 +49,8 @@ class NotAProfile{
 	 * @param $reclave Confirmación de la clave
 	 * @return no return
 	 */
-	function registrarUsuario($email, $clave, $reclave){
-		
-	
+	public static function registrarUsuario($email, $clave, $reclave){
+		//TODO
 	}
 	
 	/**
@@ -38,8 +59,8 @@ class NotAProfile{
 	 * @param $clave
 	 * @return boolean, true o false en caso de que los datos sean correctos o no.
 	 */
-	function validarUsuario($email, $clave){
-		
+	public static function validarUsuario($email, $clave){
+		//TODO
 	}
 	
 	/**
@@ -48,8 +69,8 @@ class NotAProfile{
 	 * @param $email
 	 * @return boolean, true o false en caso de existir o no en el sistema. 
 	 */
-	function existeUsuario($email){
-		
+	public static function existeUsuario($email){
+		//TODO
 	}
 	
 	/**
@@ -58,8 +79,13 @@ class NotAProfile{
 	 * @param $email
 	 * @return No return
 	 */
-	function enviarEmailValidacion($email){
-		
+	public static function enviarEmailValidacion($email){
+		//TODO
 	}
+
+//----------------------------------------------------------------------------------------------
+// Funciones relacionadas con la creación, reclamo y validación de llaves
+//----------------------------------------------------------------------------------------------	
+	
 }
 ?>
