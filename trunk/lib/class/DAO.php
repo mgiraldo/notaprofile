@@ -35,7 +35,7 @@ class DAO {
 	 * @param Resource ID $q
 	 * @return Array
 	 */
-	function parseQuery ($q) {
+	public static function parseQuery ($q) {
 		$r = array();
 		while ($row = mysql_fetch_assoc($q)) $r[] = $row;
 		return $r;
@@ -46,7 +46,7 @@ class DAO {
 	 * @param String $sql
 	 * @return Resource ID
 	 */
-	function doSQL ( $sql ) {
+	public static function doSQL ( $sql ) {
 		global $app;
 		// problemas de tildes se resuelven con la siguiente linea segun http://www.adviesenzo.nl/examples/php_mysql_charset_fix/
 		//mysql_query("SET NAMES 'utf8'"); // no funciono...
@@ -87,7 +87,7 @@ class DAO {
 	 * @param String $sql Query a ejecutar
 	 * @return Array
 	 */
-	function doSQLAndReturn( $sql ){
+	public static function doSQLAndReturn( $sql ){
 		return DAO::parseQuery( DAO::doSQL( $sql ) );
 	}
 	/**
@@ -99,7 +99,7 @@ class DAO {
 	 * @param Int $id
 	 * @return Array
 	 */
-	function exists ($table, $field, $value, $id = -1) {
+	public static function exists ($table, $field, $value, $id = -1) {
 		$sql = "SELECT id FROM " . $table . " WHERE " . $field . " = " . $value . " AND id <> " . $id;
 		$q = DAO::doSQLAndReturn( $sql );
 		return (count($q) > 0) ? $q[0]['id'] : 0 ;
@@ -109,7 +109,7 @@ class DAO {
 	 *
 	 * @return Int
 	 */
-	function lastId () {
+	public static function lastId () {
 		return mysql_insert_id();
 	}
 	/**
@@ -145,7 +145,7 @@ class DAO {
 	 * @param String $str
 	 * @return String
 	 */
-	function escape_str ($str) {
+	public static function escape_str ($str) {
 		return mysql_real_escape_string(stripslashes($str));
 	}
 	/**
