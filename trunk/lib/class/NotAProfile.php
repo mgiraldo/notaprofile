@@ -119,8 +119,24 @@ class NotAProfile{
 // Funciones auxiliares
 //----------------------------------------------------------------------------------------------	
 
-	//TODO Realizar el esqueleto ALGORTA
-	//Documentar y declarar funciones
+	
+	/** Función que se encarga de modificar la foto para que esta tenga el formato estandar,
+	 * la foto modificada reemplaza la original.
+	 *  @param $urlFoto
+	 *  @return boolean, true o false dependiendo de si la operación tuvo éxito o no.
+	 */
+	public static function modificarFoto($urlFoto){
+		//TODO
+	}
+	
+	/** Función que se encarga de crear un link para un id de una llave dada, 
+	 *  devuelve el link creado.
+	 *  @param $idLlave
+	 *  @return link, cadena de caracteres asociada a la llave.
+	 */
+	public static function crearLink($idLlave){
+		//TODO
+	}
 	
 }
 ?>
