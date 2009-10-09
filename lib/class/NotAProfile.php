@@ -82,10 +82,45 @@ class NotAProfile{
 	public static function enviarEmailValidacion($email){
 		//TODO
 	}
+	
+	/**
+	 * Función que se encarga de activar a un usuario determinado dado su email en el sistema.
+	 * @param $email
+	 * @return No return
+	 */
+	public static function activarUsuario($email){
+		//TODO 
+	}
+	
+	/**
+	 * Función que se encarga de cerrar la sesión de un usuario dado su email
+	 * @param $email
+	 * @return No return
+	 */
+	public static function cerrarSesion ($email){
+		//TODO
+	}
 
 //----------------------------------------------------------------------------------------------
 // Funciones relacionadas con la creación, reclamo y validación de llaves
 //----------------------------------------------------------------------------------------------	
+
+	//TODO Realizar el esqueleto VIEDA
+	//Documentar y declarar funciones
+	
+//----------------------------------------------------------------------------------------------
+// Funciones relacionadas con Google Maps
+//----------------------------------------------------------------------------------------------	
+
+	//TODO Realizar el esqueleto ALGORTA
+	//Documentar y declarar funciones
+	
+//----------------------------------------------------------------------------------------------
+// Funciones auxiliares
+//----------------------------------------------------------------------------------------------	
+
+	//TODO Realizar el esqueleto ALGORTA
+	//Documentar y declarar funciones
 	
 }
 ?>
