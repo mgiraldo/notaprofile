@@ -107,19 +107,11 @@ class NotAProfile{
 
 	//TODO Realizar el esqueleto VIEDA
 	//Documentar y declarar funciones
-	
-//----------------------------------------------------------------------------------------------
-// Funciones relacionadas con Google Maps
-//----------------------------------------------------------------------------------------------	
 
-	//TODO Realizar el esqueleto ALGORTA
-	//Documentar y declarar funciones
-	
 //----------------------------------------------------------------------------------------------
 // Funciones auxiliares
 //----------------------------------------------------------------------------------------------	
 
-	
 	/** Función que se encarga de modificar la foto para que esta tenga el formato estandar,
 	 * la foto modificada reemplaza la original.
 	 *  @param $urlFoto
