@@ -37,6 +37,9 @@ $app['defaults']['localization'] = Array( 'esp', 'spanish', 'es', 'es_ES' );
 $app['debug']					= 0;
 $app['siteemail']				= "xxxx@xxxx.com";
 
+#GoogleMaps
+$app['apiKey'] = "ABQIAAAA18qEiHphe4mikuwMZVbDfBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxR3ccS3aeoyDwYsLjU2Gj3FcJ7nNw";
+
 #Definiendo Localización
 foreach( $app["defaults"]["localization"] as $row ) $loc[] = "'" . $row . "'";
 eval("setlocale( LC_ALL, " . implode( ", ", $loc ) . ");");
