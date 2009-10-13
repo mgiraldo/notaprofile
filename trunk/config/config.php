@@ -15,10 +15,10 @@ $app['photoroot']				= "up/";
 $app['templatepath']			= $app["siteroot"] . "template/";
 
 #DB
-$app['dbhost']					= $_ENV['DATABASE_SERVER'];
-$app['db']						= "xxxx";
-$app['dbuser']					= "xxxx";
-$app['dbpassword']				= "xxxx";
+$app['dbhost']					= "localhost";
+$app['db']						= "notaprofile";
+$app['dbuser']					= "root";
+$app['dbpassword']				= "";
 
 #Images
 $app['photo_max_size']			= 999999999999999;

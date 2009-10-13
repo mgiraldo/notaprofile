@@ -107,6 +107,13 @@ class NotAProfile{
 
 	//TODO Realizar el esqueleto VIEDA
 	//Documentar y declarar funciones
+	
+	//Creación provisional de esta función para la prueba del mapa.
+	public static function listaLlavesDisponibles(){
+		$sql = "SELECT * FROM llave";
+		$llaves = DAO::doSQLAndReturn($sql);
+		return $llaves;
+	}
 
 //----------------------------------------------------------------------------------------------
 // Funciones auxiliares
@@ -130,5 +137,34 @@ class NotAProfile{
 		//TODO
 	}
 	
+	/** Función que se encarga de crear una llave dados 3 parámetros básicos, latitud longitud y texto,
+	 *  Esta función es provisional para las pruebas.
+	 *  devuelve el código de la llave
+	 *  @param $lat
+	 *  @param $long
+	 *  @param $texto
+	 *  @return codigo, cadena de caracteres asociada a la llave. 
+	 *  error en caso de no haber sido exitoso el proceso.
+	 */
+	public static function crearLlave($lat,$long,$texto){
+		$codigo = substr(md5(rand()), 5, 6); 
+		//El id del creador es siempre 1 para probar la creación de llaves.
+		$creador_id= 1;
+		$fecha = date("c");
+		$sql = sprintf("INSERT INTO llave (txt,latitud,longitud,codigo,creador_id,fecha_creado) VALUES ('%s','%s','%s','%s','%s','%s')",
+					$texto,
+					$lat,
+					$long,
+					$codigo,
+					$creador_id,
+					$fecha
+					);
+		$exito = DAO::doSQL($sql);
+		if($exito!=1)
+		{
+			$codigo="error";
+		}
+		return $codigo;
+	}
 }
 ?>
