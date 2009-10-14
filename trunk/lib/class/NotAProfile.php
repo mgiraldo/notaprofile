@@ -8,7 +8,7 @@ require_once 'DAO.php';
  * @author DISE3320 - 20092
  */
 class NotAProfile{
-
+	
 //----------------------------------------------------------------------------------------------
 // Constructor
 //----------------------------------------------------------------------------------------------	
@@ -105,8 +105,41 @@ class NotAProfile{
 // Funciones relacionadas con la creación, reclamo y validación de llaves
 //----------------------------------------------------------------------------------------------	
 
+	
 	//TODO Realizar el esqueleto VIEDA
 	//Documentar y declarar funciones
+	
+	/**
+	 * Este metodo se encarga de crear una llave asociada a un usuario
+	 * @param unknown_type $idUsuario
+	 * @param unknown_type $texto
+	 * @param unknown_type $cordenadas
+	 * @return unknown_type
+	 */
+	public static function crearLlave($idUsuario, $texto, $cordenadas ){
+		// TODO
+	} 
+	
+	/**
+	 * Este metodo se encarga de marcar una llave como reclamada
+	 * @param unknown_type $idLlave
+	 * @param unknown_type $idUuario
+	 * @return unknown_type
+	 */
+	public static function reclamarLlave($idLlave, $idUuario){
+		// TODO
+	}
+	
+	/**
+	 * Esta metodo se encarga de realizar una validación de llave
+	 * @param unknown_type $idLlave
+	 * @return unknown_type
+	 */
+	public static function validarLlave($idLlave){
+		// TODO
+	}
+	
+
 	
 	//Creación provisional de esta función para la prueba del mapa.
 	public static function listaLlavesDisponibles(){
