@@ -75,6 +75,15 @@ class DAO{
 	}
 	
 	/**
+	 * Ejecuta un query y retorna su valor en un array
+	 * @param String $sql Query a ejecutar
+	 * @return Array
+	 */
+	public static function doSQLAndReturn( $sql ){
+		return DAO::parseQuery( DAO::doSQL( $sql ) );
+	}
+	
+	/**
 	 * Escapa una cadena para que sea segura para ingresar en base de datos.
 	 * @param String $str
 	 * @return String

@@ -1,11 +1,50 @@
 <?php
+
 require_once('DAO.php');
-require_once('PPUpload.php');
+
+/**
+ * Esta clase se encarga del manejo de las acciones asociadas a los usuarios dentro del sistema
+ * @author WEB: Proyectos Experimentales (DISE)
+ */
 class Usuario {
 	
-	var $upload;
+	public static function addUsser($email, $pass){
+		
+	}
+	
+	
+	/**
+	 * Este metodo se encarga de realizar la consulta para obtener todos los usuarios
+	 * que se encuentran registrados en el sistema
+	 * @return unknown_type
+	 */
+	public static function getAll(){
+		return DAO::doSQLAndReturn( "SELECT * FROM usuario" );
+		// TODO Validar si se desea obtener tambien los usuarios que no han validado su cuenta con el correo
+	}
+	
+	
+	/**
+	 * Esta funcion se encarga de rotornar el usuario que posee una dirección
+	 * @param unknown_type $email
+	 * @return unknown_type
+	 */
+	public static function findByEmail($email) {
+		$sql = 'SELECT * FROM usuario WHERE email = ' . DAO::escape_str($email);
+		$r = DAO::doSQLAndReturn($sql);
+		if (count($r) == 0) {
+			return false;
+		}
+		return $r[0];
+	}
+	
+}
 
-	function Usuario(){
+
+
+
+/*
+function Usuario(){
 	}
 
 	function save( $email, $clave, $id = null ){
@@ -23,19 +62,10 @@ class Usuario {
 	}
 
 	function getAll(){
-		return DAO::doSQLAndReturn( "SELECT * FROM usuario" );
+		
 	}
 	
-	function findByEmail($email) {
-		$sql = 'SELECT *
-				FROM usuario 
-				WHERE email = ' . DAO::escape_str($email);
-		$r = DAO::doSQLAndReturn($sql);
-		if (count($r) == 0) {
-			return false;
-		}
-		return $r[0];
-	}
+	
 	
 	function sendActivationEmail ($email) {
 		if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $email)) {
@@ -87,7 +117,7 @@ class Usuario {
 		$mail_object =& Mail::factory("smtp", $params);
 		
 		return $mail_object->send($recipients, $headers, $body);
-		***************************/
+		***************************
 		$headers = "From: " . $this->app['siteemail'] . "\r\n";
 		$headers .= 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/plain; charset=iso-8859-1' . "\r\n";
@@ -96,5 +126,5 @@ class Usuario {
 		mail($to_email,$subject,$body,$headers);
 	}
 	
-}
+	*/
 ?>

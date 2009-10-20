@@ -1,6 +1,6 @@
-<?php
+<?php 
 
-//Clases necesarias
+require_once('config/config.php'); 
 require_once 'DAO.php';
 
 /**
@@ -9,6 +9,7 @@ require_once 'DAO.php';
  */
 class NotAProfile{
 	
+
 //----------------------------------------------------------------------------------------------
 // Constructor
 //----------------------------------------------------------------------------------------------	
@@ -17,15 +18,17 @@ class NotAProfile{
 	 * Función constructora vacia
 	 * @return No return
 	 */
-	function notAProfile(){
+	function NotAProfile(){
 		//vacio
 	}
+	
+
 
 //----------------------------------------------------------------------------------------------
 // Funciones relacionadas con el Registro/Login del sistema
 //----------------------------------------------------------------------------------------------	
 	
-	/**
+/**
 	 * Función que procesa el inicio (login/registro) al sistema. 
 	 * En caso de encontrar un email, clave y reclave se asume que se esta registrando.
 	 * En caso de encontrar unicamente email y clave se asume que se esta logeando.
@@ -35,11 +38,11 @@ class NotAProfile{
 	 * @return unknown_type
 	 */
 	public static function procesarInicio($email, $clave, $reclave = ''){
-	 if ($reclave == ''){
-	 	validarUsuario($email, $clave);
-	 } else{
-	 	registrarUsuario($email, $clave);	
-	 }
+		if ($reclave == ''){
+			validarUsuario($email, $clave);
+		} else{
+			registrarUsuario($email, $clave);
+		}
 	}
 	
 	/**
@@ -104,21 +107,67 @@ class NotAProfile{
 //----------------------------------------------------------------------------------------------
 // Funciones relacionadas con la creación, reclamo y validación de llaves
 //----------------------------------------------------------------------------------------------	
-
-	
 	//TODO Realizar el esqueleto VIEDA
 	//Documentar y declarar funciones
+	
+	
+	/** 
+	 * Función que se encarga de crear una llave dados 3 parámetros básicos, latitud longitud y texto,
+	 *  Esta función es provisional para las pruebas.
+	 *  devuelve el código de la llave
+	 *  @param $lat
+	 *  @param $long
+	 *  @param $texto
+	 *  @return codigo, cadena de caracteres asociada a la llave. 
+	 *  error en caso de no haber sido exitoso el proceso.
+	 */
+	public static function crearLlavee(){
+
+	}
+	
 	
 	/**
 	 * Este metodo se encarga de crear una llave asociada a un usuario
 	 * @param unknown_type $idUsuario
 	 * @param unknown_type $texto
-	 * @param unknown_type $cordenadas
+	 * @param unknown_type $lat
+	 * @param unknown_type $long
 	 * @return unknown_type
 	 */
-	public static function crearLlave($idUsuario, $texto, $cordenadas ){
+	public static function crearLlave2($idUsuario, $texto, $lat, $long ){
 		// TODO
 	} 
+	
+	/**
+	 * 	ESTE ES EL CODIGO QUE SE TENIA PARA LA CREACIÓN DE LLAVES
+	 * 
+	 *
+	 */
+	 
+	 public static function crearLlave($lat, $long, $texto){
+		$codigo = substr(md5(rand()), 5, 6); 
+		//El id del creador es siempre 1 para probar la creación de llaves.
+		$creador_id= 1;
+		$fecha = date("c");
+		$sql = sprintf("INSERT INTO llave (txt,latitud,longitud,codigo,creador_id,fecha_creado) VALUES ('%s','%s','%s','%s','%s','%s')",
+					$texto,
+					$lat,
+					$long,
+					$codigo,
+					$creador_id,
+					$fecha
+					);
+		$exito = DAO::doSQL($sql);
+		if($exito!=1)
+		{
+			$codigo="error";
+		}
+		return $codigo;
+	}
+	
+	
+	
+	
 	
 	/**
 	 * Este metodo se encarga de marcar una llave como reclamada
@@ -139,15 +188,18 @@ class NotAProfile{
 		// TODO
 	}
 	
-
-	
-	//Creación provisional de esta función para la prueba del mapa.
+	/**
+	 * Este método retorna todas las llaves que se encuentran disponibles (No han sido reclamadas)
+	 * para ubicarlas dentro del mapa
+	 * @return unknown_type
+	 */
 	public static function listaLlavesDisponibles(){
 		$sql = "SELECT * FROM llave";
 		$llaves = DAO::doSQLAndReturn($sql);
 		return $llaves;
 	}
-
+	
+	
 //----------------------------------------------------------------------------------------------
 // Funciones auxiliares
 //----------------------------------------------------------------------------------------------	
@@ -170,34 +222,18 @@ class NotAProfile{
 		//TODO
 	}
 	
-	/** Función que se encarga de crear una llave dados 3 parámetros básicos, latitud longitud y texto,
-	 *  Esta función es provisional para las pruebas.
-	 *  devuelve el código de la llave
-	 *  @param $lat
-	 *  @param $long
-	 *  @param $texto
-	 *  @return codigo, cadena de caracteres asociada a la llave. 
-	 *  error en caso de no haber sido exitoso el proceso.
-	 */
-	public static function crearLlave($lat,$long,$texto){
-		$codigo = substr(md5(rand()), 5, 6); 
-		//El id del creador es siempre 1 para probar la creación de llaves.
-		$creador_id= 1;
-		$fecha = date("c");
-		$sql = sprintf("INSERT INTO llave (txt,latitud,longitud,codigo,creador_id,fecha_creado) VALUES ('%s','%s','%s','%s','%s','%s')",
-					$texto,
-					$lat,
-					$long,
-					$codigo,
-					$creador_id,
-					$fecha
-					);
-		$exito = DAO::doSQL($sql);
-		if($exito!=1)
-		{
-			$codigo="error";
-		}
-		return $codigo;
-	}
+	
+
+
+	
+	
+
+	
+	
+
+	
+	
 }
+
+
 ?>
