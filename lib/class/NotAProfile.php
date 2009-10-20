@@ -53,7 +53,12 @@ class NotAProfile{
 	 * @return no return
 	 */
 	public static function registrarUsuario($email, $clave, $reclave){
-		//TODO
+		//TODO ALGORTA
+		// verificar que el email no exista en la bd (llamar metodo)
+		// verificar que clave y reclave sean iguales
+		// ingresar a la base de datos el nuevo usuario, como inactivo
+		// enviar email de confirmación (llamar metodo)
+		// en caso de error retorna un string con el mensaje de error
 	}
 	
 	/**
@@ -63,17 +68,23 @@ class NotAProfile{
 	 * @return boolean, true o false en caso de que los datos sean correctos o no.
 	 */
 	public static function validarUsuario($email, $clave){
-		//TODO
+		//TODO VIEDA
+		// verificar que el email exista en la BD (llamar metodo)
+		// verificar que la clave corresponda al email en la BD
+		// inicializar variables de sesion
+		// retornar true o false si en caso de que los datos sean correctos o no
 	}
 	
 	/**
-	 * Función que verifica si un usuario representado con tu email existe 
+	 * Función que verifica si un usuario representado con su email existe 
 	 * o no en el sistema.
 	 * @param $email
 	 * @return boolean, true o false en caso de existir o no en el sistema. 
 	 */
 	public static function existeUsuario($email){
-		//TODO
+		//TODO GOMEZ
+		// verificar si un determinado email esta registrado en la BD
+		// retorna true false dependiendo sea el caso
 	}
 	
 	/**
@@ -83,16 +94,21 @@ class NotAProfile{
 	 * @return No return
 	 */
 	public static function enviarEmailValidacion($email){
-		//TODO
+		//TODO GUEVARA
+		// crear un código unico de activacion e ingresarlo a la BD, en el usuario determinado
+		// enviar correo con este codigo dentro de un link
 	}
 	
 	/**
-	 * Función que se encarga de activar a un usuario determinado dado su email en el sistema.
-	 * @param $email
-	 * @return No return
+	 * Función que se encarga de verificar si el código unico existe en la base de datos, en caso de que sí
+	 * exista activa el usuario relacionado con el código. 
+	 * @param $codigoActivacion
+	 * @return unknown_type
 	 */
-	public static function activarUsuario($email){
-		//TODO 
+	public static function activarUsuario($codigoActivacion){
+		//TODO ALGORTA
+		// verificar que el codigo sea valido
+		// activar usuario asociado a codigo
 	}
 	
 	/**
@@ -101,15 +117,14 @@ class NotAProfile{
 	 * @return No return
 	 */
 	public static function cerrarSesion ($email){
-		//TODO
+		//TODO GUEVARA
+		// borrar las variables de sesion
+	
 	}
 
 //----------------------------------------------------------------------------------------------
 // Funciones relacionadas con la creación, reclamo y validación de llaves
-//----------------------------------------------------------------------------------------------	
-	//TODO Realizar el esqueleto VIEDA
-	//Documentar y declarar funciones
-	
+//----------------------------------------------------------------------------------------------
 	
 	/** 
 	 * Función que se encarga de crear una llave dados 3 parámetros básicos, latitud longitud y texto,
