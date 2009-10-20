@@ -10,44 +10,74 @@ $pass = "";
 $pass2 = "";
 
 //Esta variable se encarga de mostrar un error en pantalla si es necesario
-$msgError = 0;
+$msgError = "";
 
-//Verificamos primer si se está enviando el formulario
-if(isset($_POST['email'])){
-		// Se esta enviando formulario para login
-		$email = trim("".$_POST['email']);
-		if($email == ""){$msgError = 1;}
-		else{
-			$regex = "/[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))/";
-			if(preg_match($regex,$email)){
-				$email = strip_tags($email);
-				$email = addslashes(htmlspecialchars(htmlentities($email)));
+if(isset($_POST['submit'])){
+	// Se ha enviado el formulario para iniciar sesion
+	
+	$email = trim("".$_POST['email']);
+	if($email == ""){$msgError = $msgError."Email cannot be empty";}
+	else{
+		$regex = "/[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))/";
+		if(preg_match($regex,$email)){
+			$email = strip_tags($email);
+			$email = addslashes(htmlspecialchars(htmlentities($email)));
 				
-				if(isset($_POST['pass'])){
-					// En este momento se realiza la validación de las credenciales introducidas
-					$pass = trim("".$_POST['pass']);
-					if($pass == ""){$msgError = 2;}
-					else{
-					  header('Location:http://localhost/not_a_profile/visualizacionLlaves.php');	
+			if(isset($_POST['pass'])){
+				$pass = trim("".$_POST['pass']);
+				if($pass == ""){$msgError = $msgError."The password cannot be empty";}
+				else{
+					$pass = strip_tags($pass);
+					$pass = addslashes(htmlspecialchars(htmlentities($pass)));
+
+					// En este momento tenemos el email y el password escritos de manera adecuada
+					//NotAProfile::IniciarSesion($email, $pass);
+					if(true){
+						header('Location:'.$app['url'].'');
 					}
-					
-					
-					
-				}else {
-					$msgError = 2;
 				}
-			}
-			else{
-				$msgError = 1;
+				
 			}
 		}
-		
+		else{$msgError = $msgError."Incorrect Email format";}
+	}
 	
+}else if(isset($_POST['signup'])){
+	// Se ha enviado el formulario para registrarse
+	
+	$email = trim("".$_POST['email2']);
+	if($email == ""){$msgError = $msgError."Email cannot be empty";}
+	else{
+		$regex = "/[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))/";
+		if(preg_match($regex,$email)){
+			$email = strip_tags($email);
+			$email = addslashes(htmlspecialchars(htmlentities($email)));
+				
+			if(isset($_POST['pass2'])){
+				if(isset($_POST['pass3'])){
+					$pass = trim("".$_POST['pass2']);
+					$pass2 = trim("".$_POST['pass3']);
+					if($pass == ""){$msgError = $msgError."The password cannot be empty";}
+					else{
+						if($pass == $pass2){
+							$pass = strip_tags($pass);
+							$pass = addslashes(htmlspecialchars(htmlentities($pass)));
 		
-}else if(isset($_POST['email2'])){
-		// Se esta enviando formulario para registrarse
-		
+							// En este momento tenemos el email y el password escritos de manera adecuada
+							//NotAProfile::RegistrarUsuario($email, $pass);
+							if(true){
+								header('Location:'.$app['url'].'test');
+							}
+						}else{$msgError = $msgError."Your password doesnt match";}
+					}
+				}
+			}
+		}
+		else{$msgError = $msgError."Incorrect Email format";}
+	}
+	
 }
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -60,36 +90,17 @@ if(isset($_POST['email'])){
 <h1>not_a_profile</h1>
 
 <?php 
-
-switch($msgError){
-	case 0:
-		echo "<h1>No error</h1>";
-		break;
-	case 1:
-		echo "<h1>Debe ingresar una direccion de correo o un formato valido</h1>"; 
-		break;
-	case 2:
-		echo "<h1>Debe ingresar una constrasena </h1>";
-		break;
-	case 4: 
-		echo "<h1>Termino ok </h1>";
-		break;
-	default:
-		echo "wtf?";
-		break;
-}
-
+echo "<h1>".$msgError."</h1>";
 ?>
-<p> Formulario de prueba para ingreso al sistema: </p>
+
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<label for="email">E-mail:</label>
 	<input type="text" name="email" id="email" value="" tabindex="1" /><br />
 	<label for="pass">Password:</label>
 	<input type="text" name="pass" id="pass" value="" tabindex="2" /><br />
-	<input type="submit" name="submit" id="Submit" value="Submit" tabindex="3" />
+	<input type="submit" name="submit" id="submit" value="Submit" tabindex="3" />
 </form>
 <hr></hr>
-<p> Formulario de prueba para registro: </p>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<label for="email2">E-mail:</label>
 	<input type="text" name="email2" id="email2" value="" tabindex="4" /><br />
@@ -97,7 +108,7 @@ switch($msgError){
 	<input type="text" name="pass2" id="pass2" value="" tabindex="5" /><br />
 	<label for="pass3">Confirmar Contrasena:</label>
 	<input type="text" name="pass3" id="pass3" value="" tabindex="6" /><br />
-	<input type="submit" name="registrar" id="registrar" value="Registrarse" tabindex="7" />
+	<input type="submit" name="signup" id="signup" value="Sign_Up" tabindex="7" />
 </form>
 </body>
 </html>
