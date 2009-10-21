@@ -52,13 +52,30 @@ class NotAProfile{
 	 * @param $reclave Confirmación de la clave
 	 * @return no return
 	 */
-	public static function registrarUsuario($email, $clave, $reclave){
-		//TODO ALGORTA
+	public static function registrarUsuario($email, $clave){
 		// verificar que el email no exista en la bd (llamar metodo)
-		// verificar que clave y reclave sean iguales
-		// ingresar a la base de datos el nuevo usuario, como inactivo
-		// enviar email de confirmación (llamar metodo)
-		// en caso de error retorna un string con el mensaje de error
+		if(NotAProfile::existeUsuario($email))
+		{
+			return "Error";
+			exit;
+		}
+		else
+		{
+			//ingresar a la base de datos el nuevo usuario, como inactivo, la clave entra como un md5 de si misma, 
+			//esto debe tenerse en cuenta a la hora de hacer login.
+			$sql = sprintf("INSERT INTO usuario (email, clave, flag_activo) VALUES ('%s','%s','%s')",$email,md5($clave),0);
+			$exito = DAO::doSQL($sql);
+			if(!$exito)
+			{
+				return "Error";
+			}
+			else
+			{
+				// enviar email de confirmación (llamar metodo)
+				NotAProfile::enviarEmailValidacion($email);
+				return "Success";
+			}
+		}
 	}
 	
 	/**
@@ -81,10 +98,11 @@ class NotAProfile{
 	 * @param $email
 	 * @return boolean, true o false en caso de existir o no en el sistema. 
 	 */
-	public static function existeUsuario($email){
+	 public static function existeUsuario($email){
 		//TODO GOMEZ
 		// verificar si un determinado email esta registrado en la BD
 		// retorna true false dependiendo sea el caso
+		return 0;
 	}
 	
 	/**
