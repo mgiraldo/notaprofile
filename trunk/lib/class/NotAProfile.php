@@ -54,7 +54,7 @@ class NotAProfile{
 	 */
 	public static function registrarUsuario($email, $clave){
 		// verificar que el email no exista en la bd (llamar metodo)
-		if(NotAProfile::existeUsuario($email))
+		if(NotAProfile::existeUsuario($email)==true)
 		{
 			return "Error";
 			exit;
@@ -101,9 +101,7 @@ class NotAProfile{
 	 public static function existeUsuario($email){
 		//TODO GOMEZ
 		// verificar si un determinado email esta registrado en la BD
-        
-	 	$resultados=array();
-
+	   $resultados=array();
 	   $resultados=DAO::doSQLAndReturn("select email from usuario");
 
        $existe=0;
@@ -117,7 +115,7 @@ class NotAProfile{
          }
 	 	
        }
-             
+           
        // retorna true false dependiendo sea el caso
 		//return 0;
        if($existe==1){
@@ -125,9 +123,6 @@ class NotAProfile{
        }else{
          return false;
        }
-	 	
-	 	
-		
 	}
 	
 	/**
