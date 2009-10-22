@@ -101,8 +101,33 @@ class NotAProfile{
 	 public static function existeUsuario($email){
 		//TODO GOMEZ
 		// verificar si un determinado email esta registrado en la BD
-		// retorna true false dependiendo sea el caso
-		return 0;
+        
+	 	$resultados=array();
+
+	   $resultados=DAO::doSQLAndReturn("select email from usuario");
+
+       $existe=0;
+       $largo= count($resultados);
+
+       for($i=0;$i<$largo;$i++){
+
+         if($email==$resultados[$i]['email']){
+      
+           $existe=1;
+         }
+	 	
+       }
+             
+       // retorna true false dependiendo sea el caso
+		//return 0;
+       if($existe==1){
+         return true;
+       }else{
+         return false;
+       }
+	 	
+	 	
+		
 	}
 	
 	/**
