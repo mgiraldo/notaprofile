@@ -144,9 +144,9 @@ class NotAProfile{
 	 * @return unknown_type
 	 */
 	public static function activarUsuario($codigoActivacion){
-		//TODO ALGORTA
-		// verificar que el codigo sea valido
-		// activar usuario asociado a codigo
+		$sql=sprintf("UPDATE usuario SET flag_activo = '1' WHERE token_validacion = '%s'",$codigoActivacion);
+		$exito = DAO::doSQL($sql);
+		return $exito;
 	}
 	
 	/**
