@@ -132,9 +132,30 @@ class NotAProfile{
 	 * @return No return
 	 */
 	public static function enviarEmailValidacion($email){
-		//TODO GUEVARA
-		// crear un código unico de activacion e ingresarlo a la BD, en el usuario determinado
+		//TODO GUEVARA corregir
+		//Crea el código de activación usando como parametro el email y el tiempo el milisegundos 
+		// con aumento de la entropia activado.
+		$codigoUnico = md5(uniqid($email.mt_rand(), true));
+		
+		//ingresa a la base de datos el id relacionado al correo
+		$sql = "UPDATE usuario SET id_activacion = '$codigoUnico' WHERE email = '$email'";
+		DAO::doSQL($sql);
+				
 		// enviar correo con este codigo dentro de un link
+		$link = $app['url'] . $codigoUnico;
+		
+		List ($nombre, $empresaEmail) = split("@", $email);
+		$msg = "Hola '$nombre'!, \r\n\r\n
+		
+		Gracias por registrarte en Not_A_Profile!, en este momento eres un usuario inactivo, 
+		para activar tu cuenta has clic en el siguiente link: \r\n\r\n
+		
+		'$link' \r\n\r\n
+		
+		Equipo Not_A_Profile \r\n\r\n
+		
+		";
+		NotAProfile::sendMail($email, $email, 'Activación en Not_A_Profile!', $msg);
 	}
 	
 	/**
@@ -155,9 +176,15 @@ class NotAProfile{
 	 * @return No return
 	 */
 	public static function cerrarSesion ($email){
-		//TODO GUEVARA
-		// borrar las variables de sesion
-	
+		//TODO GUEVARA revisar
+		//Elimina la seción
+		session_start(); 
+		$_SESSION = array(); 
+		session_destroy();
+		session_start(); 
+		
+		//Redirecciona a la pagina principal
+		header ("Location: index.php");  
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -175,7 +202,7 @@ class NotAProfile{
 	 *  error en caso de no haber sido exitoso el proceso.
 	 */
 	public static function crearLlavee(){
-
+		
 	}
 	
 	
@@ -273,6 +300,47 @@ class NotAProfile{
 	 */
 	public static function crearLink($idLlave){
 		//TODO
+	}
+	
+	/**
+	 * Función que se encarga de enviar un email
+	 * @param $to_name
+	 * @param $to_email
+	 * @param $subject
+	 * @param $msg
+	 * @return unknown_type
+	 */
+	public static function sendMail($to_name,$to_email,$subject,$msg) {
+		/***************************
+		include_once("Mail.php");
+		
+		$recipients = $app['siteemail'];
+		
+		$headers["From"]    = $app['siteemail'];
+		$headers["To"]      = $to_email;
+		$headers["Subject"] = $subject;
+		$headers["Content-type"] = "text/plain; charset=utf-8";
+		
+		$body = $msg;
+		
+		$params["host"] = $app['smtp_host'];
+		$params["port"] = $app['smtp_port'];
+		$params["auth"] = $app['smtp_auth'];
+		$params["username"] = $app['smtp_username'];
+		$params["password"] = $app['smtp_password'];
+		
+		// Create the mail object using the Mail::factory method
+		$mail_object =& Mail::factory("smtp", $params);
+		
+		return $mail_object->send($recipients, $headers, $body);
+		***************************/
+		global $app;
+		$headers = "From: " . $app['siteemail'] . "\r\n";
+		$headers .= 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/plain; charset=iso-8859-1' . "\r\n";
+		$headers .= 'Content-Transfer-Encoding: 8bit' . "\r\n";
+		$body = $msg;
+		mail($to_email,$subject,$body,$headers);
 	}
 	
 	
