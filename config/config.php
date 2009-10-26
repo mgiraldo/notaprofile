@@ -6,7 +6,7 @@ global $app;
 $app['sitename']				= 'not_a_profile';
 
 #Paths
-$app['url']						= 'http://xxxx.xxxx.com/';
+$app['url']						= 'http://localhost/notaprofile/';
 $app['urlroot']					= "/html/";
 $app['siteroot']				= '/xxxx/xxxx/xxxx/xxxx.xxxx.com/html/';
 $app['libpath']					= $app["siteroot"] . "lib/";

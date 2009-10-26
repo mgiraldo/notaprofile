@@ -7,6 +7,9 @@ class User {
 	var $app;
 	var $data;
 	var $DAO;
+	
+
+	
 
 	function User () {
 		session_start();

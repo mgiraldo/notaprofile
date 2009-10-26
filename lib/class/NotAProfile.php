@@ -1,6 +1,7 @@
 <?php 
 
 require_once('config/config.php'); 
+require_once('lib/class/Usuario.php'); 
 require_once 'DAO.php';
 
 /**
@@ -26,9 +27,9 @@ class NotAProfile{
 
 //----------------------------------------------------------------------------------------------
 // Funciones relacionadas con el Registro/Login del sistema
-//----------------------------------------------------------------------------------------------	
+//----------------------------------------------------------------------------------------------
 	
-/**
+	/**
 	 * Función que procesa el inicio (login/registro) al sistema. 
 	 * En caso de encontrar un email, clave y reclave se asume que se esta registrando.
 	 * En caso de encontrar unicamente email y clave se asume que se esta logeando.
@@ -54,23 +55,18 @@ class NotAProfile{
 	 */
 	public static function registrarUsuario($email, $clave){
 		// verificar que el email no exista en la bd (llamar metodo)
-		if(NotAProfile::existeUsuario($email)==true)
-		{
+		if(NotAProfile::existeUsuario($email)==true){
 			return "Error";
 			exit;
-		}
-		else
-		{
+		}else{
+			
 			//ingresar a la base de datos el nuevo usuario, como inactivo, la clave entra como un md5 de si misma, 
 			//esto debe tenerse en cuenta a la hora de hacer login.
 			$sql = sprintf("INSERT INTO usuario (email, clave, flag_activo) VALUES ('%s','%s','%s')",$email,md5($clave),0);
 			$exito = DAO::doSQL($sql);
-			if(!$exito)
-			{
+			if(!$exito){
 				return "Error";
-			}
-			else
-			{
+			}else{
 				// enviar email de confirmación (llamar metodo)
 				NotAProfile::enviarEmailValidacion($email);
 				return "Success";
@@ -78,19 +74,10 @@ class NotAProfile{
 		}
 	}
 	
-	/**
-	 * Función que valida un usuario en el sistema e inicia su sesión.
-	 * @param $email
-	 * @param $clave
-	 * @return boolean, true o false en caso de que los datos sean correctos o no.
-	 */
-	public static function validarUsuario($email, $clave){
-		//TODO VIEDA
-		// verificar que el email exista en la BD (llamar metodo)
-		// verificar que la clave corresponda al email en la BD
-		// inicializar variables de sesion
-		// retornar true o false si en caso de que los datos sean correctos o no
-	}
+
+	
+	
+	
 	
 	/**
 	 * Función que verifica si un usuario representado con su email existe 
@@ -102,7 +89,7 @@ class NotAProfile{
 		//TODO GOMEZ
 		// verificar si un determinado email esta registrado en la BD
 	   $resultados=array();
-	   $resultados=DAO::doSQLAndReturn("select email from usuario");
+	   $resultados=DAO::doSQLAndReturn("SELECT email FROM usuario");
 
        $existe=0;
        $largo= count($resultados);
