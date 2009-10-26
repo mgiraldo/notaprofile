@@ -3,6 +3,9 @@
  * Pagina Inicial del Proyecto
  */
 require_once 'lib/class/NotAProfile.php';
+if($usuario->logged_in){
+	header("Location: ./home.php");
+}else{
 
 // Declaramos las varfiables que vamos a usar en el formulario para prevenir XSS por URL
 $email = "";
@@ -29,14 +32,17 @@ if(isset($_POST['submit'])){
 				else{
 					$pass = strip_tags($pass);
 					$pass = addslashes(htmlspecialchars(htmlentities($pass)));
-
+					
 					// En este momento tenemos el email y el password escritos de manera adecuada
-					//NotAProfile::IniciarSesion($email, $pass);
-					if(true){
-						header('Location:'.$app['url'].'');
+					$retval = $usuario->login($email, $pass);	
+					if($retval){
+						header("Location: ./home.php");
 					}
+					/* Login failed */
+					else{
+						header("Location: ./index.php");
+			      	}		
 				}
-				
 			}
 		}
 		else{$msgError = $msgError."Incorrect Email format";}
@@ -112,5 +118,6 @@ echo "<h1>".$msgError."</h1>";
 </form>
 </body>
 </html>
- 
+
+<?php } ?>
  
