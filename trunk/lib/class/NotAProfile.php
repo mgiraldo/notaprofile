@@ -90,26 +90,16 @@ class NotAProfile{
 		//TODO GOMEZ
 		// verificar si un determinado email esta registrado en la BD
 	   $resultados=array();
-	   $resultados=DAO::doSQLAndReturn("SELECT email FROM usuario");
-
-       $existe=0;
+	   $resultados=DAO::doSQLAndReturn("SELECT email FROM usuario WHERE email = $email");
        $largo= count($resultados);
-
-       for($i=0;$i<$largo;$i++){
-
-         if($email==$resultados[$i]['email']){
-      
-           $existe=1;
-         }
-	 	
-       }
-           
+ 
+                  
        // retorna true false dependiendo sea el caso
 		//return 0;
-       if($existe==1){
-         return true;
-       }else{
+       if($largo==0){
          return false;
+       }else{
+         return true;
        }
 	}
 	
