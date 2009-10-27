@@ -64,11 +64,12 @@ class NotAProfile{
 			//esto debe tenerse en cuenta a la hora de hacer login.
 			$sql = sprintf("INSERT INTO usuario (email, clave, flag_activo) VALUES ('%s','%s','%s')",$email,md5($clave),0);
 			$exito = DAO::doSQL($sql);
+			$id = DAO::lastId();
 			if(!$exito){
 				return "Error";
 			}else{
 				// enviar email de confirmación (llamar metodo)
-				NotAProfile::enviarEmailValidacion($email);
+				NotAProfile::enviarEmailValidacion($email, $id);
 				return "Success";
 			}
 		}
@@ -118,28 +119,32 @@ class NotAProfile{
 	 * @param $email
 	 * @return No return
 	 */
-	public static function enviarEmailValidacion($email){
+	public static function enviarEmailValidacion($email, $id){
 		//TODO GUEVARA corregir
+		
+		global $app;
 		//Crea el código de activación usando como parametro el email y el tiempo el milisegundos 
 		// con aumento de la entropia activado.
 		$codigoUnico = md5(uniqid($email.mt_rand(), true));
 		
 		//ingresa a la base de datos el id relacionado al correo
-		$sql = "UPDATE usuario SET id_activacion = '$codigoUnico' WHERE email = '$email'";
+		$sql = "UPDATE usuario SET id_activacion = $codigoUnico WHERE id = $id";
 		DAO::doSQL($sql);
 				
 		// enviar correo con este codigo dentro de un link
-		$link = $app['url'] . $codigoUnico;
+		$link = $app['url'] ."a.php?c=". $codigoUnico;
 		
 		List ($nombre, $empresaEmail) = split("@", $email);
-		$msg = "Hola '$nombre'!, \r\n\r\n
+		$msg = "Hola $nombre!, \r\n\r\n
 		
-		Gracias por registrarte en Not_A_Profile!, en este momento eres un usuario inactivo, 
+		Gracias por registrarte en not_a_profile!, en este momento eres un usuario inactivo, 
 		para activar tu cuenta has clic en el siguiente link: \r\n\r\n
 		
-		'$link' \r\n\r\n
+		$link \r\n\r\n
 		
-		Equipo Not_A_Profile \r\n\r\n
+		Equipo not_a_profile \r\n
+		{$app['url']}\r\n
+		
 		
 		";
 		NotAProfile::sendMail($email, $email, 'Activación en Not_A_Profile!', $msg);
@@ -152,7 +157,7 @@ class NotAProfile{
 	 * @return unknown_type
 	 */
 	public static function activarUsuario($codigoActivacion){
-		$sql=sprintf("UPDATE usuario SET flag_activo = '1' WHERE token_validacion = '%s'",$codigoActivacion);
+		$sql=sprintf("UPDATE usuario SET flag_activo = '1' WHERE id_activacion = '%s'",$codigoActivacion);
 		$exito = DAO::doSQL($sql);
 		return $exito;
 	}
@@ -168,10 +173,10 @@ class NotAProfile{
 		session_start(); 
 		$_SESSION = array(); 
 		session_destroy();
-		session_start(); 
+
 		
 		//Redirecciona a la pagina principal
-		header ("Location: index.php");  
+		//header ("Location: index.php");  
 	}
 
 //----------------------------------------------------------------------------------------------
