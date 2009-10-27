@@ -92,6 +92,15 @@ class DAO{
 		return mysql_real_escape_string(stripslashes($str));
 	}
 
+	/**
+	 * Obtiene el id del último registro creado
+	 *
+	 * @return Int
+	 */
+	public static function lastId () {
+		return mysql_insert_id();
+	}
+	
 }
 
 ?>
