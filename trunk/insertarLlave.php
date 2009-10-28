@@ -7,11 +7,11 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"])&&isset($_POST["texto"]))
 	$codigo = NotAProfile::crearLlave($_POST["latitud"],$_POST["longitud"],$_POST["texto"]);
 	if($codigo!="error")
 	{
-	 echo("Llave creada exitosamente, el c&oacute;digo es: ". $codigo);
+	 echo("key_created: ". $codigo);
 	}
 	else
 	{
-	  echo("Error al crear Llave");
+	  echo("error_creating_key");
 	}
 }
 
@@ -63,14 +63,42 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"])&&isset($_POST["texto"]))
   <body onload="initialize()" onunload="GUnload()">
     <div id="map_canvas" style="width: 500px; height: 300px"></div>
     <form method="post">
-    Latitud: <input type = "text" name="latitud" id="lat"></input>
-    <br>
-    Longitud: <input type = "text" name="longitud" id="lng"></input>
-    <br>
-    Texto: <input name="texto" type = "text"></input>
-    <br>
-    <input type="submit" value="Crear Llave"></input>
+    <table>
+    <tr>
+    <td>
+    latitude: 
+    </td>
+    <td>
+    <input type = "text" name="latitud" readonly="readonly" id="lat"></input>
+    </td>
+	</tr>
+	<tr>
+	<td>
+    longitude: 
+    </td>
+    <td>
+    <input type = "text" name="longitud" readonly="readonly" id="lng"></input>
+    </td>
+    </tr>
+    <tr>
+    <td>
+    txt: 
+    </td>
+    <td>
+    <textarea name="texto" rows="2" cols="20" ></textarea>
+    </td>
+    </tr>
+    <tr>
+    <td>
+    <input type="submit" value="make_key"></input>
+    </td>
+    <td>
+    </td>
+    </tr>
+    </table>
     </form>
-    <a href="visualizacionLlaves.php">ver todas las llaves disponibles</a>
+    <a href="visualizacionLlaves.php">check_out_keys</a>
+    <br>
+    <a href="notprofile.php">my_not_profile</a>
   </body>
 </html>
