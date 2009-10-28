@@ -36,7 +36,7 @@ if(isset($_POST['submit'])){
 					// En este momento tenemos el email y el password escritos de manera adecuada
 					$retval = $usuario->login($email, $pass);	
 					if($retval){
-						header("Location: ./home.php");
+						header("Location: ./notprofile.php");
 					}
 					/* Login failed */
 					else{
