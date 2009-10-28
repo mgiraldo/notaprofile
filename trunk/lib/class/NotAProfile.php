@@ -182,30 +182,7 @@ class NotAProfile{
 	 *  @param $texto
 	 *  @return codigo, cadena de caracteres asociada a la llave. 
 	 *  error en caso de no haber sido exitoso el proceso.
-	 */
-	public static function crearLlavee(){
-		
-	}
-	
-	
-	/**
-	 * Este metodo se encarga de crear una llave asociada a un usuario
-	 * @param unknown_type $idUsuario
-	 * @param unknown_type $texto
-	 * @param unknown_type $lat
-	 * @param unknown_type $long
-	 * @return unknown_type
-	 */
-	public static function crearLlave2($idUsuario, $texto, $lat, $long ){
-		// TODO
-	} 
-	
-	/**
-	 * 	ESTE ES EL CODIGO QUE SE TENIA PARA LA CREACIÓN DE LLAVES
-	 * 
-	 *
-	 */
-	 
+	 */	 
 	 public static function crearLlave($lat, $long, $texto){
 	 	global $app;
 		$codigo = NotAProfile::elegirCodigoUnico();
