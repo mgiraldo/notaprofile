@@ -56,7 +56,7 @@ class NotAProfile{
 	public static function registrarUsuario($email, $clave){
 		// verificar que el email no exista en la bd (llamar metodo)
 		if(NotAProfile::existeUsuario($email)==true){
-			return "Error";
+			return "Error, el usuario ya se encuentra registrado.";
 			exit;
 		}else{
 			
@@ -66,7 +66,7 @@ class NotAProfile{
 			$exito = DAO::doSQL($sql);
 			$id = DAO::lastId();
 			if(!$exito){
-				return "Error";
+				return "Error de la base de datos.";
 			}else{
 				// enviar email de confirmación (llamar metodo)
 				NotAProfile::enviarEmailValidacion($email, $id);
@@ -207,7 +207,8 @@ class NotAProfile{
 	 */
 	 
 	 public static function crearLlave($lat, $long, $texto){
-		$codigo = substr(md5(rand()), 5, 6); 
+	 	global $app;
+		$codigo = NotAProfile::elegirCodigoUnico();
 		//El id del creador es siempre 1 para probar la creación de llaves.
 		$creador_id= 1;
 		$fecha = date("c");
@@ -223,12 +224,38 @@ class NotAProfile{
 		if($exito!=1)
 		{
 			$codigo="error";
+			return $codigo;
+			exit;
 		}
-		return $codigo;
+
+		$url = $app['url']."llave.php?c=".$codigo;
+		return $url;
 	}
 	
 	
-	
+	/*
+	 * Elige un código único para la llave
+	 * 
+	 */
+	public static function elegirCodigoUnico(){
+		$codigo= substr(md5(rand()), 5, 6);
+		
+		$sql = "SELECT codigo FROM llave";
+		$cods= DAO::doSQLAndReturn($sql);
+		$noesunico=1;
+		while($noesunico==1)
+		{
+			$noesunico=0;
+			for ($index = 0; $index < count($cods) && $noesunico==0; $index++) {
+				if($filename==$cods[$index]['codigo'])
+				{
+					$noesunico=1;
+				}				
+			}
+			$codigo = substr(md5(rand()), 5, 6);
+		}	
+		return $codigo;
+	}
 	
 	
 	/**
@@ -237,10 +264,38 @@ class NotAProfile{
 	 * @param unknown_type $idUuario
 	 * @return unknown_type
 	 */
-	public static function reclamarLlave($idLlave, $idUuario){
-		// TODO
+	public static function reclamarLlave($codigoLlave, $idUuario){
+		$sql=sprintf("SELECT * FROM llave WHERE codigo='%s'",$codigoLlave);
+		$llave = DAO::doSQLAndReturn($sql);
+		if(!isset($llave[0]['id']))
+		{
+			return "Error, la llave no existe.";
+			exit;
+		}
+		else if(isset($llave[0]['reclamador_id']))
+		{
+			return "Error, la llave ya ha sido reclamada";
+			exit;
+		}
+		else
+		{
+			$fecha = date("c");
+			$sql=sprintf("UPDATE llave SET reclamador_id = '%s',fecha_reclamado = '%s' WHERE codigo = '%s'",$idUuario,$fecha,$codigoLlave);
+			DAO::doSQL($sql);
+			return $llave;
+		}
 	}
 	
+	
+/**
+	 * Este metodo se encarga de marcar una llave como aceptada, despues de haber sido reclamada
+	 * @param unknown_type $idLlave
+	 */
+	public static function aceptarLlave($codigoLlave){
+			$sql=sprintf("UPDATE llave SET flag_aceptado = 1 WHERE codigo = '%s'",$codigoLlave);
+			$exito = DAO::doSQL($sql);
+			return $exito;
+	}
 	/**
 	 * Esta metodo se encarga de realizar una validación de llave
 	 * @param unknown_type $idLlave
@@ -256,7 +311,7 @@ class NotAProfile{
 	 * @return unknown_type
 	 */
 	public static function listaLlavesDisponibles(){
-		$sql = "SELECT * FROM llave";
+		$sql = "SELECT * FROM llave WHERE reclamador_id IS NULL";
 		$llaves = DAO::doSQLAndReturn($sql);
 		return $llaves;
 	}
