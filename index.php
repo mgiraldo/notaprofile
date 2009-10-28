@@ -70,9 +70,10 @@ if(isset($_POST['submit'])){
 							$pass = addslashes(htmlspecialchars(htmlentities($pass)));
 		
 							// En este momento tenemos el email y el password escritos de manera adecuada
-							//NotAProfile::RegistrarUsuario($email, $pass);
+							$mensaje = NotAProfile::RegistrarUsuario($email, $pass);
 							if(true){
-								header('Location:'.$app['url'].'test');
+								//header('Location:'.$app['url'].'test');
+								echo($mensaje);
 							}
 						}else{$msgError = $msgError."Your password doesnt match";}
 					}
@@ -98,14 +99,15 @@ if(isset($_POST['submit'])){
 <?php 
 echo "<h1>".$msgError."</h1>";
 ?>
-
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<label for="email">E-mail:</label>
-	<input type="text" name="email" id="email" value="" tabindex="1" /><br />
-	<label for="pass">Password:</label>
-	<input type="text" name="pass" id="pass" value="" tabindex="2" /><br />
-	<input type="submit" name="submit" id="submit" value="Submit" tabindex="3" />
-</form>
+<div id=login>
+	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+		<label for="email">E-mail:</label>
+		<input type="text" name="email" id="email" value="" tabindex="1" /><br />
+		<label for="pass">Password:</label>
+		<input type="text" name="pass" id="pass" value="" tabindex="2" /><br />
+		<input type="submit" name="submit" id="submit" value="Submit" tabindex="3" />
+	</form>
+</div>
 <hr></hr>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<label for="email2">E-mail:</label>

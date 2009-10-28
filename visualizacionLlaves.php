@@ -51,7 +51,7 @@ $count = count($llaves);
          markerOptions = { icon:baseIcon };
          var marker = new GMarker(point,markerOptions);
          GEvent.addListener(marker, "click", function() {
-             marker.openInfoWindowHtml(" Llave dejada: " + fecha);
+             marker.openInfoWindowHtml(" key_left  : " + fecha);
            });
          return marker;
     }
@@ -60,6 +60,8 @@ $count = count($llaves);
   </head>
   <body onload="initialize()" onunload="GUnload()">
     <div id="map_canvas" style="width: 500px; height: 300px"></div>
-    <a href="insertarLlave.php">crear una llave</a>
+    <a href="insertarLlave.php">make_key</a>
+    <br>
+    <a href="notprofile.php">my_not_profile</a>
   </body>
 </html>
