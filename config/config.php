@@ -6,7 +6,7 @@ global $app;
 $app['sitename']				= 'not_a_profile';
 
 #Paths
-$app['url']						= 'http://localhost/notaprofile/';
+$app['url']						= 'http://notaprofile.manuelvieda.com/';
 $app['urlroot']					= "/html/";
 $app['siteroot']				= '/xxxx/xxxx/xxxx/xxxx.xxxx.com/html/';
 $app['libpath']					= $app["siteroot"] . "lib/";
@@ -15,10 +15,10 @@ $app['photoroot']				= "photos/";
 $app['templatepath']			= $app["siteroot"] . "template/";
 
 #DB
-$app['dbhost']					= "localhost";
-$app['db']						= "notaprofile";
-$app['dbuser']					= "root";
-$app['dbpassword']				= "";
+$app['dbhost']					= "db2019.perfora.net";
+$app['db']						= "db295480523";
+$app['dbuser']					= "dbo295480523";
+$app['dbpassword']				= "dise3220_nap";
 
 #Images
 $app['photo_max_size']			= 9999999999;
@@ -33,10 +33,10 @@ $app['dateformat_long']			= "%d de %B de %Y"; //20 de Septiembre de 2008
 #Others
 $app['defaults']['localization'] = Array( 'esp', 'spanish', 'es', 'es_ES' );
 $app['debug']					= 0;
-$app['siteemail']				= "xxxx@xxxx.com";
+$app['siteemail']				= "notaprofile@manuelvieda.com";
 
 #GoogleMaps
-$app['apiKey'] = "ABQIAAAA18qEiHphe4mikuwMZVbDfBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxR3ccS3aeoyDwYsLjU2Gj3FcJ7nNw";
+$app['apiKey'] = "ABQIAAAA18qEiHphe4mikuwMZVbDfBR446503xKeWs3_h9WUvSMDtqkhXBSu0DLVqlKGM_fDey78REtRKSjCMQ";
 
 #Definiendo Localización
 foreach( $app["defaults"]["localization"] as $row ) $loc[] = "'" . $row . "'";
