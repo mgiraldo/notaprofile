@@ -55,14 +55,15 @@ class NotAProfile{
 	 */
 	public static function registrarUsuario($email, $clave){
 		// verificar que el email no exista en la bd (llamar metodo)
-		if(NotAProfile::existeUsuario($email)==true){
+		if(NotAProfile::existeUsuario($email)){
 			return "Error, el usuario ya se encuentra registrado.";
 			exit;
 		}else{
 			
 			//ingresar a la base de datos el nuevo usuario, como inactivo, la clave entra como un md5 de si misma, 
 			//esto debe tenerse en cuenta a la hora de hacer login.
-			$sql = sprintf("INSERT INTO usuario (email, clave, flag_activo) VALUES ('%s','%s','%s')",$email,md5($clave),0);
+			$fecha = date("c");
+			$sql = sprintf("INSERT INTO usuario (email, clave, flag_activo, fecha_creado) VALUES ('%s','%s','%s','%s')",$email,md5($clave),0,$fecha);
 			$exito = DAO::doSQL($sql);
 			$id = DAO::lastId();
 			if(!$exito){
@@ -160,7 +161,7 @@ class NotAProfile{
 		//TODO GOMEZ
 		// verificar si un determinado email esta registrado en la BD
 	   $resultados=array();
-	   $resultados=DAO::doSQLAndReturn("SELECT email FROM usuario WHERE email = $email");
+	   $resultados=DAO::doSQLAndReturn("SELECT email FROM usuario WHERE email = '%s'",$email);
        $largo= count($resultados);
  
                   
@@ -222,6 +223,8 @@ class NotAProfile{
 		return $exito;
 	}
 	
+	
+
 	/**
 	 * Función que se encarga de cerrar la sesión de un usuario dado su email
 	 * @param $email

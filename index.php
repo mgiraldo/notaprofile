@@ -104,7 +104,7 @@ echo "<h1>".$msgError."</h1>";
 		<label for="email">E-mail:</label>
 		<input type="text" name="email" id="email" value="" tabindex="1" /><br />
 		<label for="pass">Password:</label>
-		<input type="text" name="pass" id="pass" value="" tabindex="2" /><br />
+		<input type="password" name="pass" id="pass" value="" tabindex="2" /><br />
 		<input type="submit" name="submit" id="submit" value="Submit" tabindex="3" />
 	</form>
 </div>
@@ -113,9 +113,9 @@ echo "<h1>".$msgError."</h1>";
 	<label for="email2">E-mail:</label>
 	<input type="text" name="email2" id="email2" value="" tabindex="4" /><br />
 	<label for="pass2">Contrasena:</label>
-	<input type="text" name="pass2" id="pass2" value="" tabindex="5" /><br />
+	<input type="password" name="pass2" id="pass2" value="" tabindex="5" /><br />
 	<label for="pass3">Confirmar Contrasena:</label>
-	<input type="text" name="pass3" id="pass3" value="" tabindex="6" /><br />
+	<input type="password" name="pass3" id="pass3" value="" tabindex="6" /><br />
 	<input type="submit" name="signup" id="signup" value="Sign_Up" tabindex="7" />
 </form>
 </body>
