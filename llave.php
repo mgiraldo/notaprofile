@@ -6,13 +6,16 @@ if(isset($_GET['c']))
 	{
 		NotAProfile::aceptarLlave($_GET['c']);
 		echo("Ok");
-?>		
+?>	
+<br>	
 <a href="notprofile.php">back</a>
 <?php 
 	}
 	else
 	{
-		$llave = NotAProfile::reclamarLlave($_GET['c'],5);
+		$creador_id= $_SESSION['userid'];
+		if(!isset($_SESSION['userid'])){echo("you need to be logged in");exit;}
+		$llave = NotAProfile::reclamarLlave($_GET['c'],$creador_id);
 		if(isset($llave[0]['txt']))
 		{
 			echo($llave[0]['txt']);
@@ -20,12 +23,16 @@ if(isset($_GET['c']))
 ?>			
 <form action="#" method="post"><input name="gusta" type="submit" value="like it"></form>
 <br>
-<form action="#" method="post"><input name="nogusta" type="submit" value="don't like it"></form>
+<form action="notprofile.php" method="post"><input name="nogusta" type="submit" value="don't like it"></form>
 <?php			
 		}
 		else
 		{
 			echo($llave);
+?>	
+<br>
+<a href="notprofile.php">back</a>
+<?php 		
 		}
 	}
 }

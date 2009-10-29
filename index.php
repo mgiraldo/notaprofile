@@ -34,7 +34,7 @@ if(isset($_POST['submit'])){
 					$pass = addslashes(htmlspecialchars(htmlentities($pass)));
 					
 					// En este momento tenemos el email y el password escritos de manera adecuada
-					$retval = $usuario->login($email, $pass);	
+					$retval = NotAProfile::hacerLogin($email, $pass);	
 					if($retval){
 						header("Location: ./notprofile.php");
 					}
