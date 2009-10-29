@@ -6,19 +6,19 @@ global $app;
 $app['sitename']				= 'not_a_profile';
 
 #Paths
-$app['url']						= 'http://notaprofile.manuelvieda.com/';
-$app['urlroot']					= "/html/";
-$app['siteroot']				= '/xxxx/xxxx/xxxx/xxxx.xxxx.com/html/';
+$app['url']						= 'http://www.notaprofile.com/';
+$app['urlroot']					= "/";
+$app['siteroot']				= '/nfs/c01/h12/mnt/9117/domains/notaprofile.com/html/';
 $app['libpath']					= $app["siteroot"] . "lib/";
 $app['liburl']					= $app["url"] . "lib/";
 $app['photoroot']				= "photos/";
 $app['templatepath']			= $app["siteroot"] . "template/";
 
 #DB
-$app['dbhost']					= "db2019.perfora.net";
-$app['db']						= "db295480523";
-$app['dbuser']					= "dbo295480523";
-$app['dbpassword']				= "dise3220_nap";
+$app['dbhost']					= $ENV{'DATABASE_SERVER'};
+$app['db']						= "db9117_notaprofile";
+$app['dbuser']					= "db9117_uniandes";
+$app['dbpassword']				= "noesunperfil";
 
 #Images
 $app['photo_max_size']			= 9999999999;
