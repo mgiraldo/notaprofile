@@ -3,7 +3,7 @@
  * Pagina Inicial del Proyecto
  */
 require_once 'lib/class/NotAProfile.php';
-if($usuario->logged_in){
+if(NotAProfile::estaLogeado()){
 	header("Location: ./home.php");
 }else{
 
