@@ -115,6 +115,7 @@ class NotAProfile{
 		}
 		
 	}
+
 	/**
 	 * Función que verifica que el email exista y la clave esté bien
 	 */
@@ -242,6 +243,20 @@ class NotAProfile{
 		//header ("Location: index.php");  
 	}
 
+	
+	/**
+	 * Función que revisa si el usuario está logeado
+	 */
+	public static function estaLogeado(){
+			if(isset($_SESSION['userid']))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+	}
 //----------------------------------------------------------------------------------------------
 // Funciones relacionadas con la creación, reclamo y validación de llaves
 //----------------------------------------------------------------------------------------------

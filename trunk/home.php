@@ -6,8 +6,12 @@
  */
 
 require_once 'lib/class/NotAProfile.php';
-if(!($usuario->logged_in)){
+if(!(NotAProfile::estaLogeado())){
 	header("Location: ./index.php");
+}
+else
+{
+	header("Location: ./notprofile.php");
 }
 if(isset($_GET['logout'])){
 	NotAProfile::cerrarSesion();
