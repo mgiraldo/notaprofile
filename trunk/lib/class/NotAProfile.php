@@ -75,10 +75,80 @@ class NotAProfile{
 		}
 	}
 	
+	/**
+	 * Función que hace login del usuario
+	 * @param unknown_type $email
+	 * @param unknown_type $clave
+	 */
+	public static function hacerLogin($email, $clave){
+		global $app;
+		$email = trim($email);
+		$clave = trim($clave);
 
+		/* Checks that email is in database and password is correct */
+		$email = stripslashes($email);
+		$result = NotAProfile::validarUsuario($email, md5($clave));
+		
+		/* Check error codes */
+		if($result == 0){
+			return false;
+			exit;
+		}
+		
+		 /* Username and password correct, register session variables */
+		 $usuario  = NotAProfile::infoUsuario($email);
+		 $_SESSION['username'] = $usuario[0]['email'];
+		 $_SESSION['userid']   = $usuario[0]['id'];
+		
+		 return true;
+		 
+		  
+		 echo "<br />".$_SESSION['username'];
+		 echo "<br />".$_SESSION['userid'];
+		if(isset($_SESSION['username']) && isset($_SESSION['userid']) && $_SESSION['username'] != ""){
+			echo "Estan creadas las credenciales ";
+			
+		}
+		else{
+			echo "No se crearon credenciales";
+		}
+		
+	}
+	/**
+	 * Función que verifica que el email exista y la clave esté bien
+	 */
+	public static function validarUsuario($email, $clave)
+	{
+		$sql = sprintf("SELECT * FROM usuario WHERE email= '%s'",$email);
+		$usuario = DAO::doSQLAndReturn($sql);
+		if(!isset($usuario[0]['id']))
+		{
+			return 0;
+			exit;
+		}
+		else
+		{
+			if($usuario[0]['clave']==$clave)
+			{
+				return 1;
+				exit;
+			}
+			else
+			{
+				return 0;
+				exit;
+			}
+		}
+	}
 	
-	
-	
+	/**
+	 * Función que devuelve la información del usuario
+	 */
+	public static function infoUsuario($email)
+	{
+		$sql = sprintf("SELECT * FROM usuario WHERE email= '%s'",$email);
+		return DAO::doSQLAndReturn($sql);
+	}
 	
 	/**
 	 * Función que verifica si un usuario representado con su email existe 
@@ -157,7 +227,7 @@ class NotAProfile{
 	 * @param $email
 	 * @return No return
 	 */
-	public static function cerrarSesion ($email){
+	public static function cerrarSesion (){
 		//TODO GUEVARA revisar
 		//Elimina la seción
 		session_start(); 
@@ -187,26 +257,27 @@ class NotAProfile{
 	 	global $app;
 		$codigo = NotAProfile::elegirCodigoUnico();
 		//El id del creador es siempre 1 para probar la creación de llaves.
-		$creador_id= 1;
-		$fecha = date("c");
-		$sql = sprintf("INSERT INTO llave (txt,latitud,longitud,codigo,creador_id,fecha_creado) VALUES ('%s','%s','%s','%s','%s','%s')",
-					$texto,
-					$lat,
-					$long,
-					$codigo,
-					$creador_id,
-					$fecha
-					);
-		$exito = DAO::doSQL($sql);
-		if($exito!=1)
-		{
-			$codigo="error";
-			return $codigo;
-			exit;
-		}
-
-		$url = $app['url']."llave.php?c=".$codigo;
-		return $url;
+		$creador_id= $_SESSION['userid'];
+		if(!isset($creador_id)){echo("you need to be logged in");exit;}	
+			$fecha = date("c");
+			$sql = sprintf("INSERT INTO llave (txt,latitud,longitud,codigo,creador_id,fecha_creado) VALUES ('%s','%s','%s','%s','%s','%s')",
+						$texto,
+						$lat,
+						$long,
+						$codigo,
+						$creador_id,
+						$fecha
+						);
+			$exito = DAO::doSQL($sql);
+			if($exito!=1)
+			{
+				$codigo="error";
+				return $codigo;
+				exit;
+			}
+	
+			$url = $app['url']."llave.php?c=".$codigo;
+			return $url;
 	}
 	
 	
@@ -264,7 +335,7 @@ class NotAProfile{
 	}
 	
 	
-/**
+	/**
 	 * Este metodo se encarga de marcar una llave como aceptada, despues de haber sido reclamada
 	 * @param unknown_type $idLlave
 	 */

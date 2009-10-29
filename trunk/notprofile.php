@@ -18,3 +18,7 @@ My Claimed Keys:
 <a href="insertarLlave.php">create_key</a>
 <br>
 <a href="visualizacionLlaves.php">check_out_keys</a>
+<br>
+<br>
+<br>
+<a href="home.php?logout=si">log_out</a>

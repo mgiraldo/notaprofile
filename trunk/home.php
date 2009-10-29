@@ -9,8 +9,8 @@ require_once 'lib/class/NotAProfile.php';
 if(!($usuario->logged_in)){
 	header("Location: ./index.php");
 }
-if(isset($_POST['logout'])){
-	$usuario->logout();
+if(isset($_GET['logout'])){
+	NotAProfile::cerrarSesion();
 	header("Location: ./index.php");
 }
 
