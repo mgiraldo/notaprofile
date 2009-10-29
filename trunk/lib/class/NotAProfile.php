@@ -182,7 +182,7 @@ class NotAProfile{
 	 * @return No return
 	 */
 	public static function enviarEmailValidacion($email, $id){
-		//TODO GUEVARA corregir
+
 		
 		global $app;
 		//Crea el código de activación usando como parametro el email y el tiempo el milisegundos 
@@ -232,7 +232,6 @@ class NotAProfile{
 	 * @return No return
 	 */
 	public static function cerrarSesion (){
-		//TODO GUEVARA revisar
 		//Elimina la seción
 		session_start(); 
 		$_SESSION = array(); 
