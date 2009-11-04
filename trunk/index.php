@@ -24,37 +24,14 @@ if(isset($_POST['submit'])){
 }else if(isset($_POST['signup'])){
 	// Se ha enviado el formulario para registrarse
 	
-	$email = trim("".$_POST['email2']);
-	if($email == ""){$msgError = $msgError."Email cannot be empty";}
-	else{
-		$regex = "/[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))/";
-		if(preg_match($regex,$email)){
-			$email = strip_tags($email);
-			$email = addslashes(htmlspecialchars(htmlentities($email)));
-				
-			if(isset($_POST['pass2'])){
-				if(isset($_POST['pass3'])){
-					$pass = trim("".$_POST['pass2']);
-					$pass2 = trim("".$_POST['pass3']);
-					if($pass == ""){$msgError = $msgError."The password cannot be empty";}
-					else{
-						if($pass == $pass2){
-							$pass = strip_tags($pass);
-							$pass = addslashes(htmlspecialchars(htmlentities($pass)));
+	$email = isset($_POST['email2'])?$_POST['email2']:"";
+	$passw = isset($_POST['pass2'])?$_POST['pass2']:"";
+	$passw2 = isset($_POST['pass3'])?$_POST['pass3']:"";
+	$error = NotAProfile::registrarUsuario($email, $passw, $passw2);
+	if($error==0){
 		
-							// En este momento tenemos el email y el password escritos de manera adecuada
-							$mensaje = NotAProfile::RegistrarUsuario($email, $pass);
-							if(true){
-								//header('Location:'.$app['url'].'test');
-								echo($mensaje);
-							}
-						}else{$msgError = $msgError."Your password doesnt match";}
-					}
-				}
-			}
-		}
-		else{$msgError = $msgError."Incorrect Email format";}
 	}
+
 	
 }
 
@@ -68,8 +45,9 @@ if(isset($_POST['submit'])){
 </head>
 <body>
 <h1>not_a_profile</h1>
-
 <?php
+
+if(isset($_POST['submit'])){
 switch($error){
 	case 1:
 		echo "<h2>Email or Password can not be empty </h2>";
@@ -80,8 +58,7 @@ switch($error){
 	case 3:
 		echo "<h2>Wrong Email or/and password </h2>";
 		break;
-}
-echo "<h1>".$msgError."</h1>";
+}}
 ?>
 <div id=login>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -93,6 +70,32 @@ echo "<h1>".$msgError."</h1>";
 	</form>
 </div>
 <hr></hr>
+
+<?php 
+if(isset($_POST['signup'])){
+switch($error){
+	case 1:
+		echo "<h2>Email or Password can not be empty </h2>";
+		break;
+	case 2:
+		echo "<h2>Incorrect email format </h2>";
+		break;
+	case 3:
+		echo "<h2>The passwords do not match!</h2>";
+		break;
+	case 4:
+		echo "<h2>Email already in use</h2>";
+		break;
+	case 5:
+		echo "<h2>Error in Database procesing!! Contact webmaster righ now!!!!</h2>";
+		break;
+		
+	case 0:
+		echo "<h2> SE HA REGISTRADO!! YA PUEDE INICIAR SESION!!</h2>";
+		break;
+			
+}}
+?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<label for="email2">E-mail:</label>
 	<input type="text" name="email2" id="email2" value="<?php echo isset($_POST['email2'])?$_POST['email2']:""; ?>" tabindex="4" /><br />
@@ -106,4 +109,5 @@ echo "<h1>".$msgError."</h1>";
 </html>
 
 <?php } ?>
+ 
  

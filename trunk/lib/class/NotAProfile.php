@@ -28,51 +28,56 @@ class NotAProfile{
 //----------------------------------------------------------------------------------------------
 // Funciones relacionadas con el Registro/Login del sistema
 //----------------------------------------------------------------------------------------------
-	
-	/**
-	 * Función que procesa el inicio (login/registro) al sistema. 
-	 * En caso de encontrar un email, clave y reclave se asume que se esta registrando.
-	 * En caso de encontrar unicamente email y clave se asume que se esta logeando.
-	 * @param $email
-	 * @param $clave
-	 * @param $reclave
-	 * @return unknown_type
-	 */
-	public static function procesarInicio($email, $clave, $reclave = ''){
-		if ($reclave == ''){
-			validarUsuario($email, $clave);
-		} else{
-			registrarUsuario($email, $clave);
-		}
-	}
-	
+		
 	/**
 	 * Función que agrega un nuevo usuario al sistema.
 	 * @param $email Email del nuevo usuario
 	 * @param $clave Clave que aigna el usuario a su cuenta
 	 * @param $reclave Confirmación de la clave
-	 * @return no return
+	 * @return  
+	 *   1 - Alguno de los parametros se encuentra en blanco
+	 *   2 - El campo del email no tiene el formato correcto
+	 *   3 - Las contraseñas no coinciden
+	 *   4 - El email ingresado ya esta asociado a un registro
+	 *   5 - Problema ingresando datos a la base de datos
 	 */
-	public static function registrarUsuario($email, $clave){
+	public static function registrarUsuario($email, $clave, $clave2){
+		
+		$email = trim($email);
+		$clave = trim($clave);
+		$clave2 = trim($clave2);
+		
+		// Valida que no se tenga un campo vacio
+		if($email=="" || $clave=="" || $clave2==""){return 1;}
+		
+		// Valida que el email ingresado tenga un formato valido
+		$regex = "/[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))/";
+		if(!(preg_match($regex,$email))){return 2;}
+		
+		// Verfica que las dos contraseñas sean iguales
+		if($clave2!=$clave){return 3;}
+		
+		//Agrega caracteres de control XSS
+		$email = strip_tags(addslashes(htmlspecialchars(htmlentities($email))));
+		$clave = strip_tags(addslashes(htmlspecialchars(htmlentities($clave))));
+		
+		// Verifica que no exista un usuario con ese email registrado
+		
+		
 		// verificar que el email no exista en la bd (llamar metodo)
 		if(NotAProfile::existeUsuario($email)){
-			return "Error, el usuario ya se encuentra registrado.";
-			exit;
+			return 4;
+		}
+
+		// Ingresa a la base de datos el nuevo usuario.
+		$sql = "INSERT INTO usuario (id, email, clave, flag_activo, fecha_creado) VALUES (NULL, '$email', '".md5($clave)."', '0', NOW() )";
+		if(DAO::doSQL($sql)){
+			// Enviar email
+			// $id = DAO::lastId();
+			// NotAProfile::enviarEmailValidacion($email, $id);
+			return 0;
 		}else{
-			
-			//ingresar a la base de datos el nuevo usuario, como inactivo, la clave entra como un md5 de si misma, 
-			//esto debe tenerse en cuenta a la hora de hacer login.
-			$fecha = date("c");
-			$sql = sprintf("INSERT INTO usuario (email, clave, flag_activo, fecha_creado) VALUES ('%s','%s','%s','%s')",$email,md5($clave),0,$fecha);
-			$exito = DAO::doSQL($sql);
-			$id = DAO::lastId();
-			if(!$exito){
-				return "Error de la base de datos.";
-			}else{
-				// enviar email de confirmación (llamar metodo)
-				NotAProfile::enviarEmailValidacion($email, $id);
-				return "Success";
-			}
+			return 5;
 		}
 	}
 	
@@ -87,7 +92,6 @@ class NotAProfile{
 	 *   3 - El email ingresado no existe o la contraseña no coincide
 	 */
 	public static function login($email, $clave){
-		global $app;
 
 		$email = trim($email);
 		$clave = trim($clave);
@@ -154,20 +158,10 @@ class NotAProfile{
 	 * @return boolean, true o false en caso de existir o no en el sistema. 
 	 */
 	 public static function existeUsuario($email){
-		//TODO GOMEZ
-		// verificar si un determinado email esta registrado en la BD
-	   $resultados=array();
-	   $resultados=DAO::doSQLAndReturn("SELECT email FROM usuario WHERE email = '%s'",$email);
-       $largo= count($resultados);
- 
-                  
-       // retorna true false dependiendo sea el caso
-		//return 0;
-       if($largo==0){
-         return false;
-       }else{
-         return true;
-       }
+		
+	   $resultados=DAO::doSQLAndReturn("SELECT count(*) as Contador FROM usuario WHERE email='$email'");
+	   return $resultados[0]["Contador"]==0?false:true;
+	   
 	}
 	
 	/**
