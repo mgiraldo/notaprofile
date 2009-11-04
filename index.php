@@ -9,43 +9,16 @@ if(NotAProfile::estaLogeado()){
 
 // Declaramos las varfiables que vamos a usar en el formulario para prevenir XSS por URL
 $email = "";
-$pass = "";
+$passw = "";
 $pass2 = "";
-
-//Esta variable se encarga de mostrar un error en pantalla si es necesario
-$msgError = "";
 
 if(isset($_POST['submit'])){
 	// Se ha enviado el formulario para iniciar sesion
-	
-	$email = trim("".$_POST['email']);
-	if($email == ""){$msgError = $msgError."Email cannot be empty";}
-	else{
-		$regex = "/[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))/";
-		if(preg_match($regex,$email)){
-			$email = strip_tags($email);
-			$email = addslashes(htmlspecialchars(htmlentities($email)));
-				
-			if(isset($_POST['pass'])){
-				$pass = trim("".$_POST['pass']);
-				if($pass == ""){$msgError = $msgError."The password cannot be empty";}
-				else{
-					$pass = strip_tags($pass);
-					$pass = addslashes(htmlspecialchars(htmlentities($pass)));
-					
-					// En este momento tenemos el email y el password escritos de manera adecuada
-					$retval = NotAProfile::hacerLogin($email, $pass);	
-					if($retval){
-						header("Location: ./notprofile.php");
-					}
-					/* Login failed */
-					else{
-						header("Location: ./index.php");
-			      	}		
-				}
-			}
-		}
-		else{$msgError = $msgError."Incorrect Email format";}
+	$email = isset($_POST['email'])?$_POST['email']:"";
+	$passw = isset($_POST['pass'])?$_POST['pass']:"";
+	$error = NotAProfile::login($email, $passw);
+	if($error==0){
+		header("Location: ./notprofile.php");	
 	}
 	
 }else if(isset($_POST['signup'])){
@@ -96,13 +69,24 @@ if(isset($_POST['submit'])){
 <body>
 <h1>not_a_profile</h1>
 
-<?php 
+<?php
+switch($error){
+	case 1:
+		echo "<h2>Email or Password can not be empty </h2>";
+		break;
+	case 2:
+		echo "<h2>Incorrect email format </h2>";
+		break;
+	case 3:
+		echo "<h2>Wrong Email or/and password </h2>";
+		break;
+}
 echo "<h1>".$msgError."</h1>";
 ?>
 <div id=login>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<label for="email">E-mail:</label>
-		<input type="text" name="email" id="email" value="" tabindex="1" /><br />
+		<input type="text" name="email" id="email" value="<?php echo isset($_POST['email'])?$_POST['email']:"";?>" tabindex="1" /><br />
 		<label for="pass">Password:</label>
 		<input type="password" name="pass" id="pass" value="" tabindex="2" /><br />
 		<input type="submit" name="submit" id="submit" value="Submit" tabindex="3" />
@@ -111,7 +95,7 @@ echo "<h1>".$msgError."</h1>";
 <hr></hr>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<label for="email2">E-mail:</label>
-	<input type="text" name="email2" id="email2" value="" tabindex="4" /><br />
+	<input type="text" name="email2" id="email2" value="<?php echo isset($_POST['email2'])?$_POST['email2']:""; ?>" tabindex="4" /><br />
 	<label for="pass2">Contrasena:</label>
 	<input type="password" name="pass2" id="pass2" value="" tabindex="5" /><br />
 	<label for="pass3">Confirmar Contrasena:</label>
