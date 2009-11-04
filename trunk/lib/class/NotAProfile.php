@@ -80,75 +80,70 @@ class NotAProfile{
 	 * Función que hace login del usuario
 	 * @param unknown_type $email
 	 * @param unknown_type $clave
+	 * 
+	 * Errores:
+	 *   1 - En email o la contraseña se encuentran en blanco
+	 *   2 - El campo del email no tiene el formato correcto
+	 *   3 - El email ingresado no existe o la contraseña no coincide
 	 */
-	public static function hacerLogin($email, $clave){
+	public static function login($email, $clave){
 		global $app;
+
 		$email = trim($email);
 		$clave = trim($clave);
+		
+		// Valida que no se tenga un campo vacio
+		if($email=="" || $clave==""){return 1;}
+		
+		// Valida que el email ingresado tenga un formato valido
+		$regex = "/[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))/";
+		if(!(preg_match($regex,$email))){return 2;}
+		
+		//Agrega caracteres de control XSS
+		$email = strip_tags(addslashes(htmlspecialchars(htmlentities($email))));
+		$clave = strip_tags(addslashes(htmlspecialchars(htmlentities($clave))));
+		
+		// Verifica que exista un registro asociado a un emai, y si existe, que la coincida la cllave
+		if(!(NotAProfile::validarUsuario($email, md5($clave)))){return 3;}
 
-		/* Checks that email is in database and password is correct */
-		$email = stripslashes($email);
-		$result = NotAProfile::validarUsuario($email, md5($clave));
+		// Crea la sesión con las variables username y id
+		$usuario = NotAProfile::infoUsuario($email);
+		$_SESSION['username'] = $usuario[0]['email'];
+		$_SESSION['userid']   = $usuario[0]['id'];
 		
-		/* Check error codes */
-		if($result == 0){
-			return false;
-			exit;
-		}
-		
-		 /* Username and password correct, register session variables */
-		 $usuario  = NotAProfile::infoUsuario($email);
-		 $_SESSION['username'] = $usuario[0]['email'];
-		 $_SESSION['userid']   = $usuario[0]['id'];
-		
-		 return true;
-		 
-		  
-		 echo "<br />".$_SESSION['username'];
-		 echo "<br />".$_SESSION['userid'];
-		if(isset($_SESSION['username']) && isset($_SESSION['userid']) && $_SESSION['username'] != ""){
-			echo "Estan creadas las credenciales ";
-			
-		}
-		else{
-			echo "No se crearon credenciales";
-		}
-		
+		return 0;
 	}
 
 	/**
-	 * Función que verifica que el email exista y la clave esté bien
+	 * Esta función se encarga de validar que exista un usuario dentro de la base de datos
+	 * con el email ingresado por parámetro. Si este registro existe, valida que la clave
+	 * asociada conicida con la clave ingresada por parámetro
+	 * @param unknown_type $email  - Email de un usuario
+	 * @param unknown_type $clave  - Constraseña asociada al email 
+	 * @return unknown_type - True si el usuario con $email existe y la coincide la clave,
+	 *                        false de lo contrario
 	 */
 	public static function validarUsuario($email, $clave)
 	{
-		$sql = sprintf("SELECT * FROM usuario WHERE email= '%s'",$email);
+		$sql = "SELECT clave FROM usuario WHERE email='$email'";
 		$usuario = DAO::doSQLAndReturn($sql);
-		if(!isset($usuario[0]['id']))
-		{
-			return 0;
-			exit;
-		}
-		else
-		{
-			if($usuario[0]['clave']==$clave)
-			{
-				return 1;
-				exit;
-			}
-			else
-			{
-				return 0;
-				exit;
-			}
-		}
+		if(count($usuario)==1)
+			// Existe un único registro asociado al email
+			return $usuario[0]['clave']==$clave?true:false;
+		else 
+			// No hay un registro asosciado a dicho email
+			return false;
 	}
 	
 	/**
-	 * Función que devuelve la información del usuario
+	 * Esta función se encarga de regresar un vector con toda la información de un usario
+	 * identificado con una direccion de email que ingresa por parámetro
+	 * @param unknown_type $email - Email de un usuario
+	 * @return unknown_type - Vector con los datos de tabla usuario de BD
 	 */
 	public static function infoUsuario($email)
 	{
-		$sql = sprintf("SELECT * FROM usuario WHERE email= '%s'",$email);
+		$sql = "SELECT * FROM usuario WHERE email= '$email'";
 		return DAO::doSQLAndReturn($sql);
 	}
 	
