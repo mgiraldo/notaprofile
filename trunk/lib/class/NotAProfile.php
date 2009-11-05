@@ -222,16 +222,16 @@ class NotAProfile{
 			//Activa al usuario en la BD
 			$sql=sprintf("UPDATE usuario SET flag_activo = '1' WHERE id_activacion = '%s'",$codigoActivacion);
 			DAO::doSQL($sql);
-		
+			
 			//Consulta el email del usuario activado
 			$sql=sprintf("SELECT email FROM usuario WHERE id_activacion='%s'",$codigoActivacion);
 			$email = DAO::doSQLAndReturn($sql);
-			List ($nombreUsuario, $empresaEmail) = split("@", $email);
+			List ($nombreUsuario, $empresaEmail) = split("@", $email[0]["email"]);
 			$resp = $nombreUsuario;
+
 		}
 		
-		return $resp;
-		
+		return $resp;		
 	}
 	
 	
