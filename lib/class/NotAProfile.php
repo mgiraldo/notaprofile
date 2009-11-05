@@ -377,16 +377,60 @@ class NotAProfile{
 		// TODO
 	}
 	
+/**
+	 * Función que se encarga de devolver las llaves creadas por el usuario logeado que ya han sido reclamadas.
+	 */
+	public static function darLlavesCreadasReclamadas(){
+		$sql = sprintf("SELECT * FROM Llave WHERE creador_id = %s AND reclamador_id IS NOT NULL",$_SESSION['userid']);
+		return $llaves = DAO::doSQLAndReturn($sql);
+	}
+	/**
+	 * Función que se encarga de devolver las llaves creadas por el usuario logeado que no han sido reclamadas.
+	 */
+	public static function darLlavesCreadasNoReclamadas(){
+		//TODO filtrar las llaves y dejar solo las que no se han vencido.
+		$sql = sprintf("SELECT * FROM Llave WHERE creador_id = %s AND reclamador_id IS NULL",$_SESSION['userid']);
+		return $llaves = DAO::doSQLAndReturn($sql);
+	}
+	
+	/**
+	 * Función que se encarga de devolver las llaves creadas por el usuario logeado que no han sido reclamadas.
+	 */
+	public static function darLlavesCreadasVencidas(){
+		//TODO filtrar las llaves y dejar solo las vencidas.
+		$sql = sprintf("SELECT * FROM Llave WHERE creador_id = '%s' AND reclamador_id IS NULL",$_SESSION['userid']);
+		return $llaves = DAO::doSQLAndReturn($sql);
+	}
+	
+	
+	/**
+	 * Función que se encarga de devolver las llaves que han sido reclamadas por el usuario logeado.
+	 */
+	public static function darLlavesReclamadas(){
+		$sql = sprintf("SELECT * FROM Llave WHERE reclamador_id = '%s'",$_SESSION['userid']);
+		return $llaves = DAO::doSQLAndReturn($sql);
+	}
+	
 	/**
 	 * Este método retorna todas las llaves que se encuentran disponibles (No han sido reclamadas)
-	 * para ubicarlas dentro del mapa
 	 * @return unknown_type
 	 */
-	public static function listaLlavesDisponibles(){
+	public static function darLlavesDisponibles(){
 		$sql = "SELECT * FROM llave WHERE reclamador_id IS NULL";
 		$llaves = DAO::doSQLAndReturn($sql);
 		return $llaves;
 	}
+	
+	/**
+	 * Este método retorna todas las llaves que se encuentran disponibles y que han sido publicadas por contactos
+	 */
+	public static function darLlavesDisponiblesContactos(){
+		//TODO Hacer la consulta que devuelva las llaves disponibles de los contactos
+		$sql = "SELECT * FROM llave WHERE reclamador_id IS NULL";
+		$llaves = DAO::doSQLAndReturn($sql);
+		return $llaves;
+	}
+	
 	
 	
 //----------------------------------------------------------------------------------------------
