@@ -177,8 +177,6 @@ class NotAProfile{
 		
 		//ingresa a la base de datos el id relacionado al correo
 		$sql=sprintf("UPDATE usuario SET id_activacion = '%s' WHERE id = '%s'", $codigoUnico, $id);
-		echo("cuack".$id);
-		echo($sql);
 		DAO::doSQL($sql);
 				
 		// enviar correo con este codigo dentro de un link
