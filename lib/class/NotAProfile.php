@@ -75,7 +75,6 @@ class NotAProfile{
 			// Enviar email
 			$id = DAO::lastId();
 			NotAProfile::enviarEmailValidacion($email, $id);
-			return 0;
 		}else{
 			return 5;
 		}
@@ -171,15 +170,15 @@ class NotAProfile{
 	 * @return No return
 	 */
 	public static function enviarEmailValidacion($email, $id){
-
-		
 		global $app;
 		//Crea el código de activación usando como parametro el email y el tiempo el milisegundos 
 		// con aumento de la entropia activado.
 		$codigoUnico = md5(uniqid($email.mt_rand(), true));
 		
 		//ingresa a la base de datos el id relacionado al correo
-		$sql = "UPDATE usuario SET id_activacion = $codigoUnico WHERE id = $id";
+		$sql=sprintf("UPDATE usuario SET id_activacion = '%s' WHERE id = '%s'", $codigoUnico, $id);
+		echo("cuack".$id);
+		echo($sql);
 		DAO::doSQL($sql);
 				
 		// enviar correo con este codigo dentro de un link
