@@ -22,7 +22,7 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"])&&isset($_POST["texto"]))
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>not_a_profile</title>
-    <script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAAHe---EnjKE2An4J04KAdSRR446503xKeWs3_h9WUvSMDtqkhXBRtjn73mepq-F3KYE5_lGIcJ9QNGw&sensor=true"
+    <script src="http://maps.google.com/maps?file=api&v=2&key=<?php echo $app['apiKey'] ?>&sensor=true"
             type="text/javascript"></script>
     <script type="text/javascript">
     var map;
