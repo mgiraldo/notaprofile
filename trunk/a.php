@@ -8,7 +8,7 @@ if(isset($_GET["c"])){
 	if ( ereg ("^[0-9a-z]{32}$", $cod)){
 		$resp = NotAProfile::activarUsuario($cod);	
 		if($resp == "0"){
-			echo("Código de activación errado XDDD");			
+			echo("Código de activación errado");			
 		}
 		else{
 			echo("Felicidades ".$resp." ahora eres un usuario activo de not_a_profile!");

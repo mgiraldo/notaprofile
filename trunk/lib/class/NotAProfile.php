@@ -74,7 +74,7 @@ class NotAProfile{
 		if(DAO::doSQL($sql)){
 			// Enviar email
 			// $id = DAO::lastId();
-			// NotAProfile::enviarEmailValidacion($email, $id);
+			NotAProfile::enviarEmailValidacion($email, $id);
 			return 0;
 		}else{
 			return 5;
