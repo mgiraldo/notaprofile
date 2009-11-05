@@ -73,7 +73,7 @@ class NotAProfile{
 		$sql = "INSERT INTO usuario (id, email, clave, flag_activo, fecha_creado) VALUES (NULL, '$email', '".md5($clave)."', '0', NOW() )";
 		if(DAO::doSQL($sql)){
 			// Enviar email
-			// $id = DAO::lastId();
+			$id = DAO::lastId();
 			NotAProfile::enviarEmailValidacion($email, $id);
 			return 0;
 		}else{
