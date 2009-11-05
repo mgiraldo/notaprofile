@@ -203,14 +203,36 @@ class NotAProfile{
 	
 	/**
 	 * Función que se encarga de verificar si el código unico existe en la base de datos, en caso de que sí
-	 * exista activa el usuario relacionado con el código. 
+	 * exista activa el usuario relacionado con el código y retorna el nombre del usuario activado, en caso de que no
+	 * es reornado un mensaje de error. 
 	 * @param $codigoActivacion
-	 * @return unknown_type
+	 * @return 
+	 * 	$nombreUsuario - si el código era valido y el usuario fue activado
+	 * 	0 - en caso de que el código no coinsida con ningun registro en la BD
 	 */
 	public static function activarUsuario($codigoActivacion){
-		$sql=sprintf("UPDATE usuario SET flag_activo = '1' WHERE id_activacion = '%s'",$codigoActivacion);
-		$exito = DAO::doSQL($sql);
-		return $exito;
+		//Verifica si el código si pertenece a algun registro en la BD
+		$sql = sprintf("SELECT count(*) as Contador FROM usuario WHERE id_activacion='%s'", $codigoActivacion);
+		$resultados=DAO::doSQLAndReturn($sql);
+		$existe = ($resultados[0]["Contador"]==0)?0:1;
+		
+		//Si existe realiza la activación y retorna el nombre del usuario
+		if($exite == 1){
+			//Activa al usuario en la BD
+			$sql=sprintf("UPDATE usuario SET flag_activo = '1' WHERE id_activacion = '%s'",$codigoActivacion);
+			DAO::doSQL($sql);
+		
+			//Consulta el email del usuario activado
+			$sql=sprintf("SELECT email FROM usuario WHERE id_activacion='%s'",$codigoActivacion);
+			$email = DAO::doSQLAndReturn($sql);
+			List ($nombreUsuario, $empresaEmail) = split("@", $email);
+			return $nombreUsuario;
+		}
+		else{
+			//Si no retorna 0 indicando que el código es invalido
+			return 0;
+		}	
+		
 	}
 	
 	
