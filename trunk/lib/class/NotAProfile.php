@@ -212,12 +212,13 @@ class NotAProfile{
 	 */
 	public static function activarUsuario($codigoActivacion){
 		//Verifica si el código si pertenece a algun registro en la BD
-		$sql = sprintf("SELECT count(*) as Contador FROM usuario WHERE id_activacion='%s'", $codigoActivacion);
-		$resultados=DAO::doSQLAndReturn($sql);
-		$existe = ($resultados[0]["Contador"]==0)?0:1;
+		$resultados=DAO::doSQLAndReturn("SELECT count(*) as Contador FROM usuario WHERE id_activacion='$codigoActivacion'");
+	   	$existe = $resultados[0]["Contador"];
 		
+
+		$resp = 0;
 		//Si existe realiza la activación y retorna el nombre del usuario
-		if($exite == 1){
+		if($existe == 1){
 			//Activa al usuario en la BD
 			$sql=sprintf("UPDATE usuario SET flag_activo = '1' WHERE id_activacion = '%s'",$codigoActivacion);
 			DAO::doSQL($sql);
@@ -226,12 +227,10 @@ class NotAProfile{
 			$sql=sprintf("SELECT email FROM usuario WHERE id_activacion='%s'",$codigoActivacion);
 			$email = DAO::doSQLAndReturn($sql);
 			List ($nombreUsuario, $empresaEmail) = split("@", $email);
-			return $nombreUsuario;
+			$resp = $nombreUsuario;
 		}
-		else{
-			//Si no retorna 0 indicando que el código es invalido
-			return 0;
-		}	
+		
+		return $resp;
 		
 	}
 	
