@@ -152,12 +152,12 @@ class NotAProfile{
 	 *   4 - El email ingresado no coincide con el código
 	 *   5 - Problema ingresando datos a la base de datos
 	 */
-	public static function cambiarClave($email, $clave, $clave2, $token){
+	public static function cambiarClave($email, $clave, $clave2, $param){
 		
 		$email = trim($email);
 		$clave = trim($clave);
 		$clave2 = trim($clave2);
-		
+		list($basura, $token) =split("-", $param);
 		// Valida que no se tenga un campo vacio
 		if($email=="" || $clave=="" || $clave2==""){return 1;}
 		
@@ -269,7 +269,7 @@ class NotAProfile{
 		DAO::doSQL($sql);
 				
 		// enviar correo con este codigo dentro de un link
-		$link = $app['url'] ."forgotPassword.php?e=".md5($email)."&c=". $codigoUnico;
+		$link = $app['url'] ."forgotPassword.php?c=".md5($email)."-". $codigoUnico;
 		
 		List ($nombre, $empresaEmail) = split("@", $email);
 		$msg = "Hello $nombre!, \r\n\r\n
@@ -293,8 +293,9 @@ class NotAProfile{
 	 * retorna el email en caso exitoso
 	 * retorna -1 si hay error
 	 */
-	public static function existeCambioClave($email,$token)
+	public static function existeCambioClave($param)
 	{
+		list($email, $token) =split("-", $param);
 		$sql = sprintf("SELECT * FROM usuario WHERE token_reactivacion='%s'",$token);
 		$usuario = DAO::doSQLAndReturn($sql);	
 		if(md5($usuario[0]['email']) == $email)
