@@ -5,13 +5,13 @@ $cambiarClave = "error";
 if(isset($_POST['send']))
 {
 	$exito = NotAProfile::enviarEmailCambioClave($_POST['email']);
-	if(!$exito)
+	if($exito)
 	{
-		$msg = "You typed a non valid email.";
+		$msg = "an email has just been sended with a reactivation code.";
 	}
 	else
 	{
-		$msg = "an email has just been sended with a reactivation code.";
+		$msg = "You typed a non valid email.";
 	}
 }
 else if(isset($_GET['c'])&&isset($_GET['e']))
@@ -19,10 +19,10 @@ else if(isset($_GET['c'])&&isset($_GET['e']))
 	$msg = "Type and retype your new password.";	
 	$cambiarClave = NotAProfile::existeCambioClave($_GET['e'],$_GET['c']);	
 }
-else if(isset($_POST['email'])&&isset($_POST['pass2'])&&isset($_POST['pass3'])&&isset($_POST['act']))
+else if(isset($_POST['change'])&&isset($_POST['email2'])&&isset($_POST['pass2'])&&isset($_POST['pass3'])&&isset($_POST['act']))
 {
 	$msg = "your password has been changed.";	
-	$error = NotAProfile::cambiarClave($_POST['email'],$_POST['pass2'],$_POST['pass3'],$_POST['act']);	
+	$error = NotAProfile::cambiarClave($_POST['email2'],$_POST['pass2'],$_POST['pass3'],$_POST['act']);	
 	switch($error){
 	case 1:
 		echo "<h2>Email or Password can not be empty </h2>";
@@ -64,8 +64,9 @@ if($cambiarClave!="error")
 	<input type="password" name="pass2" id="pass2" value="" tabindex="5" /><br />
 	<label for="pass3">Retype Password:</label>
 	<input type="password" name="pass3" id="pass3" value="" tabindex="6" /><br />
-	<input type="hidden" value="<?php echo($cambiarClave);?>" name="email" tabindex="6" /><br />
+	<input type="hidden" value="<?php echo($cambiarClave);?>" name="email2" tabindex="6" /><br />
 	<input type="hidden" value="<?php echo($_GET['c']);?>" name="act" tabindex="6" /><br />
+	<input type="submit" name="change" id="submit" value="Submit" tabindex="3" />
 	</form>
 </div>
 <?php 
