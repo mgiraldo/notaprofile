@@ -1,5 +1,6 @@
 <?php 
 require_once 'lib/class/NotAProfile.php';
+global $app;
 $msg = "Type your email. A code will be sended with a reactivation code.";
 $cambiarClave = "error";
 if(isset($_POST['send']))
@@ -14,10 +15,10 @@ if(isset($_POST['send']))
 		$msg = "You typed a non valid email.";
 	}
 }
-else if(isset($_GET['c'])&&isset($_GET['e']))
+else if(isset($_GET['c']))
 {
 	$msg = "Type and retype your new password.";	
-	$cambiarClave = NotAProfile::existeCambioClave($_GET['e'],$_GET['c']);	
+	$cambiarClave = NotAProfile::existeCambioClave($_GET['c']);	
 }
 else if(isset($_POST['change'])&&isset($_POST['email2'])&&isset($_POST['pass2'])&&isset($_POST['pass3'])&&isset($_POST['act']))
 {
@@ -38,10 +39,10 @@ else if(isset($_POST['change'])&&isset($_POST['email2'])&&isset($_POST['pass2'])
 		break;
 	case 5:
 		$msg ="<h2>Error in Database procesing!! Contact webmaster righ now!!!!</h2>";
-		break;
-		
+		break;	
 	case 0:
-		$msg = "<h2> Your password has been changed, you can now sign in again</h2>";
+		$msg = "<h2> Your password has been changed, you can now sign in again: </h2><a href=".$app['url'].">GO</a>";
+		$cambiarClave = "error2";
 		break;
 	}
 }
@@ -55,7 +56,9 @@ else if(isset($_POST['change'])&&isset($_POST['email2'])&&isset($_POST['pass2'])
 </head>
 <body>
 <?php echo($msg);
-if($cambiarClave!="error")
+if($cambiarClave=="error2"){
+}
+else if($cambiarClave!="error")
 { 
 ?>
 <div id=change>
@@ -70,7 +73,9 @@ if($cambiarClave!="error")
 	</form>
 </div>
 <?php 
-}else{?>
+}else 
+{
+?>
 <div id=forgot>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<label for="email">E-mail:</label>
@@ -78,6 +83,8 @@ if($cambiarClave!="error")
 		<input type="submit" name="send" id="submit" value="Submit" tabindex="3" />
 	</form>
 </div>
-<?php }?>
+<?php 
+}
+?>
 </body>
 </html>
