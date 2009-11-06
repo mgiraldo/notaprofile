@@ -7,12 +7,14 @@ require_once('lib/class/NotAProfile.php');
 <br>
 <?php 
 //TODO llamar al método que devuelve las llaves creadas por esta persona.
+/**
 $llaves = NotAProfile::darLlavesCreadasReclamadas();
  echo("claimed: " . count($llaves)."<br>");
 $llaves = NotAProfile::darLlavesCreadasNoReclamadas();
  echo("unclaimed: " . count($llaves)."<br>");
  $llaves = NotAProfile::darLlavesCreadasVencidas();
  echo("expired: " . count($llaves)."<br>");
+**/
 ?>
 <br>
 <br>

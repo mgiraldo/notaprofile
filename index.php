@@ -69,8 +69,8 @@ switch($error){
 		<input type="submit" name="submit" id="submit" value="Submit" tabindex="3" />
 	</form>
 </div>
+<a href="forgotPassword.php">forgot_my_password</a>
 <hr></hr>
-
 <?php 
 if(isset($_POST['signup'])){
 switch($error){
