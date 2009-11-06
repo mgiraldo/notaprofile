@@ -2,7 +2,7 @@
 require_once('config/config.php');
 require_once('lib/class/NotAProfile.php');
 
-$llaves = NotAProfile::listaLlavesDisponibles();
+$llaves = NotAProfile::darLlavesDisponibles();
 $count = count($llaves);
 ?>
 <!DOCTYPE html "-//W3C//DTD XHTML 1.0 Strict//EN" 
@@ -11,7 +11,7 @@ $count = count($llaves);
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>not_a_profile</title>
-    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<?php echo($app["apiKey"]); ?>&sensor=true_or_false"
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<?php echo($app["apiKey"]); ?>&sensor=true"
             type="text/javascript"></script>
     <script type="text/javascript">
     var map;
