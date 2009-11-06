@@ -25,23 +25,23 @@ else if(isset($_POST['change'])&&isset($_POST['email2'])&&isset($_POST['pass2'])
 	$error = NotAProfile::cambiarClave($_POST['email2'],$_POST['pass2'],$_POST['pass3'],$_POST['act']);	
 	switch($error){
 	case 1:
-		echo "<h2>Email or Password can not be empty </h2>";
+		$msg = "<h2>Email or Password can not be empty </h2>";
 		break;
 	case 2:
-		echo "<h2>Incorrect email format </h2>";
+		$msg = "<h2>Incorrect email format </h2>";
 		break;
 	case 3:
-		echo "<h2>The passwords do not match!</h2>";
+		$msg ="<h2>The passwords do not match!</h2>";
 		break;
 	case 4:
-		echo "<h2>Email does not match activation code</h2>";
+		$msg = "<h2>Email does not match activation code</h2>";
 		break;
 	case 5:
-		echo "<h2>Error in Database procesing!! Contact webmaster righ now!!!!</h2>";
+		$msg ="<h2>Error in Database procesing!! Contact webmaster righ now!!!!</h2>";
 		break;
 		
 	case 0:
-		echo "<h2> Your password has been changed, you can now sign in again</h2>";
+		$msg = "<h2> Your password has been changed, you can now sign in again</h2>";
 		break;
 	}
 }
