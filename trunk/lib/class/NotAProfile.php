@@ -138,6 +138,57 @@ class NotAProfile{
 			return false;
 	}
 	
+	
+/**
+	 * Función que cambia la clave de un usuario dado.
+	 * @param $email Email del usuario
+	 * @param $clave Clave que aigna el usuario a su cuenta
+	 * @param $reclave Confirmación de la clave
+	 * @param $token Token de reactivación
+	 * @return  
+	 *   1 - Alguno de los parametros se encuentra en blanco
+	 *   2 - El campo del email no tiene el formato correcto
+	 *   3 - Las contraseñas no coinciden
+	 *   4 - El email ingresado no coincide con el código
+	 *   5 - Problema ingresando datos a la base de datos
+	 */
+	public static function cambiarClave($email, $clave, $clave2, $token){
+		
+		$email = trim($email);
+		$clave = trim($clave);
+		$clave2 = trim($clave2);
+		
+		// Valida que no se tenga un campo vacio
+		if($email=="" || $clave=="" || $clave2==""){return 1;}
+		
+		// Valida que el email ingresado tenga un formato valido
+		$regex = "/[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))/";
+		if(!(preg_match($regex,$email))){return 2;}
+		
+		// Verfica que las dos contraseñas sean iguales
+		if($clave2!=$clave){return 3;}
+		
+		//Agrega caracteres de control XSS
+		$email = strip_tags(addslashes(htmlspecialchars(htmlentities($email))));
+		$clave = strip_tags(addslashes(htmlspecialchars(htmlentities($clave))));
+		
+		// Verifica que no exista un usuario con ese email registrado
+		
+		
+		// verificar que el email no exista en la bd (llamar metodo)
+		$user = NotAProfile::infoUsuario($email);
+		if(!isset($user[0]['email'])||$user[0]['token_reactivacion']!=$token)
+		{
+			return 4;
+		}
+		// Ingresa a la base de datos el nuevo usuario.
+		$sql = sprintf("UPDATE usuario SET clave = '%s' WHERE email ='%s'",md5($clave),$email);
+		if(DAO::doSQL($sql)){
+	
+		}else{
+			return 5;
+		}
+	}
 	/**
 	 * Esta función se encarga de regresar un vector con toda la información de un usario
 	 * identificado con una direccion de email que ingresa por parámetro
@@ -198,6 +249,61 @@ class NotAProfile{
 		NotAProfile::sendMail($email, $email, 'Activación en Not_A_Profile!', $msg);
 	}
 	
+	/**
+	 * Función que envia a un usuario determinado un email con un código para cambiar
+	 * su clave.
+	 * @param $email
+	 */
+	public static function enviarEmailCambioClave($email){
+		global $app;
+		//Crea el código de activación usando como parametro el email y el tiempo el milisegundos 
+		// con aumento de la entropia activado.
+		$codigoUnico = md5(uniqid($email.mt_rand(), true));
+		$usuario = NotAProfile::infoUsuario($email);
+		if(!isset($usuario[0]['id']))
+		{
+			return false;
+			exit;
+		}
+		//ingresa a la base de datos el id relacionado al correo
+		$sql=sprintf("UPDATE usuario SET token_reactivacion = '%s' WHERE id = '%s'", $codigoUnico, $usuario[0]['id']);
+		DAO::doSQL($sql);
+				
+		// enviar correo con este codigo dentro de un link
+		$link = $app['url'] ."forgotPassword.php?e=".md5($email)."c=". $codigoUnico;
+		
+		List ($nombre, $empresaEmail) = split("@", $email);
+		$msg = "Hello $nombre!, \r\n\r\n
+		
+		You have asked for this email to change your notaprofile password. To change it just click on the next link: \r\n\r\n
+		
+		$link \r\n\r\n
+		
+		 not_a_profile Team \r\n
+		{$app['url']}\r\n
+		
+		
+		";
+		NotAProfile::sendMail($email, $email, 'Password Changing in Not_A_Profile!', $msg);
+	}
+	
+	
+	/**
+	 * Función que revisa si existe un email asociado a un token de cambio de clave.
+	 * retorna el email en caso exitoso
+	 * retorna -1 si hay error
+	 */
+	public static function existeCambioClave($email,$token)
+	{
+		$sql = sprint("SELECT * FROM usuario WHERE token_reactivacion='%s'",$token);
+		$usuario = DAO::doSQLAndReturn($sql);	
+		if(md5($usuario[0]['email']) == $email)
+		{
+			$emailUsuario = $usuario[0]['email'];
+			return $emailUsuario;
+		}
+		return "error";
+	}
 	/**
 	 * Función que se encarga de verificar si el código unico existe en la base de datos, en caso de que sí
 	 * exista activa el usuario relacionado con el código y retorna el nombre del usuario activado, en caso de que no
