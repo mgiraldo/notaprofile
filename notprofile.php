@@ -23,12 +23,14 @@ $llaves = NotAProfile::darLlavesCreadasNoReclamadas();
 <br>
 <?php 
 //TODO llamar al método que devuelve las llaves reclamadas por esta persona.
+/**
 $llaves = NotAProfile::darLlavesReclamadas();
  echo("claimed: " . count($llaves)."<br>");
 $llaves = NotAProfile::darLlavesDisponibles();
  echo("key_hunt: " . count($llaves)."<br>");
  $llaves = NotAProfile::darLlavesDisponiblesContactos();
  echo("my_not_profilers: " . count($llaves)."<br>");
+ **/
 ?>
 <br>
 <br>
