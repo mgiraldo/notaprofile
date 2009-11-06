@@ -260,17 +260,16 @@ class NotAProfile{
 		// con aumento de la entropia activado.
 		$codigoUnico = md5(uniqid($email.mt_rand(), true));
 		$usuario = NotAProfile::infoUsuario($email);
-		if(!isset($usuario[0]['id']))
+		if(!isset($usuario[0]['email']))
 		{
 			return false;
-			exit;
 		}
 		//ingresa a la base de datos el id relacionado al correo
 		$sql=sprintf("UPDATE usuario SET token_reactivacion = '%s' WHERE id = '%s'", $codigoUnico, $usuario[0]['id']);
 		DAO::doSQL($sql);
 				
 		// enviar correo con este codigo dentro de un link
-		$link = $app['url'] ."forgotPassword.php?e=".md5($email)."c=". $codigoUnico;
+		$link = $app['url'] ."forgotPassword.php?e=".md5($email)."&c=". $codigoUnico;
 		
 		List ($nombre, $empresaEmail) = split("@", $email);
 		$msg = "Hello $nombre!, \r\n\r\n
@@ -285,6 +284,7 @@ class NotAProfile{
 		
 		";
 		NotAProfile::sendMail($email, $email, 'Password Changing in Not_A_Profile!', $msg);
+		return true;
 	}
 	
 	
@@ -295,7 +295,7 @@ class NotAProfile{
 	 */
 	public static function existeCambioClave($email,$token)
 	{
-		$sql = sprint("SELECT * FROM usuario WHERE token_reactivacion='%s'",$token);
+		$sql = sprintf("SELECT * FROM usuario WHERE token_reactivacion='%s'",$token);
 		$usuario = DAO::doSQLAndReturn($sql);	
 		if(md5($usuario[0]['email']) == $email)
 		{
