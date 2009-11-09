@@ -105,8 +105,9 @@ h2 {
 }
 #navmapa {
 	font-size: 12px;
-	margin: 3px;
+	padding: 3px;
 	text-align: right;
+    background: #333;
 }
 /* PIE */
 #pie {
