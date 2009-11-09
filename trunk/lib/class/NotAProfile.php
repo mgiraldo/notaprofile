@@ -532,11 +532,14 @@ class NotAProfile{
 	 * Este método retorna todas las llaves que se encuentran disponibles y que han sido publicadas por contactos
 	 */
 	public static function darLlavesDisponiblesContactos(){
-		//TODO Hacer la consulta que devuelva las llaves disponibles de los contactos
-		
-		$sql = "SELECT * FROM llave WHERE reclamador_id IS NULL";
-		$llaves = DAO::doSQLAndReturn($sql);
-		return $llaves;
+		$contactos  = NotAProfile::darContactos();
+		$arregloLlaves = array();
+		for ($index = 0; $index < count($contactos); $index++) {
+			$sql = sprintf("SELECT * FROM llave WHERE creador_id = '%s' AND reclamador_id IS NULL",$contactos[$index]['id']);
+			$llaves = DAO::doSQLAndReturn($sql);
+			$arregloLlaves = array_merge($arregloLlaves, $llaves);
+		}
+		return $arregloLlaves;
 	}
 	
 	/**
@@ -544,10 +547,10 @@ class NotAProfile{
 	 */
 	public static function darContactos(){
 		//Consulta que devuelve una tabla con la información de cada una de las llaves reclamadas al usuario logeado y la información del usuario reclamador.
-		$contactossql1 = sprintf("SELECT * FROM usuario LEFT JOIN llave ON usuario.id = llave.reclamador_id WHERE flag_aceptado = 1 AND creador_id = '%s'", $_SESSION['userid']);
+		$contactossql1 = sprintf("SELECT usuario.id, email  FROM usuario LEFT JOIN llave ON usuario.id = llave.reclamador_id WHERE flag_aceptado = 1 AND creador_id = '%s' GROUP BY email" , $_SESSION['userid']);
 		$contactos1 = DAO::doSQLAndReturn($contactossql1);
 		//Consulta que devuelve una tabla con cada la información de cada una de las llaves reclamadas por usuario logeado y la información del usuario creador.
-		$contactossql2 = sprintf("SELECT * FROM usuario LEFT JOIN llave ON usuario.id = llave.creador_id WHERE flag_aceptado = 1 AND reclamador_id = '%s'", $_SESSION['userid']);
+		$contactossql2 = sprintf("SELECT usuario.id, email FROM usuario LEFT JOIN llave ON usuario.id = llave.creador_id WHERE flag_aceptado = 1 AND reclamador_id = '%s' GROUP BY email", $_SESSION['userid']);
 		$contactos2 = DAO::doSQLAndReturn($contactossql2);
 		//Concatenamos ambos arreglos
 		$contactos = array_merge($contactos1, $contactos2);
