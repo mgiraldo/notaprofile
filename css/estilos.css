@@ -1,6 +1,117 @@
-h1 {
-	font-family: "Courier New", Courier, monospace;
-	font-size: 24px;
-	color: #6C0;
+/* ESTILOS BASE */
+* {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
 }
- 	
+body,td,th {
+	font-family: Courier New, Courier, monospace;
+	font-size: 18px;
+	color: #FFF;
+	font-weight: normal;
+}
+body {
+	background-color: #000;
+}
+a:link {
+	color: #FCAF3F;
+	text-decoration: underline;
+}
+a:visited {
+	text-decoration: underline;
+	color: #C98B30;
+}
+a:hover {
+	text-decoration: none;
+	color: #FCAF3F;
+}
+a:active {
+	text-decoration: underline;
+}
+h1 {
+	font-size: 33px;
+	font-weight: normal;
+}
+h2 {
+	font-size: 24px;
+}
+#contenido {
+	width: 960px;
+	margin-left: auto;
+	margin-right: auto;
+	/*background: url(../img/columna.gif);*/
+}
+/* CABEZOTE */
+#cabezote {
+	height: 120px;
+}
+#cabezote h1 {
+	padding: 6px 0 12px 3px;
+	border-bottom: 3px solid #fff;
+}
+#nav {
+	float: left;
+	width: 408px;
+}
+#nav li {
+	float: left;
+	width: 138px;
+}
+#nav li a {
+	display: block;
+	padding: 3px;
+	text-decoration: none;
+}
+#nav li a:hover {
+	background-color: #FCAF3F;
+	color: #000;
+}
+#userinfo {
+	float: right;
+	width: 345px;
+	text-align: right;
+	font-size: 12px;
+	margin: 3px;
+}
+/* CUERPO */
+#cuerpo {
+	height: 470px;
+	background: #666;
+}
+#llaves {
+	float: left;
+	width: 276px;
+	height: 100%;
+	overflow: auto;
+}
+#llaves h2 {
+	font-weight: normal;
+	margin-left: 3px;
+}
+#listallaves {
+	font-size: 12px;
+}
+#listallaves li {
+	padding: 3px 0 6px 3px;
+	margin-bottom: 3px;
+}
+#listallaves li.activa {
+	background: #099;
+}
+#mapa {
+	float: left;
+	width: 684px;
+	height: 100%;
+}
+#navmapa {
+	font-size: 12px;
+	margin: 3px;
+	text-align: right;
+}
+/* PIE */
+#pie {
+	height: 20px;
+	font-size: 12px;
+	margin: 3px;
+	text-align: right;
+}
