@@ -2,7 +2,22 @@
 require_once('config/config.php');
 require_once('lib/class/NotAProfile.php');
 
-$llaves = NotAProfile::darLlavesDisponibles();
+
+$filtro = $_GET['filtro'];
+if(!isset($filtro))
+{
+	$filtro=0;
+}
+
+if($filtro==0)
+{
+	$llaves = NotAProfile::darLlavesDisponibles();
+}
+else if($filtro==1)
+{
+	$llaves = NotAProfile::darLlavesDisponiblesContactos();
+}
+
 $count = count($llaves);
 ?>
 <!DOCTYPE html "-//W3C//DTD XHTML 1.0 Strict//EN" 
@@ -63,5 +78,20 @@ $count = count($llaves);
     <a href="insertarLlave.php">make_key</a>
     <br>
     <a href="notprofile.php">my_not_profile</a>
+    <br>
+    <br>
+    <?php
+    if($filtro != 1)
+    {
+    ?> 
+    <a href="visualizacionLlaves.php?filtro=1">just_contacts_keys</a><br>
+    <?php 
+    }
+    if($filtro != 0)
+    {
+    ?>
+    <a href="visualizacionLlaves.php?filtro=0">all_keys</a><br>
+    <?php }
+    ?>
   </body>
 </html>
