@@ -1,9 +1,11 @@
 <?php 
 require_once('config/config.php');
 require_once('lib/class/NotAProfile.php');
+//echo("id=".$_SESSION['userid']);
 
 if(isset($_POST["latitud"])&&isset($_POST["longitud"])&&isset($_POST["texto"]))
 {
+	//echo(NotAProfile::subirFoto('image'));
 	$codigo = NotAProfile::crearLlave($_POST["latitud"],$_POST["longitud"],$_POST["texto"]);
 	if($codigo!="error")
 	{
@@ -62,7 +64,7 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"])&&isset($_POST["texto"]))
   </head>
   <body onload="initialize()" onunload="GUnload()">
     <div id="map_canvas" style="width: 500px; height: 300px"></div>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
     <table>
     <tr>
     <td>
@@ -88,6 +90,7 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"])&&isset($_POST["texto"]))
     <textarea name="texto" rows="2" cols="20" ></textarea>
     </td>
     </tr>
+    <tr><td><input type="file" name="image"></td></tr>
     <tr>
     <td>
     <input type="submit" value="make_key"></input>
@@ -96,6 +99,7 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"])&&isset($_POST["texto"]))
     </td>
     </tr>
     </table>
+	 	
     </form>
     <a href="visualizacionLlaves.php">check_out_keys</a>
     <br>
