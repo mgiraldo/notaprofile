@@ -9,7 +9,8 @@ class Work {
 	public static function upload ($field) {
 		global $app;
 		$filename = PPUpload::checkAndUpload ($field,$app['photoroot'],"","");
-		$e = PPUpload::resizeViral($filename);
+		//$e = PPUpload::resizeViral($filename);
+		/*
 		if ($e==-1) {
 			return "error_notimage";
 		} else if ($e==-2) {
@@ -17,6 +18,9 @@ class Work {
 		} else {
 			return $e;
 		}
+		*/
+		echo($filename);
+		return $filename;
 	}
 	
 	public static function save ($user_id,$photo,$music,$character,$background,$message) {

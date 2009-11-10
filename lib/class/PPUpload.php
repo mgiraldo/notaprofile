@@ -178,22 +178,22 @@ class PPUpload {
 		$height = $data[1];
 		
 		if ($width>$height) {
-			$format = 1;
+			$format = 1;//horiz
 		} else if ($width==$height) {
-			$format = 0;
+			$format = 0;//cuad
 		} else {
-			$format = 2;
+			$format = 2;//vert
 		}
 		
 		$size = ' -size ' . $width.'x'.$height . ' ';
 		
-		/**
+		/**/
 		switch ($format) {
 			case 1:
-				$crop = ' -crop '.$height.'x'.$height.'+'.(($width-$height)/2).'+0! ';
+				$crop = ' -crop '.$height.'x'.$height.'+'.floor(($width-$height)/2).'+0! ';
 				break;
 			case 2:
-				$crop = ' -crop '.$width.'x'.$width.'+0+'.(($height-$width)/2).'! ';
+				$crop = ' -crop '.$width.'x'.$width.'+0+'.floor(($height-$width)/2).'! ';
 				break;
 			default:
 				$crop = '';
@@ -203,26 +203,25 @@ class PPUpload {
 		// primero crop... por alguna razon mediatemple no aguanta todo de una
 		
 		$command = $app['convert_path'] . $size . $source_full . $crop . '  -quality 100 +profile "*" ' . $thumb_full . '';
-		
+		//echo $command;
 		system($command);
 		
 		// ahora tamanio thumb
 		
 		$command = $app['convert_path'] . ' ' . $thumb_full . ' -resize ' . $app['thumb_size'] . '  -quality 100 +profile "*" ' . $thumb_full . '';
-		
+		//echo $command;
 		system($command);
 		/**/
 				
 		$command = $app['convert_path'] . $size . $source_full . ' -resize ' . $app['full_size'] . '  -quality 100 +profile "*" ' . $resize_full . '';
-		
+		//echo $command;
 		system($command);
 		
-		/**/
+		/**
 		if (is_file($source_full)) {
 			unlink($source_full);
 		}
 		/**/
-		
 		return $source_name . '.jpg';
 	}
 	
