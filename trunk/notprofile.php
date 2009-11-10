@@ -1,7 +1,9 @@
 <?php 
 require_once('config/config.php');
 require_once('lib/class/NotAProfile.php');
+echo($_SESSION['username']);
 ?>
+<br>
 <b>Yours:</b>
 <br>
 <br>

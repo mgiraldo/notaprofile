@@ -2,6 +2,7 @@
 
 require_once('config/config.php'); 
 require_once('lib/class/Usuario.php'); 
+require_once('PPUpload.php'); 
 require_once 'DAO.php';
 
 /**
@@ -557,7 +558,23 @@ class NotAProfile{
 		return $contactos;
 	}
 	
-	
+	/*
+	 * Función que se encarga de subir la imagen de la llave.
+	 * @param $field: nombre del campo post: 
+	 */
+	public static function subirFoto ($field) {
+		global $app;
+		$filename = PPUpload::checkAndUpload ($field,$app['photoroot'],"",0);
+		$e = PPUpload::resizeViral($filename);
+		if ($e==-1) {
+			return "error_notimage";
+		} else if ($e==-2) {
+			return "error_nofile";
+		} else {
+			return $e;
+		}
+		return $e;
+	}
 //----------------------------------------------------------------------------------------------
 // Funciones auxiliares
 //----------------------------------------------------------------------------------------------	
