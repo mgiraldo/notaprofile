@@ -385,20 +385,21 @@ class NotAProfile{
 	 *  @return codigo, cadena de caracteres asociada a la llave. 
 	 *  error en caso de no haber sido exitoso el proceso.
 	 */	 
-	 public static function crearLlave($lat, $long, $texto){
+	 public static function crearLlave($lat, $long, $texto, $foto){
 	 	global $app;
 		$codigo = NotAProfile::elegirCodigoUnico();
 		//El id del creador es siempre 1 para probar la creación de llaves.
 		$creador_id= $_SESSION['userid'];
 		if(!isset($creador_id)){echo("you need to be logged in");exit;}	
 			$fecha = date("c");
-			$sql = sprintf("INSERT INTO llave (txt,latitud,longitud,codigo,creador_id,fecha_creado) VALUES ('%s','%s','%s','%s','%s','%s')",
+			$sql = sprintf("INSERT INTO llave (txt,latitud,longitud,codigo,creador_id,fecha_creado,foto) VALUES ('%s','%s','%s','%s','%s','%s','%s')",
 						$texto,
 						$lat,
 						$long,
 						$codigo,
 						$creador_id,
-						$fecha
+						$fecha,
+						$foto
 						);
 			$exito = DAO::doSQL($sql);
 			if($exito!=1)

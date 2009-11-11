@@ -222,7 +222,7 @@ class PPUpload {
 			unlink($source_full);
 		}
 		/**/
-		return $source_name . '.jpg';
+		return $source_name ;
 	}
 	
 	/**
