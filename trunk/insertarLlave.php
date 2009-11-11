@@ -5,8 +5,8 @@ require_once('lib/class/NotAProfile.php');
 
 if(isset($_POST["latitud"])&&isset($_POST["longitud"])&&isset($_POST["texto"]))
 {
-	echo(NotAProfile::subirFoto('image'));
-	$codigo = NotAProfile::crearLlave($_POST["latitud"],$_POST["longitud"],$_POST["texto"]);
+	$foto = NotAProfile::subirFoto('image');
+	$codigo = NotAProfile::crearLlave($_POST["latitud"],$_POST["longitud"],$_POST["texto"],$foto);
 	if($codigo!="error")
 	{
 	 echo("key_created: ". $codigo);
