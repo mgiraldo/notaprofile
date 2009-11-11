@@ -19,9 +19,9 @@ if(isset($_GET['c']))
 		if(isset($llave[0]['txt']))
 		{
 			echo($llave[0]['txt']);
-			echo($llave[0]['url']);
+			echo($llave[0]['foto']);
 ?>	
-<img src="<?php echo ($app['url'].$app['photoroot'].$llave[0]['url']."jpg") ?>"></img>		
+<img src="<?php echo ($app['url'].$app['photoroot'].$llave[0]['url'].".jpg") ?>"></img>		
 <form action="#" method="post"><input name="gusta" type="submit" value="like it"></form>
 <br>
 <form action="notprofile.php" method="post"><input name="nogusta" type="submit" value="don't like it"></form>
