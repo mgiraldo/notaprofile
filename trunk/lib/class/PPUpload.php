@@ -158,6 +158,7 @@ class PPUpload {
 		rename($source_dir . $filename, $source_dir . $filename . '.tmp');
 		$source_full = $source_dir . $filename . '.tmp';
 		$thumb_full = $source_dir . $source_name . "_t.jpg";
+		$resize_iphone = $source_dir . $source_name . "_ip.jpg";
 		$resize_full = $source_dir . $source_name . ".jpg";
 		/**
 		if (!exif_imagetype($source_full)) {
@@ -214,6 +215,10 @@ class PPUpload {
 		/**/
 				
 		$command = $app['convert_path'] . $size . $source_full . ' -resize ' . $app['full_size'] . '  -quality 100 +profile "*" ' . $resize_full . '';
+		//echo $command;
+		system($command);
+		
+		$command = $app['convert_path'] . $size . $source_full . ' -resize ' . $app['iphone_size'] . '  -quality 100 +profile "*" ' . $resize_iphone . '';
 		//echo $command;
 		system($command);
 		
