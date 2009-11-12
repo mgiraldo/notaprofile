@@ -42,6 +42,16 @@ if(isset($_POST['submit'])){
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>not_a_profile</title>
 <link href="/css/estilos.css" rel="stylesheet" type="text/css" />
+<script>
+var agent=navigator.userAgent.toLowerCase();
+var is_iphone = ((agent.indexOf('iphone')!=-1));
+
+if (is_iphone)
+{ 	
+	window.location = "../mIndex.php" 
+}
+
+</script>
 </head>
 <body>
 <h1>not_a_profile</h1>
