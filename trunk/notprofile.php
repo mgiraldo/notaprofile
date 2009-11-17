@@ -2,6 +2,15 @@
 require_once('config/config.php');
 require_once('lib/class/NotAProfile.php');
 echo("Bienvenido ".$_SESSION['username']);
+if(isset($_GET['tb']))
+{
+?>	
+	<script>
+	alert("hey");
+	self.parent.tb_remove();
+	</script>	
+<?php 
+}
 ?>
 <br>
 <b>Yours:</b>
