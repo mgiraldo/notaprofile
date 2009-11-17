@@ -24,7 +24,8 @@ if(isset($_GET['c']))
 		NotAProfile::aceptarLlave($_GET['c']);
 		echo("Ok");
 		echo("<br>");
-		echo($llave);
+		$llave = NotAProfile::darLlave($_GET['c']);
+		echo($llave[0]['txt']);
 ?>	
 <br>
 <img src="<?php echo ($app['url'].$app['photoroot'].$llave[0]['foto'].".jpg") ?>"></img>
