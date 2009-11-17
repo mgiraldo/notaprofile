@@ -495,6 +495,16 @@ class NotAProfile{
 	}
 	
 	/**
+	 * Este metodo se encarga de devolver la llave despues de que fue reclamada.
+	 * @return unknown_type
+	 */
+	public static function darLlave($codigoLlave){
+		$sql=sprintf("SELECT * FROM llave WHERE codigo='%s'",$codigoLlave);
+		$llave = DAO::doSQLAndReturn($sql);
+		return $llave;
+	}
+	
+	/**
 	 * Este metodo se encarga de marcar una llave como aceptada, despues de haber sido reclamada
 	 * @param unknown_type $idLlave
 	 */
