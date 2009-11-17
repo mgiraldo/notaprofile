@@ -1,7 +1,5 @@
 <?php 
-
 require_once('config/config.php'); 
-require_once('lib/class/Usuario.php'); 
 require_once('PPUpload.php'); 
 require_once 'DAO.php';
 
@@ -92,7 +90,6 @@ class NotAProfile{
 	 *   3 - El email ingresado no existe o la contraseña no coincide
 	 */
 	public static function login($email, $clave){
-
 		$email = trim($email);
 		$clave = trim($clave);
 		
