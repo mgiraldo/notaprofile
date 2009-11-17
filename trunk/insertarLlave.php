@@ -101,6 +101,7 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"])&&isset($_POST["texto"]))
     </table>
 	 	
     </form>
+    <a href="mailto:uploads@notaprofile.com?subject=subir foto&body=1.7432|1.4444">subir por iPhone</a><br><br>
     <a href="visualizacionLlaves.php">check_out_keys</a>
     <br>
     <a href="notprofile.php">my_not_profile</a>
