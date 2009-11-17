@@ -457,13 +457,42 @@ class NotAProfile{
 		}
 		else
 		{
+			if(!isset($idUuario))
+			{
+				$idUuario=-1;
+			}
 			$fecha = date("c");
 			$sql=sprintf("UPDATE llave SET reclamador_id = '%s',fecha_reclamado = '%s' WHERE codigo = '%s'",$idUuario,$fecha,$codigoLlave);
 			DAO::doSQL($sql);
 			return $llave;
 		}
 	}
-	
+	/**
+	 * Este metodo se encarga de cambiar al usuario que reclamó una llave, se utiliza para el login despues de haber visto una llave.
+	 * @param unknown_type $idLlave
+	 * @param unknown_type $idUuario
+	 * @return unknown_type
+	 */
+	public static function rereclamarLlave($codigoLlave, $idUuario){
+		$sql=sprintf("SELECT * FROM llave WHERE codigo='%s'",$codigoLlave);
+		$llave = DAO::doSQLAndReturn($sql);
+		if(!isset($llave[0]['id']))
+		{
+			return "Error, la llave no existe.";
+			exit;
+		}
+		else
+		{
+			if(!isset($idUuario))
+			{
+				$idUuario=-1;
+			}
+			$fecha = date("c");
+			$sql=sprintf("UPDATE llave SET reclamador_id = '%s',fecha_reclamado = '%s' WHERE codigo = '%s'",$idUuario,$fecha,$codigoLlave);
+			DAO::doSQL($sql);
+			return $llave;
+		}
+	}
 	
 	/**
 	 * Este metodo se encarga de marcar una llave como aceptada, despues de haber sido reclamada
