@@ -7,7 +7,7 @@ if(NotAProfile::estaLogeado()){
 	header("Location: ./notprofile.php");
 }else{
 
-// Declaramos las varfiables que vamos a usar en el formulario para prevenir XSS por URL
+// Declaramos las variables que vamos a usar en el formulario para prevenir XSS por URL
 $email = "";
 $passw = "";
 $pass2 = "";
@@ -17,22 +17,33 @@ if(isset($_POST['submit'])){
 	$email = isset($_POST['email'])?$_POST['email']:"";
 	$passw = isset($_POST['pass'])?$_POST['pass']:"";
 	$error = NotAProfile::login($email, $passw);
-	if($error==0){
-		header("Location: ./notprofile.php");	
+	if(isset($_POST['reclamollave']))
+	{
+		$idreclamador= $_SESSION['userid'];
+		$ll = NotAProfile::rereclamarLlave($_POST['reclamollave'],$idreclamador);
 	}
+	if($error==0){
+				header("Location: ./notprofile.php");
+		}
 	
 }else if(isset($_POST['signup'])){
 	// Se ha enviado el formulario para registrarse
-	
+
 	$email = isset($_POST['email2'])?$_POST['email2']:"";
 	$passw = isset($_POST['pass2'])?$_POST['pass2']:"";
 	$passw2 = isset($_POST['pass3'])?$_POST['pass3']:"";
 	$error = NotAProfile::registrarUsuario($email, $passw, $passw2);
 	if($error==0){
-		
-	}
-
-	
+	$error = NotAProfile::login($email, $passw);
+		if(isset($_POST['reclamollave']))
+		{
+			$idreclamador= $_SESSION['userid'];
+			$ll = NotAProfile::rereclamarLlave($_POST['reclamollave'],$idreclamador);
+		}
+		if($error==0){
+				header("Location: ./notprofile.php");
+		}
+	}	
 }
 
 ?>
@@ -66,7 +77,21 @@ switch($error){
 		<input type="text" name="email" id="email" value="<?php echo isset($_POST['email'])?$_POST['email']:"";?>" tabindex="1" /><br />
 		<label for="pass">Password:</label>
 		<input type="password" name="pass" id="pass" value="" tabindex="2" /><br />
+		<?php 
+		if(isset($_GET['tb']))
+		{
+		?>
+		<input type="hidden" value="<?php echo($_GET['reclamollave'])?>" name="reclamollave" id="reclamollave"></input>
+		<input type="submit" name="submit" onclick="self.parent.tb_remove()" id="submit" value="Submit" tabindex="3" />
+		<?php 
+		}
+		else
+		{
+		?>
 		<input type="submit" name="submit" id="submit" value="Submit" tabindex="3" />
+		<?php 
+		}
+		?>
 	</form>
 </div>
 <a href="forgotPassword.php">forgot_my_password</a>
@@ -103,7 +128,21 @@ switch($error){
 	<input type="password" name="pass2" id="pass2" value="" tabindex="5" /><br />
 	<label for="pass3">Confirmar Contrasena:</label>
 	<input type="password" name="pass3" id="pass3" value="" tabindex="6" /><br />
+	<?php 
+	if(isset($_GET['tb']))
+	{
+	?>
+	<input type="hidden" value="<?php echo($_GET['reclamollave'])?>" name="reclamollave" id="reclamollave"></input>
+	<input type="submit" name="signup" id="signup" onclick="self.parent.tb_remove()"  value="Sign_Up" tabindex="7" />
+	<?php 
+	}
+	else
+	{
+	?>
 	<input type="submit" name="signup" id="signup" value="Sign_Up" tabindex="7" />
+	<?php 
+	}
+	?>
 </form>
 </body>
 </html>
