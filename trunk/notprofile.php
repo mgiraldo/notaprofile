@@ -6,7 +6,6 @@ if(isset($_GET['tb']))
 {
 ?>	
 	<script>
-	alert("hey");
 	self.parent.tb_remove();
 	</script>	
 <?php 
