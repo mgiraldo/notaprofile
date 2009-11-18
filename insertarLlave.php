@@ -3,23 +3,26 @@ require_once('config/config.php');
 require_once('lib/class/NotAProfile.php');
 //echo("id=".$_SESSION['userid']);
 
-if(isset($_POST["latitud"])&&isset($_POST["longitud"])&&isset($_POST["texto"]))
+if(isset($_POST["latitud"])&&isset($_POST["longitud"]))
 {
-	$foto=NULL;
-	if(isset($_POST['image']))
+	if(($_POST["texto"]!="")||($_FILES['image']["name"]!=""))
 	{
-		$foto = NotAProfile::subirFoto('image');	
-	}
-	
-	$codigo = NotAProfile::crearLlave($_POST["latitud"],$_POST["longitud"],$_POST["texto"],$foto);
-	
-	if($codigo!="error")
-	{
-	 echo("key_created: ". $codigo);
-	}
-	else
-	{
-	  echo("error_creating_key");
+		$foto=NULL;
+		if($_FILES['image']["name"]!="")
+		{
+			$foto = NotAProfile::subirFoto('image');	
+		}
+		
+		$codigo = NotAProfile::crearLlave($_POST["latitud"],$_POST["longitud"],$_POST["texto"],$foto);
+		
+		if($codigo!="error")
+		{
+		 echo("key_created: ". $codigo);
+		}
+		else
+		{
+		  echo("error_creating_key");
+		}
 	}
 }
 
