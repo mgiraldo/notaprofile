@@ -28,7 +28,14 @@ if(isset($_GET['c']))
 		echo($llave[0]['txt']);
 ?>	
 <br>
-<img src="<?php echo ($app['url'].$app['photoroot'].$llave[0]['foto'].".jpg") ?>"></img>
+	<?php
+	if($llave[0]['foto']!=NULL)
+	{
+	?> 
+	<img src="<?php echo ($app['url'].$app['photoroot'].$llave[0]['foto'].".jpg") ?>"></img>
+	<?php 
+	}
+	?>
 	
 <a href="notprofile.php">back</a>
 <?php 
@@ -41,7 +48,14 @@ if(isset($_GET['c']))
 		{
 			echo($llave[0]['txt']);
 ?>	
-<img src="<?php echo ($app['url'].$app['photoroot'].$llave[0]['foto'].".jpg") ?>"></img>		
+	<?php
+	if($llave[0]['foto']!=NULL)
+	{
+	?> 
+	<img src="<?php echo ($app['url'].$app['photoroot'].$llave[0]['foto'].".jpg") ?>"></img>
+	<?php 
+	}
+	?>	
 <form action="#" method="post"><input name="gusta" type="submit" value="like it"></form>
 <br>
 <form action="notprofile.php" method="post"><input name="nogusta" type="submit" value="don't like it"></form>
