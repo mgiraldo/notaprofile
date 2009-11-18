@@ -17,13 +17,13 @@ if(isset($_POST['submit'])){
 	$email = isset($_POST['email'])?$_POST['email']:"";
 	$passw = isset($_POST['pass'])?$_POST['pass']:"";
 	$error = NotAProfile::login($email, $passw);
-	if(isset($_POST['reclamollave']))
+	if(isset($_POST['reclamollave'])&&$error==0)
 	{
 		$idreclamador= $_SESSION['userid'];
 		$ll = NotAProfile::rereclamarLlave($_POST['reclamollave'],$idreclamador);
 	}
 	if($error==0){
-				header("Location: ./notprofile.php");
+				header("Location: ./notprofile.php?tb=true");
 		}
 	
 }else if(isset($_POST['signup'])){
@@ -35,13 +35,13 @@ if(isset($_POST['submit'])){
 	$error = NotAProfile::registrarUsuario($email, $passw, $passw2);
 	if($error==0){
 	$error = NotAProfile::login($email, $passw);
-		if(isset($_POST['reclamollave']))
+		if(isset($_POST['reclamollave'])&&$error==0)
 		{
 			$idreclamador= $_SESSION['userid'];
 			$ll = NotAProfile::rereclamarLlave($_POST['reclamollave'],$idreclamador);
 		}
 		if($error==0){
-				header("Location: ./notprofile.php");
+				header("Location: ./notprofile.php?tb=true");
 		}
 	}	
 }
@@ -82,16 +82,11 @@ switch($error){
 		{
 		?>
 		<input type="hidden" value="<?php echo($_GET['reclamollave'])?>" name="reclamollave" id="reclamollave"></input>
-		<input type="submit" name="submit" onclick="self.parent.tb_remove()" id="submit" value="Submit" tabindex="3" />
 		<?php 
 		}
-		else
-		{
 		?>
 		<input type="submit" name="submit" id="submit" value="Submit" tabindex="3" />
-		<?php 
-		}
-		?>
+
 	</form>
 </div>
 <a href="forgotPassword.php">forgot_my_password</a>
@@ -133,16 +128,10 @@ switch($error){
 	{
 	?>
 	<input type="hidden" value="<?php echo($_GET['reclamollave'])?>" name="reclamollave" id="reclamollave"></input>
-	<input type="submit" name="signup" id="signup" onclick="self.parent.tb_remove()"  value="Sign_Up" tabindex="7" />
 	<?php 
 	}
-	else
-	{
 	?>
 	<input type="submit" name="signup" id="signup" value="Sign_Up" tabindex="7" />
-	<?php 
-	}
-	?>
 </form>
 </body>
 </html>

@@ -22,7 +22,7 @@ if(isset($_GET['c']))
 	if(isset($_POST['gusta']))
 	{
 		NotAProfile::aceptarLlave($_GET['c']);
-		echo("Ok");
+		echo("<a href=\"index.php\">Ok<a>");
 		echo("<br>");
 		$llave = NotAProfile::darLlave($_GET['c']);
 		echo($llave[0]['txt']);
