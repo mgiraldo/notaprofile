@@ -29,9 +29,9 @@ if(isset($_POST['submit'])){
 }else if(isset($_POST['signup'])){
 	// Se ha enviado el formulario para registrarse
 
-	$email = isset($_POST['email2'])?$_POST['email2']:"";
-	$passw = isset($_POST['pass2'])?$_POST['pass2']:"";
-	$passw2 = isset($_POST['pass3'])?$_POST['pass3']:"";
+	$email = isset($_POST['email'])?$_POST['email']:"";
+	$passw = isset($_POST['pass'])?$_POST['pass']:"";
+	$passw2 = isset($_POST['pass2'])?$_POST['pass2']:"";
 	$error = NotAProfile::registrarUsuario($email, $passw, $passw2);
 	if($error==0){
 	$error = NotAProfile::login($email, $passw);
@@ -54,7 +54,7 @@ if(isset($_POST['submit'])){
 <title>not_a_profile</title>
 <link href="/css/estilos.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body onload="escondidoInicial(<?php if(isset($error)){echo($error);}else{echo(1);}?>);">
 <h1>not_a_profile</h1>
 <?php
 
@@ -70,28 +70,6 @@ switch($error){
 		echo "<h2>Wrong Email or/and password </h2>";
 		break;
 }}
-?>
-<div id=login>
-	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-		<label for="email">E-mail:</label>
-		<input type="text" name="email" id="email" value="<?php echo isset($_POST['email'])?$_POST['email']:"";?>" tabindex="1" /><br />
-		<label for="pass">Password:</label>
-		<input type="password" name="pass" id="pass" value="" tabindex="2" /><br />
-		<?php 
-		if(isset($_GET['tb']))
-		{
-		?>
-		<input type="hidden" value="<?php echo($_GET['reclamollave'])?>" name="reclamollave" id="reclamollave"></input>
-		<?php 
-		}
-		?>
-		<input type="submit" name="submit" id="submit" value="Submit" tabindex="3" />
-
-	</form>
-</div>
-<a href="forgotPassword.php">forgot_my_password</a>
-<hr></hr>
-<?php 
 if(isset($_POST['signup'])){
 switch($error){
 	case 1:
@@ -116,23 +94,61 @@ switch($error){
 			
 }}
 ?>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<label for="email2">E-mail:</label>
-	<input type="text" name="email2" id="email2" value="<?php echo isset($_POST['email2'])?$_POST['email2']:""; ?>" tabindex="4" /><br />
-	<label for="pass2">Contrasena:</label>
-	<input type="password" name="pass2" id="pass2" value="" tabindex="5" /><br />
-	<label for="pass3">Confirmar Contrasena:</label>
-	<input type="password" name="pass3" id="pass3" value="" tabindex="6" /><br />
-	<?php 
-	if(isset($_GET['tb']))
+<script languaje="javascript">
+function escondidoInicial(caso)
+{
+	if(caso==1)
 	{
-	?>
-	<input type="hidden" value="<?php echo($_GET['reclamollave'])?>" name="reclamollave" id="reclamollave"></input>
-	<?php 
+		document.getElementById("logindiv").style.visibility = '';
+		document.getElementById("signupdiv").style.visibility = 'hidden';
 	}
-	?>
-	<input type="submit" name="signup" id="signup" value="Sign_Up" tabindex="7" />
-</form>
+	else
+	{
+		document.getElementById("nuevo").checked=true;
+    	document.getElementById("signupdiv").style.visibility = '';
+    	document.getElementById("logindiv").style.visibility = 'hidden';
+	}
+}
+function habilitaDeshabilita(form)
+{
+    if (form.nuevo.checked == true)
+    {
+    	document.getElementById("signupdiv").style.visibility = '';
+    	document.getElementById("logindiv").style.visibility = 'hidden';
+    }
+    else
+    {
+    	document.getElementById("logindiv").style.visibility = '';
+    	document.getElementById("signupdiv").style.visibility = 'hidden';
+    }
+}
+</script>
+<div>
+	<form method="post" name="loginsignupform" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			<label for="email">E-mail:</label>
+			<input type="text" name="email" id="email" value="<?php echo isset($_POST['email'])?$_POST['email']:""; ?>" tabindex="4" /><br />
+			<label for="pass">Pass:</label>
+			<input type="password" name="pass" id="pass" value="" tabindex="5" /><br />
+			<input type="checkbox" id="nuevo" name="nuevo" onclick="habilitaDeshabilita(this.form);" value="nuevo">I'm new<br />
+			<div id="signupdiv">
+				<label for="pass2">Pass2:</label>
+				<input type="password" name="pass2" id="pass2" value="" tabindex="6" /><br />
+				<input type="submit" name="signup" id="signup" value="Sign_Up" tabindex="7" />
+			</div>
+			<div id="logindiv">
+				<input type="submit" name="submit" id="login" value="Log_in" tabindex="7" />
+				<a href="forgotPassword.php">forgot_my_password</a>
+			</div>
+			<?php 
+			if(isset($_GET['tb']))
+			{
+			?>
+			<input type="hidden" value="<?php echo($_GET['reclamollave'])?>" name="reclamollave" id="reclamollave"></input>
+			<?php 
+			}
+			?>
+	</form>
+</div>
 </body>
 </html>
 <?php } ?>
