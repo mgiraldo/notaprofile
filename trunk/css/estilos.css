@@ -79,16 +79,29 @@ h2 {
 }
 #llaves {
 	float: left;
-	width: 276px;
+	width: 270px;
 	height: 100%;
-	overflow: auto;
 }
-#llaves h2 {
-	font-weight: normal;
-	margin-left: 3px;
+#mapatabs {
+	width: 270px;
+	height: 35px;
+}
+.claimedactiva {
+	background: url(../img/tab_claimed.gif);
+}
+.orphansactiva {
+	background: url(../img/tab_orphans.gif);
+}
+#mapatabs .orphans, #mapatabs .claimed {
+	width: 132px;
+	float: left;
+	text-align: center;
+	margin-top: 5px;
 }
 #listallaves {
 	font-size: 12px;
+	height: 90%;
+	overflow: auto;
 }
 #listallaves li {
 	padding: 3px 0 6px 3px;
@@ -106,7 +119,6 @@ h2 {
 	font-size: 12px;
 	padding: 3px;
 	text-align: right;
-    background: #333;
 }
 /* PIE */
 #pie {
@@ -117,7 +129,7 @@ h2 {
 }
 /* LLAVE DETALLE */
 #fotollave {
-	background: url(img/fotoejemplo.jpg) repeat-x;
+	background: url(../img/fotoejemplo.jpg) repeat-x;
 	width: 100%;
 	height: 360px;
 	position: absolute;
@@ -125,7 +137,7 @@ h2 {
 	z-index: 0;
 }
 #gradiente {
-	background: url(img/degrade.png) repeat-x;
+	background: url(../img/degrade.png) repeat-x;
 	width: 100%;
 	height: 360px;
 }
@@ -140,11 +152,11 @@ h2 {
 	top: 316px;
 }
 #dislike {
-	background:  url(img/btn_dislike.png) no-repeat;
+	background:  url(../img/btn_dislike.png) no-repeat;
 	left: 116px;
 }
 #like {
-	background:  url(img/btn_like.png) no-repeat;
+	background:  url(../img/btn_like.png) no-repeat;
 	left: 737px;
 }
 #dislike a, #like a {
@@ -160,7 +172,7 @@ h2 {
 	left: 266px;
 	top: 328px;
 	width: 408px;
-	background: url(img/fondo.png);
+	background: url(../img/fondo.png);
 }
 #textollave p {
 	margin: 20px 10px 10px 10px;

@@ -22,7 +22,15 @@
 	
 	<div id="cuerpo">
 		<div id="llaves">
-			<h2>orphan_keys</h2>
+			<!--
+			cambiar el class segun el tab activo:
+			orphans: orphansactiva
+			claimed: claimedactiva
+			-->
+			<div id="mapatabs" class="orphansactiva">
+				<div class="orphans"><a href="#">orphans</a></div>
+				<div class="claimed"><a href="#">claimed</a></div>
+			</div>
 			<ul id="listallaves">
 				<li><a href="#">llave 1</a> (ago 21 2009)</li>
 				<li><a href="#">llave 2</a></li>
@@ -55,8 +63,7 @@
 			</ul>
 		</div>
 		<div id="mapa">
-			<div id="navmapa">
-				<a href="#">orphans</a> | <a href="#">claimed</a> | <a href="#">create_a_key</a>
+			<div id="navmapa"><a href="#">create_a_key</a>
 			</div>
 			<div id="gmap">
 				[aca va el mapa google 690px x lo que de]
