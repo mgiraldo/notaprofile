@@ -584,6 +584,7 @@ class NotAProfile{
 	 * Este método retorna todos los contactos de un usuario dado.
 	 */
 	public static function darContactos(){
+		/**
 		//Consulta que devuelve una tabla con la información de cada una de las llaves reclamadas al usuario logeado y la información del usuario reclamador.
 		$contactossql1 = sprintf("SELECT usuario.id, email  FROM usuario LEFT JOIN llave ON usuario.id = llave.reclamador_id WHERE flag_aceptado = 1 AND creador_id = '%s' GROUP BY email" , $_SESSION['userid']);
 		$contactos1 = DAO::doSQLAndReturn($contactossql1);
@@ -592,7 +593,31 @@ class NotAProfile{
 		$contactos2 = DAO::doSQLAndReturn($contactossql2);
 		//Concatenamos ambos arreglos
 		$contactos = array_merge($contactos1, $contactos2);
-		return $contactos;
+		**/
+		
+		//Consulta que devuelve una tabla con las personas que han creado llaves reclamadas por el usuario logeado.
+		$contactossql1 = sprintf("(SELECT reclamados_el, reclamados_yo, amigo_idc1, amigo_idc2  FROM  (SELECT t1.reclamador_id as amigo_idc1, COUNT( t1.id ) AS reclamados_el
+		FROM llave AS t1
+		WHERE t1.reclamador_id >0
+		AND t1.creador_id = '%s'
+		GROUP BY t1.reclamador_id) AS c1  LEFT JOIN (SELECT t1.creador_id as amigo_idc2, COUNT( t1.id ) AS reclamados_yo
+		FROM llave AS t1
+		WHERE t1.reclamador_id ='%s'
+		AND t1.creador_id >0
+		GROUP BY t1.creador_id) AS c2 ON c1.amigo_idc1 = c2.amigo_idc2) 
+		UNION
+		(SELECT reclamados_el, reclamados_yo, amigo_idc1, amigo_idc2  FROM  (SELECT t1.reclamador_id as amigo_idc1, COUNT( t1.id ) AS reclamados_el
+		FROM llave AS t1
+		WHERE t1.reclamador_id >0
+		AND t1.creador_id = '%s'
+		GROUP BY t1.reclamador_id) AS c1  RIGHT JOIN (SELECT t1.creador_id as amigo_idc2, COUNT( t1.id ) AS reclamados_yo
+		FROM llave AS t1
+		WHERE t1.reclamador_id ='%s'
+		AND t1.creador_id >0
+		GROUP BY t1.creador_id) AS c2 ON c1.amigo_idc1 = c2.amigo_idc2) 
+		" , $_SESSION['userid'], $_SESSION['userid'], $_SESSION['userid'], $_SESSION['userid']);
+		$contactos1 = DAO::doSQLAndReturn($contactossql1);
+		return $contactos1;
 	}
 	
 	/*
