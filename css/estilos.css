@@ -100,7 +100,8 @@ h2 {
 }
 #listallaves {
 	font-size: 12px;
-	height: 90%;
+	height: 435px;
+	background: #FFF;
 	overflow: auto;
 }
 #listallaves li {
