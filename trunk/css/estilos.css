@@ -76,7 +76,6 @@ h2 {
 /* CUERPO */
 #cuerpo {
 	height: 470px;
-	background: #666;
 }
 #llaves {
 	float: left;
@@ -115,4 +114,55 @@ h2 {
 	font-size: 12px;
 	margin: 3px;
 	text-align: right;
+}
+/* LLAVE DETALLE */
+#fotollave {
+	background: url(img/fotoejemplo.jpg) repeat-x;
+	width: 100%;
+	height: 360px;
+	position: absolute;
+	top: 80px;
+	z-index: 0;
+}
+#gradiente {
+	background: url(img/degrade.png) repeat-x;
+	width: 100%;
+	height: 360px;
+}
+#contenido {
+	z-index: 1;
+	position: relative;
+}
+#dislike, #like {
+	width: 87px;
+	height: 87px;
+	position: absolute;
+	top: 316px;
+}
+#dislike {
+	background:  url(img/btn_dislike.png) no-repeat;
+	left: 116px;
+}
+#like {
+	background:  url(img/btn_like.png) no-repeat;
+	left: 737px;
+}
+#dislike a, #like a {
+	width: 87px;
+	height: 87px;
+	display: block;
+}
+#dislike a span, #like a span {
+	margin-left: -40000px;
+}
+#textollave {
+	position: absolute;
+	left: 266px;
+	top: 328px;
+	width: 408px;
+	background: url(img/fondo.png);
+}
+#textollave p {
+	margin: 20px 10px 10px 10px;
+	line-height: 140%;
 }
