@@ -103,27 +103,63 @@ h2 {
 	height: 435px;
 	background: #FFF;
 	overflow: auto;
+	color: #000;
 }
 #listallaves li {
-	padding: 3px 0 6px 3px;
-	margin-bottom: 3px;
+	padding: 0;
+	height: 65px;
+	margin-bottom: 10px;
 }
-#listallaves li.activa {
-	background: #099;
+#listallaves li:hover {
+	background-color: #999;
+}
+#listallaves li:hover .textollave .loc {
+	color: #666;
+}
+#listallaves .fotollave, #listallaves .textollave {
+	float: left;
+}
+#listallaves .fotollave {
+	width: 65px;
+	margin-right: 4px;
+}
+#listallaves .fotollave img {
+	margin: 2px;
+}
+#listallaves .textollave {
+	width: 180px;
+	margin-top: 10px;
+}
+#listallaves .textollave .texto {
+	font-size: 12px;
+}
+#listallaves .textollave .loc {
+	font-style: italic;
+	font-size: 10px;
+	color: #999;
 }
 #mapa {
 	float: left;
 	width: 684px;
-	height: 100%;
+	height: 470px;
 }
 #navmapa {
-	font-size: 12px;
-	padding: 3px;
-	text-align: right;
 	height: 31px;
 }
+#navmapa .createkey {
+	float: right;
+	background: url(../img/btn_create.gif);
+	width: 202px;
+	height: 26px;
+}
+#navmapa a.createkey {
+	display: block;
+}
+#navmapa a.createkey span {
+	margin-left: -40000px;
+}
 #gmap {
-	height: 433px;
+	height: 439px;
 }
 /* PIE */
 #pie {
