@@ -44,8 +44,8 @@ else if(isset($_POST['change'])&&isset($_POST['email2'])&&isset($_POST['pass2'])
 	}
 }
 else if(isset($_GET['c'])){
-	$msg = "Type and retype your new password.";	
-	$cambiarClave = NotAProfile::existeCambioClave($_GET['c']);	
+	$cambiarClave = NotAProfile::existeCambioClave($_GET['c']);
+	$msg = $cambiarClave!=-1 ? "Type and retype your new password.": "This link has already been used or invalid ... if you want to change your password enter your email address below.";
 }
 else{
 	$cambiarClave = -1;
