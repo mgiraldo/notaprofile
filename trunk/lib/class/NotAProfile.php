@@ -1,6 +1,6 @@
 <?php 
 require_once('config/config.php'); 
-require_once('PPUpload.php'); 
+require_once('PPUpload.php');
 require_once 'DAO.php';
 
 /**
@@ -9,21 +9,6 @@ require_once 'DAO.php';
  */
 class NotAProfile{
 	
-
-//----------------------------------------------------------------------------------------------
-// Constructor
-//----------------------------------------------------------------------------------------------	
-	
-	/**
-	 * Función constructora vacia
-	 * @return No return
-	 */
-	function NotAProfile(){
-		//vacio
-	}
-	
-
-
 //----------------------------------------------------------------------------------------------
 // Funciones relacionadas con el Registro/Login del sistema
 //----------------------------------------------------------------------------------------------
@@ -61,9 +46,6 @@ class NotAProfile{
 		$clave = strip_tags(addslashes(htmlspecialchars(htmlentities($clave))));
 		
 		// Verifica que no exista un usuario con ese email registrado
-		
-		
-		// verificar que el email no exista en la bd (llamar metodo)
 		if(NotAProfile::existeUsuario($email)){
 			return 4;
 		}
@@ -137,7 +119,7 @@ class NotAProfile{
 	}
 	
 	
-/**
+	/**
 	 * Función que cambia la clave de un usuario dado.
 	 * @param $email Email del usuario
 	 * @param $clave Clave que aigna el usuario a su cuenta
@@ -171,30 +153,24 @@ class NotAProfile{
 		$clave = strip_tags(addslashes(htmlspecialchars(htmlentities($clave))));
 		
 		// Verifica que no exista un usuario con ese email registrado
-		
-		
-		// verificar que el email no exista en la bd (llamar metodo)
 		$user = NotAProfile::infoUsuario($email);
-		if(!isset($user[0]['email'])||$user[0]['token_reactivacion']!=$token)
-		{
+		if(!isset($user[0]['email'])||$user[0]['token_reactivacion']!=$token){
 			return 4;
 		}
+		
 		// Ingresa a la base de datos el nuevo usuario.
-		$sql = sprintf("UPDATE usuario SET clave = '%s' WHERE email ='%s'",md5($clave),$email);
-		if(DAO::doSQL($sql)){
-	
-		}else{
-			return 5;
-		}
+		$sql = sprintf("UPDATE usuario SET clave = '%s', token_reactivacion = NULL  WHERE email ='%s'",md5($clave),$email);
+		return DAO::doSQL($sql)? 0:5;
+
 	}
+	
 	/**
 	 * Esta función se encarga de regresar un vector con toda la información de un usario
 	 * identificado con una direccion de email que ingresa por parámetro
 	 * @param unknown_type $email - Email de un usuario
 	 * @return unknown_type - Vector con los datos de tabla usuario de BD
 	 */
-	public static function infoUsuario($email)
-	{
+	public static function infoUsuario($email){
 		$sql = "SELECT * FROM usuario WHERE email= '$email'";
 		return DAO::doSQLAndReturn($sql);
 	}
@@ -206,10 +182,8 @@ class NotAProfile{
 	 * @return boolean, true o false en caso de existir o no en el sistema. 
 	 */
 	 public static function existeUsuario($email){
-		
 	   $resultados=DAO::doSQLAndReturn("SELECT count(*) as Contador FROM usuario WHERE email='$email'");
 	   return $resultados[0]["Contador"]==0?false:true;
-	   
 	}
 	
 	/**
@@ -296,12 +270,11 @@ class NotAProfile{
 		list($email, $token) =split("-", $param);
 		$sql = sprintf("SELECT * FROM usuario WHERE token_reactivacion='%s'",$token);
 		$usuario = DAO::doSQLAndReturn($sql);	
-		if(md5($usuario[0]['email']) == $email)
-		{
+		if(md5($usuario[0]['email']) == $email)	{
 			$emailUsuario = $usuario[0]['email'];
 			return $emailUsuario;
 		}
-		return "error";
+		return -1;
 	}
 	/**
 	 * Función que se encarga de verificar si el código unico existe en la base de datos, en caso de que sí
@@ -347,27 +320,20 @@ class NotAProfile{
 		//Elimina la seción
 		session_start(); 
 		$_SESSION = array(); 
-		session_destroy();
-
-		
-		//Redirecciona a la pagina principal
-		//header ("Location: index.php");  
+		session_destroy(); 
 	}
 
 	
 	/**
-	 * Función que revisa si el usuario está logeado
+	 * Función que revisa si el usuario está logeado o no 
+	 * @return true - Se encuentr un userid en la sesion
+	 *         false - de lo contrario
 	 */
 	public static function estaLogeado(){
-			if(isset($_SESSION['userid']))
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+		return isset($_SESSION['userid'])? true: false; 
 	}
+	
+	
 //----------------------------------------------------------------------------------------------
 // Funciones relacionadas con la creación, reclamo y validación de llaves
 //----------------------------------------------------------------------------------------------
@@ -421,12 +387,10 @@ class NotAProfile{
 		$sql = "SELECT codigo FROM llave";
 		$cods= DAO::doSQLAndReturn($sql);
 		$noesunico=1;
-		while($noesunico==1)
-		{
+		while($noesunico==1){
 			$noesunico=0;
 			for ($index = 0; $index < count($cods) && $noesunico==0; $index++) {
-				if($filename==$cods[$index]['codigo'])
-				{
+				if($filename==$cods[$index]['codigo']){
 					$noesunico=1;
 				}				
 			}
@@ -483,8 +447,7 @@ class NotAProfile{
 		}
 		else
 		{
-			if(!isset($idUuario))
-			{
+			if(!isset($idUuario)){
 				$idUuario=-1;
 			}
 			$fecha = date("c");
@@ -500,8 +463,7 @@ class NotAProfile{
 	 */
 	public static function darLlave($codigoLlave){
 		$sql=sprintf("SELECT * FROM llave WHERE codigo='%s'",$codigoLlave);
-		$llave = DAO::doSQLAndReturn($sql);
-		return $llave;
+		return  DAO::doSQLAndReturn($sql);
 	}
 	
 	/**
@@ -510,8 +472,7 @@ class NotAProfile{
 	 */
 	public static function aceptarLlave($codigoLlave){
 			$sql=sprintf("UPDATE llave SET flag_aceptado = 1 WHERE codigo = '%s'",$codigoLlave);
-			$exito = DAO::doSQL($sql);
-			return $exito;
+			return DAO::doSQL($sql);
 	}
 	
 	/**
@@ -520,8 +481,7 @@ class NotAProfile{
 	 */
 	public static function rechazarLlave($codigoLlave){
 			$sql=sprintf("UPDATE llave SET flag_aceptado = -1 WHERE codigo = '%s'",$codigoLlave);
-			$exito = DAO::doSQL($sql);
-			return $exito;
+			return DAO::doSQL($sql);
 	}
 	
 	/**
@@ -533,7 +493,7 @@ class NotAProfile{
 		// TODO
 	}
 	
-/**
+	/**
 	 * Función que se encarga de devolver las llaves creadas por el usuario logeado que ya han sido reclamadas.
 	 */
 	public static function darLlavesCreadasReclamadas(){
@@ -679,29 +639,6 @@ class NotAProfile{
 	 * @return unknown_type
 	 */
 	public static function sendMail($to_name,$to_email,$subject,$msg) {
-		/***************************
-		include_once("Mail.php");
-		
-		$recipients = $app['siteemail'];
-		
-		$headers["From"]    = $app['siteemail'];
-		$headers["To"]      = $to_email;
-		$headers["Subject"] = $subject;
-		$headers["Content-type"] = "text/plain; charset=utf-8";
-		
-		$body = $msg;
-		
-		$params["host"] = $app['smtp_host'];
-		$params["port"] = $app['smtp_port'];
-		$params["auth"] = $app['smtp_auth'];
-		$params["username"] = $app['smtp_username'];
-		$params["password"] = $app['smtp_password'];
-		
-		// Create the mail object using the Mail::factory method
-		$mail_object =& Mail::factory("smtp", $params);
-		
-		return $mail_object->send($recipients, $headers, $body);
-		***************************/
 		global $app;
 		$headers = "From: " . $app['siteemail'] . "\r\n";
 		$headers .= 'MIME-Version: 1.0' . "\r\n";
@@ -710,16 +647,6 @@ class NotAProfile{
 		$body = $msg;
 		mail($to_email,$subject,$body,$headers);
 	}
-	
-	
-
-
-	
-	
-
-	
-	
-
 	
 	
 }
