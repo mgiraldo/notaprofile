@@ -17,14 +17,76 @@ if(isset($_GET['tb']))
 <br>
 <?php 
 //TODO llamar al método que devuelve las llaves creadas por esta persona.
-/**
-$llaves = NotAProfile::darLlavesCreadasReclamadas();
- echo("claimed: " . count($llaves)."<br>");
-$llaves = NotAProfile::darLlavesCreadasNoReclamadas();
- echo("unclaimed: " . count($llaves)."<br>");
- $llaves = NotAProfile::darLlavesCreadasVencidas();
- echo("expired: " . count($llaves)."<br>");
-**/
+
+	$llaves = NotAProfile::darLlavesCreadasReclamadas();
+ 	$numLlaves = count($llaves);
+ 	echo("claimed: $numLlaves <br>");
+
+ 	echo "<table border=\"1\">";
+ 	echo "<tr><th>id</th>";
+	echo "<th>codigo</th>";
+	echo "<th>txt</th>";
+	echo "<th>foto</th>";
+	echo "<th>fecha_creado</th>";
+	echo "<th>latitud/longitud</th>";
+	echo "<th>fecha_reclamado</th></tr>";
+ 	foreach ($llaves as &$llave) {
+	 	echo "<tr><td>".$llave['id']."</td>";
+		echo "<td>".$llave['codigo']."</td>";
+		echo "<td>".$llave['txt']."</td>";
+		echo "<td>".$llave['foto']."</td>";
+		echo "<td>".$llave['fecha_creado']."</td>";
+		echo "<td>".$llave['latitud']."/".$llave['longitud']."</td>";
+		echo "<td>".$llave['fecha_reclamado']."</td></tr>";
+ 	}
+ 	echo "</table><br /><br />";
+ 	
+ 	
+ 	
+ 	echo "<tr><table border=\"1\">";
+ 	echo "<th>id</th>";
+	echo "<th>codigo</th>";
+	echo "<th>txt</th>";
+	echo "<th>foto</th>";
+	echo "<th>fecha_creado</th>";
+	echo "<th>latitud/longitud</th>";
+	echo "<th>fecha_reclamado</th></tr>";
+	$llaves = NotAProfile::darLlavesCreadasNoReclamadas();
+	$numLlaves = count($llaves);
+ 	echo("Unclaimed: $numLlaves <br>");
+ 	foreach ($llaves as &$llave) {
+ 		echo "<tr><td>".$llave['id']."</td>";
+		echo "<td>".$llave['codigo']."</td>";
+		echo "<td>".$llave['txt']."</td>";
+		echo "<td>".$llave['foto']."</td>";
+		echo "<td>".$llave['fecha_creado']."</td>";
+		echo "<td>".$llave['latitud']."/".$llave['longitud']."</td>";
+		echo "<td>".$llave['fecha_reclamado']."</td></tr>";
+ 	}
+ 	echo "</table><br /><br />";
+ 	
+ 	
+ 	echo "<tr><table border=\"1\">";
+ 	echo "<th>id</th>";
+	echo "<th>codigo</th>";
+	echo "<th>txt</th>";
+	echo "<th>foto</th>";
+	echo "<th>fecha_creado</th>";
+	echo "<th>latitud/longitud</th>";
+	echo "<th>fecha_reclamado</th></tr>";
+ 	$llaves = NotAProfile::darLlavesCreadasVencidas();
+ 	$numLlaves = count($llaves);
+ 	echo("Expired: $numLlaves <br>");
+ 	foreach ($llaves as &$llave) {
+ 		echo "<tr><td>".$llave['id']."</td>";
+		echo "<td>".$llave['codigo']."</td>";
+		echo "<td>".$llave['txt']."</td>";
+		echo "<td>".$llave['foto']."</td>";
+		echo "<td>".$llave['fecha_creado']."</td>";
+		echo "<td>".$llave['latitud']."/".$llave['longitud']."</td>";
+		echo "<td>".$llave['fecha_reclamado']."</td><tr/>";
+ 	}
+ 	echo "</table><br /><br />";
 ?>
 <br>
 <br>
