@@ -513,6 +513,17 @@ class NotAProfile{
 			$exito = DAO::doSQL($sql);
 			return $exito;
 	}
+	
+	/**
+	 * Este metodo se encarga de marcar una llave como aceptada, despues de haber sido reclamada
+	 * @param unknown_type $idLlave
+	 */
+	public static function rechazarLlave($codigoLlave){
+			$sql=sprintf("UPDATE llave SET flag_aceptado = -1 WHERE codigo = '%s'",$codigoLlave);
+			$exito = DAO::doSQL($sql);
+			return $exito;
+	}
+	
 	/**
 	 * Esta metodo se encarga de realizar una validación de llave
 	 * @param unknown_type $idLlave
