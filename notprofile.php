@@ -20,9 +20,10 @@ if(isset($_GET['tb']))
 <link href="/css/estilos.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<h1>your_not_profile</h1><br /><br />
+<h1>Pagina de prueba!! </h1><br /><br />
 <?php echo("Bienvenido ".$_SESSION['username']); ?>
 <br>
+<br /> Nota: Coloque estas tablas para ver las llaves, obviamente no van en el diseño final! MV<br /> 
 <b>Yours:</b>
 <br><br>
 <?php 
@@ -43,7 +44,7 @@ if(isset($_GET['tb']))
  	foreach ($llaves as &$llave) {
 	 	echo "<tr><td>".$llave['id']."</td>";
 		echo "<td>".$llave['codigo']."</td>";
-		echo "<td>".$llave['txt']."</td>";
+		echo "<td>".substr($llave['txt'],0,20)."".(strlen($llave['txt'])>=20? "...": "")."</td>";
 		echo "<td>".$llave['foto']."</td>";
 		echo "<td>".$llave['fecha_creado']."</td>";
 		echo "<td>".$llave['latitud']."/".$llave['longitud']."</td>";
@@ -67,11 +68,10 @@ if(isset($_GET['tb']))
  	foreach ($llaves as &$llave) {
  		echo "<tr><td>".$llave['id']."</td>";
 		echo "<td>".$llave['codigo']."</td>";
-		echo "<td>".$llave['txt']."</td>";
+		echo "<td>".substr($llave['txt'],0,20)."".(strlen($llave['txt'])>=20? "...": "")."</td>";
 		echo "<td>".$llave['foto']."</td>";
 		echo "<td>".$llave['fecha_creado']."</td>";
 		echo "<td>".$llave['latitud']."/".$llave['longitud']."</td>";
-		echo "<td>".$llave['fecha_reclamado']."</td></tr>";
  	}
  	echo "</table><br /><br />";
  	
@@ -90,7 +90,7 @@ if(isset($_GET['tb']))
  	foreach ($llaves as &$llave) {
  		echo "<tr><td>".$llave['id']."</td>";
 		echo "<td>".$llave['codigo']."</td>";
-		echo "<td>".$llave['txt']."</td>";
+		echo "<td>".substr($llave['txt'],0,20)."".(strlen($llave['txt'])>=20? "...": "")."</td>";
 		echo "<td>".$llave['foto']."</td>";
 		echo "<td>".$llave['fecha_creado']."</td>";
 		echo "<td>".$llave['latitud']."/".$llave['longitud']."</td>";
@@ -120,7 +120,7 @@ if(isset($_GET['tb']))
  	foreach ($llaves as &$llave) {
  		echo "<tr><td>".$llave['id']."</td>";
 		echo "<td>".$llave['codigo']."</td>";
-		echo "<td>".$llave['txt']."</td>";
+		echo "<td>".substr($llave['txt'],0,20)."</td>";
 		echo "<td>".$llave['foto']."</td>";
 		echo "<td>".$llave['fecha_creado']."</td>";
 		echo "<td>".$llave['latitud']."/".$llave['longitud']."</td>";
@@ -130,8 +130,8 @@ if(isset($_GET['tb']))
  	
  	$llaves = NotAProfile::darLlavesDisponibles();
  echo("key_hunt: " . count($llaves)."<br>");
- $llaves = NotAProfile::darLlavesDisponiblesContactos();
- echo("my_not_profilers: " . count($llaves)."<br>");
+ $llaves = NotAProfile::contarLlavesDisponibles();
+ echo("my_not_profilers: " .($llaves)."<br>");
 ?>
 <br>
 <br>
