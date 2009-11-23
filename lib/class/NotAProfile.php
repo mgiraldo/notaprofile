@@ -221,6 +221,22 @@ class NotAProfile{
 		NotAProfile::sendMail($email, $email, 'Activación en Not_A_Profile!', $msg);
 	}
 	
+	
+	/**
+	 * Esta función se encarga de regresar un booleano que indica si la llave puede ser vista o no por el usuario logeado.
+	 */
+	public static function puedeSerVista($llave)
+	{
+		if($llave['reclamador_id']==$_SESSION['userid']||$llave['creador_id']==$_SESSION['userid'])
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	/**
 	 * Función que envia a un usuario determinado un email con un código para cambiar
 	 * su clave.
@@ -538,13 +554,25 @@ class NotAProfile{
 	}
 	
 	/**
-	 * Este método retorna todas las llaves que se encuentran disponibles y que han sido publicadas por contactos
+	 * Este método retorna todas las llaves que han sido reclamadas por mis contactos o por mi
 	 */
-	public static function darLlavesDisponiblesContactos(){
+	public static function darLlavesReclamadas2(){
 		$contactos  = NotAProfile::darContactos();
 		$arregloLlaves = array();
 		for ($index = 0; $index < count($contactos); $index++) {
-			$sql = sprintf("SELECT * FROM llave WHERE creador_id = '%s' AND reclamador_id IS NULL",$contactos[$index]['id']);
+			if(isset($contactos[$index]['amigo_idc1']))
+			{
+				$idpersona =$contactos[$index]['amigo_idc1'];
+			}
+			else
+			{
+				$idpersona =$contactos[$index]['amigo_idc2'];
+			}
+			$sql = sprintf("SELECT * FROM llave WHERE creador_id = '%s' AND reclamador_id = '%s'",$idpersona, $_SESSION['userid']);
+			$llaves = DAO::doSQLAndReturn($sql);
+			$arregloLlaves = array_merge($arregloLlaves, $llaves);
+			
+			$sql = sprintf("SELECT * FROM llave WHERE creador_id = '%s' AND reclamador_id = '%s'", $_SESSION['userid'],$idpersona);
 			$llaves = DAO::doSQLAndReturn($sql);
 			$arregloLlaves = array_merge($arregloLlaves, $llaves);
 		}
