@@ -32,15 +32,13 @@ $count = count($llaves);
             type="text/javascript"></script>
     <script type="text/javascript">
     var map;
-
-    function centrarEnPunto(lat, lang, id)
-    {
-        var ida= "llave"+id;
-    	map.setCenter(new GLatLng(lat,lang));
-    	document.getElementById(ida).setAttribute("class","activa");
-		alert("document.getElementById("+ida+").setAttribute(\"class\",\"activa\");");
-    	//document.getElementById(ida).setAttribute("className","activa");
-    }
+    <?php
+          for($i=0;$i<$count;$i++)
+          {
+    ?>
+    var <?php echo("llave".$i."a")?>;
+    <?php }?>
+    
     function initialize() {
       if (GBrowserIsCompatible()) {
         map = new GMap2(document.getElementById("gmap"));
@@ -48,7 +46,7 @@ $count = count($llaves);
         map.addControl(new GSmallMapControl());
         map.addControl(new GMapTypeControl());
         map.enableScrollWheelZoom();
-      }
+      
 
           <?php
           	 for($i=0;$i<$count;$i++)
@@ -56,31 +54,49 @@ $count = count($llaves);
           	 $fecha = new DateTime($llaves[$i]["fecha_creado"]);	
           	 $fechaFormato = $fecha->format('jS F Y');
           ?>
-        map.addOverlay(crearMarker(<?php echo($llaves[$i]["latitud"]); ?>,<?php echo($llaves[$i]["longitud"]); ?>,"<?php echo($fechaFormato); ?>"));
+
+          var point<?php echo($i)?> = new GLatLng(<?php echo($llaves[$i]["latitud"]); ?>,<?php echo($llaves[$i]["longitud"]); ?>);
+          var baseIcon<?php echo($i)?> = new GIcon(G_DEFAULT_ICON);
+          baseIcon<?php echo($i)?>.image = "llave.png";
+          var tamanio<?php echo($i)?> = 20;
+          baseIcon<?php echo($i)?>.iconSize = new GSize(tamanio<?php echo($i)?>, tamanio<?php echo($i)?>+tamanio<?php echo($i)?>*0.7);
+          baseIcon<?php echo($i)?>.shadowSize = new GSize(37, 34);
+          baseIcon<?php echo($i)?>.iconAnchor = new GPoint(9, 34);
+          baseIcon<?php echo($i)?>.infoWindowAnchor = new GPoint(9, 2);
+
+          markerOptions = { icon:baseIcon<?php echo($i)?> };
+          <?php echo("llave".$i."a")?> = new GMarker(point<?php echo($i)?>,markerOptions);
+          GEvent.addListener(<?php echo("llave".$i."a")?>, "click", function() {
+        	  <?php echo("llave".$i."a")?>.openInfoWindowHtml(" key_left  : " + "<?php echo($fechaFormato); ?>");
+            });
+
+        map.addOverlay(<?php echo("llave".$i."a")?>);
         <?php 
         	}
          ?>
-      
+      }
     }
+      <?php
+           	 for($i=0;$i<$count;$i++)
+           	 {
+           	 $fecha = new DateTime($llaves[$i]["fecha_creado"]);	
+           	 $fechaFormato = $fecha->format('jS F Y');
+           ?>
+      function centrarEnPunto<?php echo("llave".$i."a")?>()
+		        {
+		            
+		        	map.setCenter(new GLatLng(<?php echo($llaves[$i]["latitud"])?>,<?php echo($llaves[$i]["longitud"]); ?>));
+		        	<?php echo("llave".$i."a")?>.openInfoWindowHtml(" key_left  : " + "<?php echo($fechaFormato); ?>");
+		        	document.getElementById(ida).setAttribute("class","activa");
+		    		alert("document.getElementById("+<?php echo("llave".$i."a")?>+").setAttribute(\"class\",\"activa\");");
+		    		//document.getElementById(ida).setAttribute("className","activa");
+		        } 
+      <?php 
+         	}
+          ?>
+    
 
-    function crearMarker(lat,lon, fecha)
-    {
-         var point = new GLatLng(lat,lon);
-         var baseIcon = new GIcon(G_DEFAULT_ICON);
-         baseIcon.image = "llave.png";
-         var tamanio = 20;
-         baseIcon.iconSize = new GSize(tamanio, tamanio+tamanio*0.7);
-         baseIcon.shadowSize = new GSize(37, 34);
-         baseIcon.iconAnchor = new GPoint(9, 34);
-         baseIcon.infoWindowAnchor = new GPoint(9, 2);
 
-         markerOptions = { icon:baseIcon };
-         var marker = new GMarker(point,markerOptions);
-         GEvent.addListener(marker, "click", function() {
-             marker.openInfoWindowHtml(" key_left  : " + fecha);
-           });
-         return marker;
-    }
 
     </script>
 </head>
@@ -115,7 +131,7 @@ $count = count($llaves);
 			<ul id="listallaves">
 			<?php for ($index = 0; $index < $count; $index++) {?>
 			<!-- inicio llave tipo -->
-				<li>
+				<li id=<?php echo("llave".$index."a")?>>
 					<div class="fotollave">
 					<!-- si la llave es mia o yo la reclame me sale la foto -->
 					<!-- si no es mia o no la reclame me sale generica -->
@@ -134,7 +150,7 @@ $count = count($llaves);
 						<span class="texto"><?php echo($llaves[$index]['txt'])?></span><br />
 						<span class="loc"><?php echo($llaves[$index]['latitud'].",".$llaves[$index]['longitud'])?> </span><br />
 						<?php }?>
-						<a href="#" onclick="centrarEnPunto(<?php echo($llaves[$index]['latitud'].",".$llaves[$index]['longitud'].",".$index) ?>)">view</a>
+						<a href="#" onclick="centrarEnPunto<?php echo("llave".$index."a")?>();">view</a>
 					</div>
 				</li>
 			<!-- fin llave tipo -->
