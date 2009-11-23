@@ -553,6 +553,17 @@ class NotAProfile{
 		return $llaves;
 	}
 	
+	
+	/**
+	 * Este método retorna el numero de llaves que se encuentran disponibles (No han sido reclamadas)
+	 * @return unknown_type - Numero de llaves disponibles
+	 */
+	public static function contarLlavesDisponibles(){
+		$sql = "SELECT count(*) AS cont FROM llave WHERE reclamador_id IS NULL";
+		$llaves = DAO::doSQLAndReturn($sql);
+		return $llaves[0]['cont'];
+	}
+	
 	/**
 	 * Este método retorna todas las llaves que han sido reclamadas por mis contactos o por mi
 	 */

@@ -67,7 +67,7 @@ $count = count($llaves);
           markerOptions = { icon:baseIcon<?php echo($i)?> };
           <?php echo("llave".$i."a")?> = new GMarker(point<?php echo($i)?>,markerOptions);
           GEvent.addListener(<?php echo("llave".$i."a")?>, "click", function() {
-        	  <?php echo("llave".$i."a")?>.openInfoWindowHtml(" key_left  : " + "<?php echo($fechaFormato); ?>");
+        	  <?php echo("llave".$i."a")?>.openInfoWindowHtml("<?php  contenidoGlobo($fechaFormato) ?>");
             });
 
         map.addOverlay(<?php echo("llave".$i."a")?>);
@@ -82,15 +82,14 @@ $count = count($llaves);
            	 $fecha = new DateTime($llaves[$i]["fecha_creado"]);	
            	 $fechaFormato = $fecha->format('jS F Y');
            ?>
-      function centrarEnPunto<?php echo("llave".$i."a")?>()
-		        {
+      function centrarEnPunto<?php echo("llave".$i."a")?>(){
 		            
 		        	map.setCenter(new GLatLng(<?php echo($llaves[$i]["latitud"])?>,<?php echo($llaves[$i]["longitud"]); ?>));
 		        	<?php echo("llave".$i."a")?>.openInfoWindowHtml(" key_left  : " + "<?php echo($fechaFormato); ?>");
 		        	document.getElementById(ida).setAttribute("class","activa");
 		    		alert("document.getElementById("+<?php echo("llave".$i."a")?>+").setAttribute(\"class\",\"activa\");");
-		    		//document.getElementById(ida).setAttribute("className","activa");
-		        } 
+	  		//document.getElementById(ida).setAttribute("className","activa");
+	} 
       <?php 
          	}
           ?>
@@ -146,8 +145,11 @@ $count = count($llaves);
 					<div class="textollave">
 						<!-- esto sale si la llave es MIA o YO LA RECLAME -->
 						<?php if(NotAProfile::puedeSerVista($llaves[$index]))
-						{?>
-						<span class="texto"><?php echo($llaves[$index]['txt'])?></span><br />
+						{
+							$txt = substr($llaves[$index]['txt'], 0, 20);
+							$txt .= strlen($llaves[$index]['txt'])>20 ? "...": "";
+							?>
+						<span class="texto"><?php echo($txt)?></span><br />
 						<span class="loc"><?php echo($llaves[$index]['latitud'].",".$llaves[$index]['longitud'])?> </span><br />
 						<?php }?>
 						<a href="#" onclick="centrarEnPunto<?php echo("llave".$index."a")?>();">view</a>
@@ -174,3 +176,8 @@ $count = count($llaves);
 </div>
 </body>
 </html>
+
+
+<?php function contenidoGlobo($fecha){
+ echo "Key left: $fecha ";
+}?>
