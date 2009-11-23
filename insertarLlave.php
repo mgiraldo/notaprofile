@@ -27,12 +27,13 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"]))
 }
 
 ?>
-<!DOCTYPE html "-//W3C//DTD XHTML 1.0 Strict//EN" 
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <title>not_a_profile</title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>not_a_profile</title>
+<link href="/css/estilos.css" rel="stylesheet" type="text/css" />
+
     <script src="http://maps.google.com/maps?file=api&v=2&key=<?php echo $app['apiKey'] ?>&sensor=true"
             type="text/javascript"></script>
     <script type="text/javascript">

@@ -1,7 +1,7 @@
 <?php 
 require_once('config/config.php');
 require_once('lib/class/NotAProfile.php');
-echo("Bienvenido ".$_SESSION['username']);
+
 if(isset($_GET['tb']))
 {
 ?>	
@@ -11,10 +11,20 @@ if(isset($_GET['tb']))
 <?php 
 }
 ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>not_a_profile</title>
+<link href="/css/estilos.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>your_not_profile</h1><br /><br />
+<?php echo("Bienvenido ".$_SESSION['username']); ?>
 <br>
 <b>Yours:</b>
-<br>
-<br>
+<br><br>
 <?php 
 //TODO llamar al método que devuelve las llaves creadas por esta persona.
 
@@ -95,14 +105,33 @@ if(isset($_GET['tb']))
 <br>
 <?php 
 //TODO llamar al método que devuelve las llaves reclamadas por esta persona.
-/**
-$llaves = NotAProfile::darLlavesReclamadas();
- echo("claimed: " . count($llaves)."<br>");
-$llaves = NotAProfile::darLlavesDisponibles();
+
+	echo "<tr><table border=\"1\">";
+ 	echo "<th>id</th>";
+	echo "<th>codigo</th>";
+	echo "<th>txt</th>";
+	echo "<th>foto</th>";
+	echo "<th>fecha_creado</th>";
+	echo "<th>latitud/longitud</th>";
+	echo "<th>fecha_reclamado</th></tr>";
+ 	$llaves = NotAProfile::darLlavesReclamadas();
+ 	$numLlaves = count($llaves);
+ 	echo("keys that you claimed:: $numLlaves <br>");
+ 	foreach ($llaves as &$llave) {
+ 		echo "<tr><td>".$llave['id']."</td>";
+		echo "<td>".$llave['codigo']."</td>";
+		echo "<td>".$llave['txt']."</td>";
+		echo "<td>".$llave['foto']."</td>";
+		echo "<td>".$llave['fecha_creado']."</td>";
+		echo "<td>".$llave['latitud']."/".$llave['longitud']."</td>";
+		echo "<td>".$llave['fecha_reclamado']."</td><tr/>";
+ 	}
+ 	echo "</table><br /><br />";
+ 	
+ 	$llaves = NotAProfile::darLlavesDisponibles();
  echo("key_hunt: " . count($llaves)."<br>");
  $llaves = NotAProfile::darLlavesDisponiblesContactos();
  echo("my_not_profilers: " . count($llaves)."<br>");
- **/
 ?>
 <br>
 <br>
@@ -114,3 +143,7 @@ $llaves = NotAProfile::darLlavesDisponibles();
 <br>
 <br>
 <a href="home.php?logout=si">log_out</a>
+
+<br /><br />
+</body>
+</html>

@@ -523,7 +523,7 @@ class NotAProfile{
 	 * Función que se encarga de devolver las llaves que han sido reclamadas por el usuario logeado.
 	 */
 	public static function darLlavesReclamadas(){
-		$sql = sprintf("SELECT * FROM Llave WHERE reclamador_id = '%s'",$_SESSION['userid']);
+		$sql = sprintf("SELECT * FROM llave WHERE reclamador_id = '%s'",$_SESSION['userid']);
 		return $llaves = DAO::doSQLAndReturn($sql);
 	}
 	
