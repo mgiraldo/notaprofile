@@ -32,7 +32,12 @@ require_once 'lib/class/NotAProfile.php';
 <title>not_a_profile: <?php echo $primerosCaracteres ?></title>
 <style>
 #fotollave {
-	background: url(<?php echo ($app['photoroot'].$llave[0]['foto'].".jpg") ?>) repeat-x;
+	<?php if($llave[0]['reclamador_id'] == "NULL" || $llave[0]['reclamador_id'] == $_SESSION['userid']){ ?>
+		background: url(<?php echo ($app['photoroot'].$llave[0]['foto'].".jpg") ?>) repeat-x;
+	<?php }
+	else{ ?>
+		background: url(/img/fotoejemplo.jpg) repeat-x;
+	<?php } ?>		
 }
 </style>
 
@@ -58,7 +63,7 @@ require_once 'lib/class/NotAProfile.php';
 <div id="contenido">
 
 	<?php
-	if($llave[0]['flag_aceptado'] == "0"){ 
+	if($llave[0]['flag_aceptado'] == "0" && ($llave[0]['reclamador_id'] == $_SESSION['userid'] || $llave[0]['reclamador_id'] == "NULL")){ 
 		include("./inc/cabezotellave.php");
 	}
 	else{
@@ -67,18 +72,26 @@ require_once 'lib/class/NotAProfile.php';
 	?>	
 	
 	<div id="cuerpo">
-		<?php if($llave[0]['flag_aceptado'] == "0") {?>
-		<div id="dislike"><a href="?like=-1&c=<?php echo $llave[0]['codigo']?>"><span>dislike</span></a></div>
-		<?php }?>
+		<?php 
+		if($llave[0]['reclamador_id'] == "NULL" || $llave[0]['reclamador_id'] == $_SESSION['userid']){
+			if($llave[0]['flag_aceptado'] == "0") {?>
+			<div id="dislike"><a href="?like=-1&c=<?php echo $llave[0]['codigo']?>"><span>dislike</span></a></div>
+			<?php }?>
 		
-		<div id="textollave">
-		<?php echo($llave[0]['txt']); ?>
-		</div>
+			<div id="textollave">
+			<?php echo($llave[0]['txt']); ?>
+			</div>
 		
-		<?php if($llave[0]['flag_aceptado'] == "0") {?>
-		<div id="like"><a href="?like=1&c=<?php echo $llave[0]['codigo']?>"><span>like</span></a></div>
-		<?php }?>
-		
+			<?php if($llave[0]['flag_aceptado'] == "0") {?>
+			<div id="like"><a href="?like=1&c=<?php echo $llave[0]['codigo']?>"><span>like</span></a></div>
+		<?php }
+		}
+		else{?>
+			<div id="textollave">
+				Ups!
+				the key has already been claimed
+			</div>
+		<?php } ?>
 	</div>
 	<?php include("./inc/pie.php");?>
 </div>
