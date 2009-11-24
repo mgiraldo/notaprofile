@@ -44,17 +44,7 @@ $count = count($llaves);
 </head>
 <body onload="initialize()">
 
-	<div id="contenido">
-		<div id="cabezote">
-			<h1>not_a_profile</h1>
-			<ul id="nav">
-				<li><a href="#">keyring</a></li>
-				<li><a href="#">connections</a></li>
-			</ul>
-			<div id="userinfo">
-				rank: locksmith | <a href="#">log_out</a>
-			</div>
-		</div>
+	<?php include("./inc/cabezote.php"); ?>
 		
 		<div id="cuerpo">
 			<div id="llaves">
@@ -109,9 +99,7 @@ $count = count($llaves);
 	
 	
 		</div>
-		<div id="pie">
-			<a href="#">help</a> | <a href="#">about this project</a> | <a href="#">google code</a> | <a href="#">copyright notice</a>
-		</div>
+		<?php include("./inc/pie.php"); ?>
 	</div>
 </div>
 </body>
