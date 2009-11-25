@@ -1,7 +1,7 @@
 <?php 
 require_once('config/config.php');
 require_once('lib/class/NotAProfile.php');
-
+include('cerrarSiThickbox.php');
 //Cuando filtro es 1 se muestran las claimed, sino, las orphans.
 $filtro = isset($_GET['filtro'])?$_GET['filtro']:0;
 $llaves = $filtro==0? NotAProfile::darLlavesDisponibles() : NotAProfile::darLlavesReclamadas2();
@@ -43,7 +43,7 @@ $count = count($llaves);
 </script>
 </head>
 <body onload="initialize()">
-
+<div id="contenido">
 	<?php include("./inc/cabezote.php"); ?>
 		
 		<div id="cuerpo">
