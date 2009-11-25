@@ -1,0 +1,10 @@
+<?
+if(isset($_GET['tb']))
+{
+?>	
+	<script>
+	self.parent.tb_remove();
+	</script>	
+<?php 
+}
+?>
