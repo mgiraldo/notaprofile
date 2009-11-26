@@ -1,0 +1,155 @@
+/* ESTILOS BASE */
+* {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+body,td,th {
+	font-family: Courier New, Courier, monospace;
+	font-size: 18px;
+	color: #FFF;
+	font-weight: normal;
+}
+body {
+	background-color: #000;
+}
+a img {
+border:none;
+}
+a:link {
+	color: #FCAF3F;
+	text-decoration: underline;
+}
+a:visited {
+	text-decoration: underline;
+	color: #C98B30;
+}
+a:hover {
+	text-decoration: none;
+	color: #FCAF3F;
+}
+a:active {
+	text-decoration: underline;
+}
+h1 {
+	font-size: 33px;
+	font-weight: normal;
+}
+h2 {
+	font-size: 24px;
+}
+#contenido {
+	width: 960px;
+	margin-left: auto;
+	margin-right: auto;
+	/*background: url(../img/columna.gif);*/
+}
+/* CABEZOTE */
+#cabezote {
+	height: 120px;
+}
+#cabezote h1 {
+	padding: 6px 0 12px 3px;
+	border-bottom: 3px solid #fff;
+}
+#nav {
+	float: left;
+	width: 408px;
+}
+#nav li {
+	float: left;
+	width: 138px;
+}
+#nav li a {
+	display: block;
+	padding: 3px;
+	text-decoration: none;
+}
+#nav li a:hover {
+	background-color: #FCAF3F;
+	color: #000;
+}
+#userinfo {
+	float: right;
+	width: 345px;
+	text-align: right;
+	font-size: 12px;
+	margin: 3px;
+}
+/* CUERPO */
+#cuerpo {
+	height: 470px;
+	background:  #666666;
+}
+#cuerpo_sign {
+	height: 470px;
+}
+#boton{
+	height:30px;
+	width:195px;
+	margin-top:7px;
+	float:right;
+}
+#text_box{
+	height:30px;
+	width:207px;
+	margin-top:10px;
+	float:right;
+}
+#header{
+	height: 30px;
+	width:546px;
+	float:left;
+	margin-bottom:10px;
+}
+#box {
+	width:201px;
+	font-family:"Courier New", Courier, monospace;
+	font-size:16px;
+}
+#sign {
+	height: 30px;
+	float:right;
+	margin-bottom:10px;
+}
+#checkbox_1 {
+	height: 30px;
+	width: 546px;
+	float:left;
+	margin-bottom:10px;
+}
+#sign h3 {
+	text-align:right;
+	font-weight: normal;
+	margin-top:10px;
+}
+#sign h4 {
+	text-align:right;
+	font-weight: normal;
+	margin-top:2px;
+	font-size:14px;
+	text-align:right;
+}
+#englobador_sign_in{
+	width:546px;
+	height:160px;
+}
+#englobador_sign_up{
+	width:546px;
+}
+
+#errorLogin{
+	width:546px;
+	height:60px;
+	font-size:16px;
+	color:#F00;
+	font-weight:bold;
+	text-align:center;
+}
+/* PIE */
+#pie {
+	height: 20px;
+	font-size: 12px;
+	margin: 3px;
+	text-align: right;
+}
