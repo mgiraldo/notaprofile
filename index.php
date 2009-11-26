@@ -47,108 +47,118 @@ if(isset($_POST['submit'])){
 }
 
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="/css/estilosLogin.css" rel="stylesheet" type="text/css" />
 <title>not_a_profile</title>
-<link href="/css/estilos.css" rel="stylesheet" type="text/css" />
 </head>
-<body onload="escondidoInicial(<?php if(isset($error)){echo($error);}else{echo(1);}?>);">
-<h1>not_a_profile</h1>
+<script languaje="javascript">
+function escondidoInicial(caso){
+	if(caso==1)	{
+		document.getElementById("englobador_sign_up").style.visibility = 'hidden';
+		document.getElementById("botonSignUp").disabled = false;
+		document.getElementById("botonSignIn").style.visibility = 'visible';
+		document.getElementById("botonSignIn").disabled = false;
+	}else{
+		document.getElementById("checkbox").checked=true;
+		document.getElementById("botonSignIn").style.visibility = 'hidden';
+		document.getElementById("botonSignIn").disabled = true;
+    	document.getElementById("englobador_sign_up").style.visibility = 'visible';
+		document.getElementById("botonSignUp").disabled = false;
+	}
+}
+
+function habilitaDeshabilita(form){
+    if (form.checkbox.checked == true)    {
+		document.getElementById("botonSignIn").style.visibility = 'hidden';
+		document.getElementById("botonSignIn").disabled = true;		
+    	document.getElementById("englobador_sign_up").style.visibility = 'visible';
+		document.getElementById("botonSignUp").disabled = false;
+    } else{
+		document.getElementById("botonSignIn").style.visibility = 'visible';
+		document.getElementById("botonSignIn").disabled = false;
+    	document.getElementById("englobador_sign_up").style.visibility = 'hidden';
+		document.getElementById("botonSignUp").disabled = true;
+    }
+}
+</script>
+
+<body onload="escondidoInicial(<?php if(isset($error)){if($error==3) echo($error); else echo (1);}else{echo(1);}?>);">
+<div id="contenido">
+	<div id="cabezote">
+		<h1>not_a_profile</h1>
+	</div>
+    <form id="cuerpo_sign" method="post" name="loginsignupform" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+		<div id="englobador_sign_in">
 <?php
 
 if(isset($_POST['submit'])){
 switch($error){
 	case 1:
-		echo "<h2>Email or Password can not be empty </h2>";
+		echo "<div id=\"errorLogin\">Email or Password can not be empty</div>";
 		break;
 	case 2:
-		echo "<h2>Incorrect email format </h2>";
+		echo "<div id=\"errorLogin\">Incorrect email format</div>";
 		break;
 	case 3:
-		echo "<h2>Wrong Email or/and password </h2>";
+		echo "<div id=\"errorLogin\">Wrong Email or/and password</div>";
 		break;
 }}
 if(isset($_POST['signup'])){
 switch($error){
 	case 1:
-		echo "<h2>Email or Password can not be empty </h2>";
+		echo "<div id=\"errorLogin\">Email or Password can not be empty </div>";
 		break;
 	case 2:
-		echo "<h2>Incorrect email format </h2>";
+		echo "<div id=\"errorLogin\">Incorrect email format </div>";
 		break;
 	case 3:
-		echo "<h2>The passwords do not match!</h2>";
+		echo "<div id=\"errorLogin\">The passwords do not match!</div>";
 		break;
 	case 4:
-		echo "<h2>Email already in use</h2>";
+		echo "<div id=\"errorLogin\">Email already in use</div>";
 		break;
 	case 5:
-		echo "<h2>Error in Database procesing!! Contact webmaster righ now!!!!</h2>";
+		echo "<div id=\"errorLogin\">Error in Database procesing!! Contact webmaster righ now!!!!</div>";
 		break;
 		
 	case 0:
-		echo "<h2> SE HA REGISTRADO!! YA PUEDE INICIAR SESION!!</h2>";
+		echo "<div id=\"errorLogin\"> SE HA REGISTRADO!! YA PUEDE INICIAR SESION!!</div>";
 		break;
 			
 }}
 ?>
-<script languaje="javascript">
-function escondidoInicial(caso)
-{
-	if(caso==1)
-	{
-		document.getElementById("logindiv").style.visibility = '';
-		document.getElementById("signupdiv").style.visibility = 'hidden';
-	}
-	else
-	{
-		document.getElementById("nuevo").checked=true;
-    	document.getElementById("signupdiv").style.visibility = '';
-    	document.getElementById("logindiv").style.visibility = 'hidden';
-	}
-}
-function habilitaDeshabilita(form)
-{
-    if (form.nuevo.checked == true)
-    {
-    	document.getElementById("signupdiv").style.visibility = '';
-    	document.getElementById("logindiv").style.visibility = 'hidden';
-    }
-    else
-    {
-    	document.getElementById("logindiv").style.visibility = '';
-    	document.getElementById("signupdiv").style.visibility = 'hidden';
-    }
-}
-</script>
-<div>
-	<form method="post" name="loginsignupform" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-			<label for="email">E-mail:</label>
-			<input type="text" name="email" id="email" value="<?php echo isset($_POST['email'])?$_POST['email']:""; ?>" tabindex="4" /><br />
-			<label for="pass">Pass:</label>
-			<input type="password" name="pass" id="pass" value="" tabindex="5" /><br />
-			<input type="checkbox" id="nuevo" name="nuevo" onclick="habilitaDeshabilita(this.form);" value="nuevo">I'm new<br />
-			<div id="signupdiv">
-				<label for="pass2">Pass2:</label>
-				<input type="password" name="pass2" id="pass2" value="" tabindex="6" /><br />
-				<input type="submit" name="signup" id="signup" value="Sign_Up" tabindex="7" />
-			</div>
-			<div id="logindiv">
-				<input type="submit" name="submit" id="login" value="Log_in" tabindex="7" />
-				<a href="forgotPassword.php">forgot_my_password</a>
-			</div>
-			<?php 
-			if(isset($_GET['tb']))
-			{
-			?>
+
+			<div id="header"><h2>sign_in</h2> </div>
+            <div id="boton">&nbsp;</div>
+            <div id="text_box"><input id="box" type="text" name="email" value="<?php echo isset($_POST['email'])?$_POST['email']:""; ?>" tabindex="1"></div>
+            <div id="sign"><h3>your email:</h3></div>            
+            <div id="boton"><input type="image" id="botonSignIn" src="/img/enter.png" name="submit" value="Sign_In" height="26" width="195" border="0" vspace="0"  alt="Sing in" tabindex="3" /></div>
+            <div id="text_box"><input id="box" type="password" name="pass" tabindex="2"></div>
+            <div id="sign"><h3>password:</h3></div>
+            <div id="sign"><h4><a href="/forgotPassword.php">forgot_password</a></h4></div>
+            <div id="checkbox_1"><input type="checkbox" id="checkbox" name="checkbox" onclick="habilitaDeshabilita(this.form);" value="checkbox" tabindex="4" >I'm new</div>
+		</div>
+        <div id="englobador_sign_up">
+            <div id="header"><h2>sign_up</h2></div>
+            <div id="header">just_rewrite_your_password!!</div>
+            <div id="boton"><input type="image" id="botonSignUp" src="/img/submit.png" name="signup" value ="Sign_Up" height="26" width="195" border="0" vspace="0" alt="Sign up"  tabindex="6" />  
+            </div><div id="text_box"><input id="box" type="password" name="pass2" tabindex="5"></div>
+            <div id="sign"><h3>password:</h3></div>
+        </div>
+        <?php if(isset($_GET['tb'])) { ?>
 			<input type="hidden" value="<?php echo($_GET['reclamollave'])?>" name="reclamollave" id="reclamollave"></input>
-			<?php 
-			}
-			?>
-	</form>
+		<?php } ?>
+    </form>
+    <div id="pie">
+		<a href="#">help</a> | <a href="#">about this project</a> | <a href="#">google code</a> | <a href="#">copyright notice</a>
+	</div>
+
 </div>
 </body>
 </html>
+
 <?php } ?>
