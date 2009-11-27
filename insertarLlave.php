@@ -1,7 +1,10 @@
 <?php 
+require_once('lib/class/classTextile.php');
 require_once('config/config.php');
 require_once('lib/class/NotAProfile.php');
 //echo("id=".$_SESSION['userid']);
+
+$textile = new Textile();
 
 if(isset($_POST["latitud"])&&isset($_POST["longitud"]))
 {
@@ -12,8 +15,10 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"]))
 		{
 			$foto = NotAProfile::subirFoto('image');	
 		}
-		
-		$codigo = NotAProfile::crearLlave($_POST["latitud"],$_POST["longitud"],$_POST["texto"],$foto);
+
+		//Texto enriquecido
+		$texto = $textile->TextileThis($_POST["texto"]);
+		$codigo = NotAProfile::crearLlave($_POST["latitud"],$_POST["longitud"],$texto,$foto);
 		
 		if($codigo!="error")
 		{
