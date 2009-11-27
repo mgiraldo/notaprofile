@@ -5,6 +5,9 @@
 			<li><a href="#">connections</a></li>
 		</ul>
 		<div id="userinfo">
-			rank: locksmith | <a href="home.php?logout=si">log_out</a>
+		<?php $email = $_SESSION['username'];
+		List ($user, $emailCompany) = split("@", $email);
+		?>
+			user: <?php echo($user);?> | <a href="home.php?logout=si">log_out</a>
 		</div>
 	</div>
