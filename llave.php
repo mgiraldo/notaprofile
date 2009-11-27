@@ -32,7 +32,8 @@ require_once 'lib/class/NotAProfile.php';
 <title>not_a_profile: <?php echo $primerosCaracteres ?></title>
 <style>
 #fotollave {
-	<?php if($llave[0]['reclamador_id'] == "NULL" || $llave[0]['reclamador_id'] == $_SESSION['userid']){ ?>
+	<?php 
+	if($llave[0]['reclamador_id'] == "" || $llave[0]['reclamador_id'] == $_SESSION['userid']){ ?>
 		background: url(<?php echo ($app['photoroot'].$llave[0]['foto'].".jpg") ?>) repeat-x;
 	<?php }
 	else{ ?>
@@ -63,23 +64,25 @@ require_once 'lib/class/NotAProfile.php';
 <div id="contenido">
 
 	<?php
-	if($llave[0]['flag_aceptado'] == "0" && ($llave[0]['reclamador_id'] == $_SESSION['userid'] || $llave[0]['reclamador_id'] == "NULL")){ 
+	if($llave[0]['flag_aceptado'] == "0" && ($llave[0]['reclamador_id'] == $_SESSION['userid'] || $llave[0]['reclamador_id'] == "")){ 
 		include("./inc/cabezotellave.php");
 	}
 	else{
-		include("./inc/cabezote.php");
+		//Cambiar cuando todos los link esten perfectos a:
+		//include("./inc/cabezote.php");
+		include("./inc/cabezotellave.php");
 	}	
 	?>	
 	
 	<div id="cuerpo">
 		<?php 
-		if($llave[0]['reclamador_id'] == "NULL" || $llave[0]['reclamador_id'] == $_SESSION['userid']){
+		if($llave[0]['reclamador_id'] == "" || $llave[0]['reclamador_id'] == $_SESSION['userid']){
 			if($llave[0]['flag_aceptado'] == "0") {?>
 			<div id="dislike"><a href="?like=-1&c=<?php echo $llave[0]['codigo']?>"><span>dislike</span></a></div>
 			<?php }?>
 		
 			<div id="textollave">
-			<?php echo($llave[0]['txt']); ?>
+			<?php echo($llave[0]['txt']);?>
 			</div>
 		
 			<?php if($llave[0]['flag_aceptado'] == "0") {?>
