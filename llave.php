@@ -5,7 +5,8 @@ require_once 'lib/class/NotAProfile.php';
 		$llave = NotAProfile::darLlave($_GET['c']);
 		$texto = $llave[0]['txt']; 
 		$primerosCaracteres = $primerosCaracteres = substr($texto, 0, 100) . '...';
-		
+		$primerosCaracteres = strip_tags($primerosCaracteres);
+		 
 		if(isset($_GET['like']))
 		{	$gusta = $_GET['like'];
 			if($gusta == 1){
