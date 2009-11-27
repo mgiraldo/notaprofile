@@ -579,11 +579,7 @@ class NotAProfile{
 			{
 				$idpersona =$contactos[$index]['amigo_idc2'];
 			}
-			$sql = sprintf("SELECT * FROM llave WHERE creador_id = '%s' AND reclamador_id = '%s'",$idpersona, $_SESSION['userid']);
-			$llaves = DAO::doSQLAndReturn($sql);
-			$arregloLlaves = array_merge($arregloLlaves, $llaves);
-			
-			$sql = sprintf("SELECT * FROM llave WHERE creador_id = '%s' AND reclamador_id = '%s'", $_SESSION['userid'],$idpersona);
+			$sql = sprintf("SELECT * FROM llave WHERE creador_id = '%s' AND reclamador_id = '%s' UNION SELECT * FROM llave WHERE reclamador_id = '%s' AND creador_id = '%s'",$idpersona, $_SESSION['userid'],$idpersona, $_SESSION['userid']);
 			$llaves = DAO::doSQLAndReturn($sql);
 			$arregloLlaves = array_merge($arregloLlaves, $llaves);
 		}
