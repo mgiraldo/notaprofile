@@ -4,7 +4,7 @@ require_once('lib/class/NotAProfile.php');
 include('cerrarSiThickbox.php');
 //Cuando filtro es 1 se muestran las claimed, sino, las orphans.
 $filtro = isset($_GET['filtro'])?$_GET['filtro']:0;
-$llaves = $filtro==0? NotAProfile::darLlavesDisponibles() : NotAProfile::darLlavesReclamadas2();
+$llaves = $filtro==0? NotAProfile::darLlavesDisponibles() : NotAProfile::darLlavesCreadasReclamadas();
 $count = count($llaves);
 if(!NotAProfile::estaLogeado())
 {
@@ -32,13 +32,17 @@ if(!NotAProfile::estaLogeado())
 		var iconoNoReclamado = 'llave.png';
 
 		//Agregamos las llaves
-	
+		
 		<?php foreach ($llaves as &$llave) {
-		    echo "	var posicionLlave".$llave['id']." = new google.maps.LatLng(".$llave['latitud'].", ".$llave['longitud']."); ";
-		    $txt = substr($llave['txt'], 0, 50);$txt .= strlen($llave['txt'])>50 ? "...": "";
-		    echo "	var contenidoLlave".$llave['id']." = '<b> Informacion de la llave: </b> <br /> <p>Esta llave tiene el ID: ".$llave['id']."  *** </p><br/><b>Texto:<b><p></p>".$txt."'; ";
-		    echo "	var infoWindow".$llave['id']." = new google.maps.InfoWindow({content: contenidoLlave".$llave['id'].", maxWidth: 350 }); ";
-		    echo "	llave".$llave['id']." = new google.maps.Marker({position: posicionLlave".$llave['id'].", map: map, icon: iconoNoReclamado }); ";
+		    echo "	var posicionLlave".$llave['id']." = new google.maps.LatLng(".$llave['latitud'].", ".$llave['longitud']."); \n";
+		    $txt = substr($llave['txt'], 0, 50);$txt .= strlen($llave['txt'])>50 ? "...</p>": "";
+		    if(NotAProfile::puedeSerVista($llave)){
+		    	echo "	var contenidoLlave".$llave['id']." = '<b> Ubicacion: </b>".$llave['longitud']."/".$llave['latitud']." <br /><b>Fecha Creacion:</b>".$llave['fecha_creado']."<br /><a href=\"/key/".$llave['codigo']."\">Click para ver</a>';\n";
+		    } else{
+		    	echo "	var contenidoLlave".$llave['id']." = '<b>Unclaimed key!</b>';\n";
+		    }
+		    echo "	var infoWindow".$llave['id']." = new google.maps.InfoWindow({content: contenidoLlave".$llave['id'].", maxWidth: 350 }); \n";
+		    echo "	llave".$llave['id']." = new google.maps.Marker({position: posicionLlave".$llave['id'].", map: map, icon: iconoNoReclamado }); \n";
 		    echo "	google.maps.event.addListener(llave".$llave['id'].", 'click', function() {if(visibleInfoWindow){ visibleInfoWindow.close(); } infoWindow".$llave['id'].".open(map,llave".$llave['id'].");  visibleInfoWindow = infoWindow".$llave['id']."; });\n";
 	    }?> 
 	}
