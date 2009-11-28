@@ -5,7 +5,7 @@ require_once('lib/class/NotAProfile.php');
 //echo("id=".$_SESSION['userid']);
 
 $textile = new Textile();
-
+$msg = "";
 if(isset($_POST["latitud"])&&isset($_POST["longitud"]))
 {
 	if(($_POST["texto"]!="")||($_FILES['image']["name"]!=""))
@@ -15,19 +15,21 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"]))
 		{
 			$foto = NotAProfile::subirFoto('image');	
 		}
-
+		
 		//Texto enriquecido
-		$texto = $textile->TextileThis($_POST["texto"]);
+		$texto = $textile->TextileThis($_POST["message_text"]);
 		$codigo = NotAProfile::crearLlave($_POST["latitud"],$_POST["longitud"],$texto,$foto);
+		
 		
 		if($codigo!="error")
 		{
-		 echo("key_created: ". $codigo);
+		 $msg = $codigo;
 		}
 		else
 		{
-		  echo("error_creating_key");
+		  $msg = "error_creating_key";
 		}
+		die($msg);
 	}
 }
 
@@ -35,25 +37,25 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"]))
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="css/estilosInsertarLlave.css" rel="stylesheet" type="text/css" />
 <title>not_a_profile</title>
-<link href="/css/estilos.css" rel="stylesheet" type="text/css" />
-
-    <script src="http://maps.google.com/maps?file=api&v=2&key=<?php echo $app['apiKey'] ?>&sensor=true"
+</head>
+ <script src="http://maps.google.com/maps?file=api&v=2&key=<?php echo $app['apiKey'] ?>&sensor=true"
             type="text/javascript"></script>
     <script type="text/javascript">
     var map;
     var llave;
     function initialize() {
       if (GBrowserIsCompatible()) {
-        map = new GMap2(document.getElementById("map_canvas"));
+        map = new GMap2(document.getElementById("gmap"));
         map.setCenter(new GLatLng(4.620913,-74.083643), 13);
         map.addControl(new GSmallMapControl());
         map.addControl(new GMapTypeControl());
         GEvent.addListener(map, "click", function(overlay,latlng) {
 				llave = latlng;
-				document.getElementById("lat").value = latlng.lat();
-				document.getElementById("lng").value = latlng.lng();
+				document.getElementById("latitude").value = latlng.lat();
+				document.getElementById("longitude").value = latlng.lng();
 				map.clearOverlays();
       	  		map.addOverlay(crearMarker(llave));
         	});
@@ -76,49 +78,69 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"]))
     }
 
     </script>
-  </head>
-  <body onload="initialize()" onunload="GUnload()">
-    <div id="map_canvas" style="width: 500px; height: 300px"></div>
-    <form method="post" enctype="multipart/form-data">
-    <table>
-    <tr>
-    <td>
-    latitude: 
-    </td>
-    <td>
-    <input type = "text" name="latitud" readonly="readonly" id="lat"></input>
-    </td>
-	</tr>
-	<tr>
-	<td>
-    longitude: 
-    </td>
-    <td>
-    <input type = "text" name="longitud" readonly="readonly" id="lng"></input>
-    </td>
-    </tr>
-    <tr>
-    <td>
-    txt: 
-    </td>
-    <td>
-    <textarea name="texto" rows="2" cols="20" ></textarea>
-    </td>
-    </tr>
-    <tr><td><input type="file" name="image"></td></tr>
-    <tr>
-    <td>
-    <input type="submit" value="make_key"></input>
-    </td>
-    <td>
-    </td>
-    </tr>
-    </table>
-	 	
-    </form>
-    <a href="mailto:uploads@notaprofile.com?subject=subir foto&body=1.7432|1.4444">subir por iPhone</a><br><br>
-    <a href="visualizacionLlaves.php">check_out_keys</a>
-    <br>
-    <a href="notprofile.php">my_not_profile</a>
-  </body>
+   <script>
+      function preview(img,obj) {
+         img.src = "file:///" + obj.value;
+      }
+   </script>
+
+<body onload="initialize()" onunload="GUnload()">
+<div id="contenido">
+
+	<?php include("./inc/cabezote.php"); ?>
+	<div id="cuerpo_sign">
+		<form method="post" enctype="multipart/form-data">
+		<div id="create_key">
+            <div id="preview_image">
+                <img id="img" width='270' height='138' src="./img/nofoto.jpg" />
+                <!--
+                el div tiene el tamaño indicado, la pregunta concretamente es sí se muestra un preview de la imagen al sacarla del browser,
+                por lo que tocaría usar el convertidor de tamaños de imagen del que habla mauricio, o si simplemente no se muestra la imagen,
+                también debe haber un default que diga "please_select_a_image", y aquí mismo debe salir el error: "invalid image format""
+                 -->
+                 </div>
+            <div id="browse">
+            	<!--  <div id="browse_text"><input id="browse_location" type="text" />
+                </div>  -->
+                <div id="browse_button">
+                <!--  <a href="#"></a>-->
+               <!-- <img src="img/browse.png" alt="enter" width="127" height="26" style="position:absolute;"/><input type="file" name="image" style="opacity: 0;"/>  -->
+               <input type="file" name="image" onchange = "preview(document.forms[0].img, this)">
+               </div>
+            </div>
+            <div id="message">
+            	<div id="message_header">
+            		write_a_message:
+                </div>
+                <div id="message_container">
+                	<textarea id="message_text" name="texto"></textarea>
+                </div>
+            </div>
+            <div id="location">
+            	<div id="location_latitude_box">
+                	<input id="latitude" type="text" readonly="readonly"/>
+                </div>
+                <div id="location_latitude">
+                	latitud:
+                </div>
+                <div id="location_latitude_box">
+                	<input id="longitude" name="latitud" type="text" readonly="readonly"/>
+                </div>
+                <div id="location_longitude">
+                	longitude:
+                </div>
+            	<div id="button_create_key">
+            	<input type="image" id="botonCreateKey" name="longitud" src="./img/create.png" name="create" value ="create" height="26" width="195" border="0" vspace="0" alt="enter" tabindex="6" />
+            	</div>
+			</div>
+		</div>
+        <div id="gmap">
+		</div>
+		</form>
+	</div>
+
+	<?php include("./inc/pie.php"); ?>
+
+</div>
+</body>
 </html>
