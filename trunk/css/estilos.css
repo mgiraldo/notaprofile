@@ -221,3 +221,36 @@ h2 {
 	margin: 20px 10px 10px 10px;
 	line-height: 140%;
 }
+
+/* CONEXIONES */
+
+#listaconexiones li {
+	float: left;
+	width: 132px;
+	margin: 0 6px 6px 0;
+	position: relative;
+}
+
+#listaconexiones li.ultima {
+	margin-right: 0;
+}
+
+#listaconexiones li div {
+	padding: 2px;
+	position: absolute;
+	left: 6px;
+	top: 6px;
+}
+
+#listaconexiones li div {
+	font-weight: bold;
+	background-color: rgba(130,130,130,0.5);
+}
+
+#listaconexiones li .yo {
+	color:#0000FF;
+}
+
+#listaconexiones li .ella {
+	color:#FF0000;
+}
