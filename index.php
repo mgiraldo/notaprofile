@@ -151,6 +151,8 @@ switch($error){
             <div id="sign"><h3>password:</h3></div>
 			<div id="boton">&nbsp;</div>
 			<div id="sign_link"><h4><a href="/forgotPassword.php">forgot_password</a></h4></div>
+			<div id="boton">&nbsp;</div>
+			<div id="boton">&nbsp;</div>
 			<div id="checkbox_1"><input type="checkbox" id="checkbox" name="checkbox" onclick="habilitaDeshabilita(this.form);" value="checkbox" tabindex="4">
 			<label for="checkbox">First time here?</label></div>
 		</div>

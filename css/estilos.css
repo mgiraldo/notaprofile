@@ -254,3 +254,72 @@ h2 {
 #listaconexiones li .ella {
 	color:#FF0000;
 }
+/* connections individual */
+#estadisticas{
+	width:207px;
+	float:left;
+}
+#llavescompartidas {
+	height: 31px;
+}
+#llavescompartidas .createkey {
+	float: right;
+	background: url(../img/btn_create.gif);
+	width: 202px;
+	height: 26px;
+}
+#llavescompartidas a.createkey {
+	display: block;
+}
+#llavescompartidas a.createkey span {
+	margin-left: -40000px;
+}
+#contenedor_lista{
+	float:right;
+	width:690px;
+}
+#listaconexionindividual li {
+	float: left;
+	width: 132px;
+	margin: 0 0 2px 6px;
+}
+#pie_connections {
+	height: 20px;
+	font-size: 12px;
+	margin: 3px;
+	text-align: right;
+	width:690px;
+	clear:both;
+}
+#textoestadistica{
+	width:160px;
+	margin-right:6px;
+	float:left;
+}
+#contenedor .me{
+	color:#0000FF;
+}
+#contenedor .they{
+	color:#FF0000;
+}
+#contenedor .bold{
+	font-weight:bold
+}
+#num_estadistica{
+	width:30px;
+	float:right;
+	text-align:right;
+}
+#espacio_up {
+	height:31px;
+}
+#contenedor {
+	height: 25px;
+	margin-bottom:6px;
+}
+#listaconexionindividual .yo img{
+	border: 2px solid #FF0000;
+}
+#listaconexionindividual .ellos img{
+	border: 2px solid #0000FF;
+}
