@@ -64,8 +64,8 @@ if(!NotAProfile::estaLogeado())
 				-->
 				<?php if($filtro==1){$class ="claimedactiva";}else{$class ="orphansactiva";}?>
 				<div id="mapatabs" class=<?php echo($class); ?>>
-					<div class="orphans"><a href="?filtro=0">orphans</a></div>
-					<div class="claimed"><a href="?filtro=1">claimed</a></div>					
+					<div class="orphans"><a href="/viewKeys/orphans">orphans</a></div>
+					<div class="claimed"><a href="/viewKeys/claimed">claimed</a></div>					
 				</div>
 				<ul id="listallaves">
 					<?php foreach ($llaves as &$llave) {
@@ -74,9 +74,9 @@ if(!NotAProfile::estaLogeado())
 							<!-- si la llave es mia o yo la reclame me sale la foto -->
 							<!-- si no es mia o no la reclame me sale generica -->
 							<?php if(NotAProfile::puedeSerVista($llave)){?>
-								<img src=<?php if(isset($llave['foto'])){echo("photos/".$llave['foto']."_t.jpg");}else{echo("img/fotogenerica.gif");}?> width="61" height="61" />
+								<img src=<?php if(isset($llave['foto'])){echo("/photos/".$llave['foto']."_t.jpg");}else{echo("/img/fotogenerica.gif");}?> width="61" height="61" />
 							<?php }else{?>
-								<img src="img/fotogenerica.gif" width="61" height="61" />
+								<img src="/img/fotogenerica.gif" width="61" height="61" />
 							<?php } // Termina if puedeSerVista?>
 						</div>
 						<div class="textollave">
