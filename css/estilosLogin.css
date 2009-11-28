@@ -37,6 +37,7 @@ h1 {
 }
 h2 {
 	font-size: 24px;
+	color:#FF0000;
 }
 #contenido {
 	width: 960px;
@@ -93,14 +94,14 @@ h2 {
 #text_box{
 	height:30px;
 	width:207px;
-	margin-top:10px;
+	margin-top:5px;
 	float:right;
 }
 #header{
 	height: 30px;
 	width:546px;
 	float:left;
-	margin-bottom:10px;
+	margin-bottom:5px;
 }
 #box {
 	width:201px;
@@ -110,7 +111,7 @@ h2 {
 #sign {
 	height: 30px;
 	float:right;
-	margin-bottom:10px;
+	margin-bottom:5px;
 }
 #checkbox_1 {
 	height: 30px;
