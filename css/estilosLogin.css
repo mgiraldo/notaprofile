@@ -87,21 +87,28 @@ h2 {
 #boton{
 	height:30px;
 	width:195px;
-	margin-top:7px;
+	margin-top:4px;
 	float:right;
 }
 #text_box{
-	height:30px;
+	height:26px;
 	width:207px;
-	margin-top:5px;
+	margin-top:8px;
 	float:right;
 }
 #header{
-	height: 30px;
+	height: 26px;
 	width:546px;
 	float:left;
-	margin-bottom:5px;
-	color:#FF0000;
+}
+#info{
+	height: 26px;
+	width:546px;
+	margin-top:5px;
+	float:left;
+}
+#header h2{
+	color:#FCAF3F;
 }
 #box {
 	width:201px;
@@ -109,15 +116,20 @@ h2 {
 	font-size:16px;
 }
 #sign {
-	height: 30px;
+	height: 22px;
 	float:right;
-	margin-bottom:5px;
+	color:#999999;
+}
+#sign_link{
+	height: 22px;
+	float:right;
+	width:220px;
 }
 #checkbox_1 {
-	height: 30px;
-	width: 546px;
-	float:left;
-	margin-bottom:10px;
+	height: 22px;
+	width: 207px;
+	float:right;
+	font-weight:bold;
 }
 #sign h3 {
 	text-align:right;
@@ -131,21 +143,20 @@ h2 {
 	font-size:14px;
 	text-align:right;
 }
+#sign_link h4 {
+	text-align:right;
+	font-weight: normal;
+	margin-top:2px;
+	font-size:14px;
+	text-align:right;
+	margin-right:5px;
+}
 #englobador_sign_in{
 	width:546px;
-	height:160px;
+	height:150px;
 }
 #englobador_sign_up{
 	width:546px;
-}
-
-#errorLogin{
-	width:546px;
-	height:60px;
-	font-size:16px;
-	color:#F00;
-	font-weight:bold;
-	text-align:center;
 }
 /* PIE */
 #pie {
