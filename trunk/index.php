@@ -140,13 +140,13 @@ switch($error){
             <div id="text_box"><input id="box" type="password" name="pass" tabindex="2"></div>
             <div id="sign"><h3>password:</h3></div>
 			<div id="boton">&nbsp;</div>
-			<div id="sign"><h4><a href="/forgotPassword.php">forgot_password</a></h4></div>
+			<div id="sign_link"><h4><a href="/forgotPassword.php">forgot_password</a></h4></div>
 			<div id="checkbox_1"><input type="checkbox" id="checkbox" name="checkbox" onclick="habilitaDeshabilita(this.form);" value="checkbox" tabindex="4">
-			<label for="checkbox">I'm new</label></div>
+			<label for="checkbox">First time here?</label></div>
 		</div>
         <div id="englobador_sign_up">
             <div id="header"><h2>sign_up</h2></div>
-            <div id="header">just_rewrite_your_password!!</div>
+            <div id="info">just_rewrite_your_password!!</div>
             <div id="boton"><input type="image" id="botonSignUp" src="/img/submit.png" name="signup" value ="Sign_Up" height="26" width="195" border="0" vspace="0" alt="Sign up"  tabindex="6" />  
             </div><div id="text_box"><input id="box" type="password" name="pass2" tabindex="5"></div>
             <div id="sign"><h3>password:</h3></div>
