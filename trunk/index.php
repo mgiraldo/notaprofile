@@ -139,9 +139,9 @@ switch($error){
             <div id="boton"><input type="image" id="botonSignIn" src="/img/enter.png" name="submit" value="Sign_In" height="26" width="195" border="0" vspace="0"  alt="Sing in" tabindex="3" /></div>
             <div id="text_box"><input id="box" type="password" name="pass" tabindex="2"></div>
             <div id="sign"><h3>password:</h3></div>
-			<div id="boton">&nbsp;</div>
-            <div id="sign"><h4><a href="/forgotPassword.php">forgot_password</a></h4></div>
-            <div id="checkbox_1"><input type="checkbox" id="checkbox" name="checkbox" onclick="habilitaDeshabilita(this.form);" value="checkbox" tabindex="4" >I'm new</div>
+			<div id="sign"><h4><a href="/forgotPassword.php">forgot_password</a></h4></div>
+            <div id="boton">&nbsp;</div>
+            <div id="checkbox_1"><input type="checkbox" id="checkbox" name="checkbox" onclick="habilitaDeshabilita(this.form);" value="checkbox" tabindex="4" id="soynuevo" ><label for="soynuevo">I'm new</label></div>
 		</div>
         <div id="englobador_sign_up">
             <div id="header"><h2>sign_up</h2></div>
