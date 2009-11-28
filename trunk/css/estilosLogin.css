@@ -37,7 +37,6 @@ h1 {
 }
 h2 {
 	font-size: 24px;
-	color:#FF0000;
 }
 #contenido {
 	width: 960px;
@@ -102,6 +101,7 @@ h2 {
 	width:546px;
 	float:left;
 	margin-bottom:5px;
+	color:#FF0000;
 }
 #box {
 	width:201px;
