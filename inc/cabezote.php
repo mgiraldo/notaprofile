@@ -8,6 +8,6 @@
 		<?php $email = $_SESSION['username'];
 		List ($user, $emailCompany) = split("@", $email);
 		?>
-			user: <?php echo($user);?> | <a href="home.php?logout=si">log_out</a>
+			user: <?php echo($user);?> | <a href="/logout">log_out</a>
 		</div>
 	</div>

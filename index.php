@@ -3,9 +3,19 @@
  * Pagina Inicial del Proyecto
  */
 require_once 'lib/class/NotAProfile.php';
+
+if(isset($_GET['logout'])){
+	NotAProfile::cerrarSesion();
+	header("Location: ./index.php");
+}
+
+
+
 if(NotAProfile::estaLogeado()){
 	header("Location: ./notprofile.php");
 }else{
+	
+
 
 // Declaramos las variables que vamos a usar en el formulario para prevenir XSS por URL
 $email = "";
