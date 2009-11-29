@@ -74,7 +74,7 @@ if(!NotAProfile::estaLogeado())
 							<!-- si la llave es mia o yo la reclame me sale la foto -->
 							<!-- si no es mia o no la reclame me sale generica -->
 							<?php if(NotAProfile::puedeSerVista($llave)){?>
-								<img src=<?php if(isset($llave['foto'])){echo("/photos/".$llave['foto']."_t.jpg");}else{echo("/img/fotogenerica.gif");}?> width="61" height="61" />
+								<img src=<?php if(isset($llave['foto'])||$llave['foto']!=""){echo("/photos/".$llave['foto']."_t.jpg");}else{echo("/img/fotogenerica.gif");}?> width="61" height="61" />
 							<?php }else{?>
 								<img src="/img/fotogenerica.gif" width="61" height="61" />
 							<?php } // Termina if puedeSerVista?>
