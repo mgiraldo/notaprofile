@@ -627,6 +627,32 @@ class NotAProfile{
 	}
 	
 	/*
+	 * Función que se encarga de subir la imagen de la llave enviada desde email.
+	 * @param $str: string binario con el archivo: 
+	 */
+	public static function subirFotoEmail ($str) {
+		global $app;
+		$filename = date('YmdHis') . rand(1000,9999);
+		$full = $app['siteroot'] . $app['photoroot'] . $filename;
+		$data = base64_decode($str);
+		$im = imagecreatefromstring($data);
+		if ($im != false) {
+			imagepng($im, $full);
+		}
+		/**/
+		$e = PPUpload::resizeViral($filename);
+		if ($e==-1) {
+			return "error_notimage";
+		} else if ($e==-2) {
+			return "error_nofile";
+		} else {
+			return $e;
+		}
+		return $e;
+		/**/
+	}
+
+	/*
 	 * Función que se encarga de subir la imagen de la llave.
 	 * @param $field: nombre del campo post: 
 	 */
