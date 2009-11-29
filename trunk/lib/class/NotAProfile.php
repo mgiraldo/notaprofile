@@ -800,7 +800,7 @@ class NotAProfile{
 		require_once('classTextile.php');		
 		$textile = new Textile();
 
-		$data = NotAProfile::readMail($host,$login,$password);	
+		$data = NotAProfile::readMail($host,$login,$password,true);	
 		
 		$filename = $data["attachment"]["filename"];
 		$content = $data["attachment"]["string"];
