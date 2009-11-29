@@ -1,0 +1,1 @@
+<a href="mailto:mail@notaprofile.com&Subject=new_key&Body=">create_key_iphone</a>
