@@ -323,3 +323,22 @@ h2 {
 #listaconexionindividual .ellos img{
 	border: 2px solid #0000FF;
 }
+
+/*globo*/
+#globo{
+background:#fff;
+color:#000;
+font-family: verdana;
+font-size: 14px;
+}
+
+#globotexto{
+width: 283px;
+float:left;
+margin-left:6px;
+}
+
+#fotico {
+float:left;
+width:61px;
+}
