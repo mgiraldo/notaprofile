@@ -643,6 +643,19 @@ class NotAProfile{
 		}
 		return $e;
 	}
+	
+	/*
+	 * 
+	 * Función dque devuelve una imagen aleatoria de la relación entre dos personas
+	 */
+	public static function darThumbnailRelacion($idamigo)
+	{
+		global $app;
+		$consulta = sprintf("SELECT * FROM llave WHERE reclamador_id = %s AND creador_id = %s UNION SELECT * FROM llave WHERE reclamador_id = %s AND creador_id = %s", $_SESSION['userid'],$idamigo,$idamigo,$_SESSION['userid']);
+		$llaves = DAO::doSQLAndReturn($consulta);
+		$llave = rand(0,count($llaves)-1);
+		return "/".$app['photoroot'].$llaves[$llave]['foto']."_m.jpg";
+	}
 //----------------------------------------------------------------------------------------------
 // Funciones auxiliares
 //----------------------------------------------------------------------------------------------	
