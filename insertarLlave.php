@@ -6,7 +6,7 @@ require_once('lib/class/NotAProfile.php');
 
 $textile = new Textile();
 $msg = "";
-if(isset($_POST["latitud"])&&isset($_POST["longitud"]))
+if(isset($_POST["latitude"])&&isset($_POST["longitude"]))
 {
 	if(($_POST["texto"]!="")||($_FILES['image']["name"]!=""))
 	{
@@ -17,19 +17,20 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"]))
 		}
 		
 		//Texto enriquecido
-		$texto = $textile->TextileThis($_POST["message_text"]);
-		$codigo = NotAProfile::crearLlave($_POST["latitud"],$_POST["longitud"],$texto,$foto);
+		$texto = $textile->TextileThis($_POST["texto"]);
+		$codigo = NotAProfile::crearLlave($_POST["latitude"],$_POST["longitude"],$texto,$foto);
 		
 		
 		if($codigo!="error")
 		{
 		 $msg = $codigo;
+		 header( "Location: $codigo");
 		}
 		else
 		{
 		  $msg = "error_creating_key";
 		}
-		die($msg);
+		
 	}
 }
 
@@ -52,6 +53,7 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"]))
         map.setCenter(new GLatLng(4.620913,-74.083643), 13);
         map.addControl(new GSmallMapControl());
         map.addControl(new GMapTypeControl());
+        map.enableScrollWheelZoom();
         GEvent.addListener(map, "click", function(overlay,latlng) {
 				llave = latlng;
 				document.getElementById("latitude").value = latlng.lat();
@@ -88,6 +90,7 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"]))
 <div id="contenido">
 
 	<?php include("./inc/cabezote.php"); ?>
+	<p><?php echo($msg);?></p>
 	<div id="cuerpo_sign">
 		<form method="post" enctype="multipart/form-data">
 		<div id="create_key">
@@ -118,19 +121,19 @@ if(isset($_POST["latitud"])&&isset($_POST["longitud"]))
             </div>
             <div id="location">
             	<div id="location_latitude_box">
-                	<input id="latitude" type="text" readonly="readonly"/>
+                	<input id="latitude" name="longitude" type="hidden" readonly="readonly"/>
                 </div>
                 <div id="location_latitude">
-                	latitud:
+                	
                 </div>
                 <div id="location_latitude_box">
-                	<input id="longitude" name="latitud" type="text" readonly="readonly"/>
+                	<input id="longitude" name="latitude" type="hidden" readonly="readonly"/>
                 </div>
                 <div id="location_longitude">
-                	longitude:
+                	
                 </div>
             	<div id="button_create_key">
-            	<input type="image" id="botonCreateKey" name="longitud" src="./img/create.png" name="create" value ="create" height="26" width="195" border="0" vspace="0" alt="enter" tabindex="6" />
+            	<input type="image" id="botonCreateKey" src="./img/create.png" name="create" value ="create" height="26" width="195" border="0" vspace="0" alt="enter" tabindex="6" />
             	</div>
 			</div>
 		</div>
