@@ -160,6 +160,7 @@ class PPUpload {
 		$thumb_full = $source_dir . $source_name . "_t.jpg";
 		$resize_iphone = $source_dir . $source_name . "_ip.jpg";
 		$resize_full = $source_dir . $source_name . ".jpg";
+		$resize_m = $source_dir . $source_name . "_m.jpg";
 		/**
 		if (!exif_imagetype($source_full)) {
 			//trigger_error("ERROR_NOT_IMAGE",E_USER_ERROR);
@@ -219,6 +220,9 @@ class PPUpload {
 		system($command);
 		
 		$command = $app['convert_path'] . $size . $source_full . ' -resize ' . $app['iphone_size'] . '  -quality 100 +profile "*" ' . $resize_iphone . '';
+		
+		$command = $app['convert_path'] . $size . $source_full . ' -resize ' . $app['msize'] . '  -quality 100 +profile "*" ' . $resize_m . '';
+		
 		//echo $command;
 		system($command);
 		
