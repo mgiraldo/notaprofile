@@ -627,32 +627,6 @@ class NotAProfile{
 	}
 	
 	/*
-	 * Función que se encarga de subir la imagen de la llave enviada desde email.
-	 * @param $str: string binario con el archivo: 
-	 */
-	public static function subirFotoEmail ($str) {
-		global $app;
-		$filename = date('YmdHis') . rand(1000,9999);
-		$full = $app['siteroot'] . $app['photoroot'] . $filename;
-		$data = base64_decode($str);
-		$im = imagecreatefromstring($data);
-		if ($im != false) {
-			imagepng($im, $full);
-		}
-		/**/
-		$e = PPUpload::resizeViral($filename);
-		if ($e==-1) {
-			return "error_notimage";
-		} else if ($e==-2) {
-			return "error_nofile";
-		} else {
-			return $e;
-		}
-		return $e;
-		/**/
-	}
-
-	/*
 	 * Función que se encarga de subir la imagen de la llave.
 	 * @param $field: nombre del campo post: 
 	 */
@@ -709,7 +683,181 @@ class NotAProfile{
 		mail($to_email,$subject,$body,$headers);
 	}
 	
+	/*
 	
+	FUNCIONES PARA CREAR LLAVES DESDE EL MAIL
+	
+	*/
+	
+	/*
+	 * Función que se encarga de subir la imagen de la llave enviada desde email.
+	 * @param $str: string binario con el archivo: 
+	 */
+	public static function subirFotoEmail ($str) {
+		global $app;
+		$filename = date('YmdHis') . rand(1000,9999) . ".xxx";
+		$full = $app['siteroot'] . $app['photoroot'] . $filename;
+		$data = base64_decode($str);
+		$im = imagecreatefromstring($data);
+		if ($im != false) {
+			imagepng($im, $full);
+		}
+		/**/
+		$e = PPUpload::resizeViral($filename);
+		if ($e==-1) {
+			return "error_notimage";
+		} else if ($e==-2) {
+			return "error_nofile";
+		} else {
+			return $e;
+		}
+		return $e;
+		/**/
+	}
+
+	public static function readMail ($host,$login,$password,$must_delete=false) {
+		$r = array();
+		$r["from"] = "";
+		$r["text"] = "";
+		$r["attachment"] = array();
+		// Open pop mailbox
+		if (!$mbox = imap_open ($host, $login, $password)) {
+			die ('Cannot connect/check pop mail! Exiting');
+		}
+		
+		if ($hdr = imap_check($mbox)) {
+			$msgCount = $hdr->Nmsgs;
+		} else {
+			echo "Failed to get mail";
+			exit;
+		}
+		
+		$MN=$msgCount;
+		
+		for ($X = 1; $X <= $MN; $X++) {
+			$overview = imap_fetch_overview($mbox, $X);
+			$r["from"] = $overview[0]->from;
+			$struct = imap_fetchstructure($mbox, $X);
+			$parts = NotAProfile::create_part_array($struct);
+			foreach ($parts as $part) {
+				if ($part["part_object"]->type==0) {
+					// es texto... meter en el string
+					$r["text"] .= imap_fetchbody($mbox,$X,$part["part_number"]);
+				} else if ($part["part_object"]->type==5) {
+					$r["attachment"]["filename"] = $part["part_object"]->dparameters[0]->value;
+					$r["attachment"]["string"] = imap_fetchbody($mbox,$X,$part["part_number"]);
+				}
+			}
+			if ($must_delete) {
+				imap_delete($mbox, $X);
+			}
+		}
+		
+		if ($must_delete) {
+			imap_expunge($mbox);
+		}
+		imap_close($mbox);
+		return $r;
+	}
+	
+	 public static function crearLlaveEmail($lat, $long, $texto, $foto, $email){
+	 	global $app;
+		$conn = DAO::getConn();
+		$codigo = NotAProfile::elegirCodigoUnico();
+		// buscar el mail
+		$sql = sprintf("SELECT id FROM usuario WHERE email = '%s'",
+						mysql_real_escape_string($email, $conn)
+						);
+		$q = DAO::doSQLAndReturn($sql);
+		if (count($q)>0) {
+			$creador_id= $q[0]['id'];
+			$fecha = date("c");
+			$sql = sprintf("INSERT INTO llave (txt,latitud,longitud,codigo,creador_id,fecha_creado,foto) VALUES ('%s','%s','%s','%s','%s','%s','%s')",
+						mysql_real_escape_string($texto, $conn),
+						mysql_real_escape_string($lat, $conn),
+						mysql_real_escape_string($long, $conn),
+						mysql_real_escape_string($codigo, $conn),
+						mysql_real_escape_string($creador_id, $conn),
+						mysql_real_escape_string($fecha, $conn),
+						mysql_real_escape_string($foto, $conn)
+						);
+			DAO::doSQL($sql);
+			$url = $app['url']."key/".$codigo;
+			return $url;
+		} else {
+			return false;
+		}
+	}
+	
+	public static function mailKeyCode () {
+		global $app;
+		// sacar esto al config luego
+		$host="{s9117.gridserver.com:110/pop3}"; // pop3host
+		$login="upload@notaprofile.com"; //pop3 login
+		$password="notaprof1le"; //pop3 password
+		// fin sacar config
+		
+		require_once('classTextile.php');		
+		$textile = new Textile();
+
+		$data = NotAProfile::readMail($host,$login,$password);	
+		
+		$filename = $data["attachment"]["filename"];
+		$content = $data["attachment"]["string"];
+		$foto = NotAProfile::subirFotoEmail($content);
+		$textile = new Textile();
+		$texto = $textile->TextileThis($data["text"]);
+		// se asume que el mail es de la forma: Nombre <email@sitio.com>
+		$tmp = explode("<",$data["from"]);
+		$stripmail = $tmp[1];
+		$stripmail = substr($stripmail,0,strlen($stripmail)-1);
+		$url = NotAProfile::crearLlaveEmail(1,1,$texto,$foto,$stripmail); // luego sacar lat/long desde el EXIF
+		if ($url!=false) {
+			$txt = $url."\r\n\r\n";
+			NotAProfile::sendMail("",$data["from"],"your key in not_a_profile",$txt);
+		} else {
+			die("email does not exist");
+		}
+	}
+	
+	public static function create_part_array($struct) {
+		if (sizeof($struct->parts) > 0) {    // There some sub parts
+			foreach ($struct->parts as $count => $part) {
+				NotAProfile::add_part_to_array($part, ($count+1), $part_array);
+			}
+		}else{    // Email does not have a seperate mime attachment for text
+			$part_array[] = array('part_number' => '1', 'part_object' => $struct);
+		}
+	   return $part_array;
+	}
+	
+	// Sub function for create_part_array(). Only called by create_part_array() and itself.
+	public static function add_part_to_array($obj, $partno, & $part_array) {
+		$part_array[] = array('part_number' => $partno, 'part_object' => $obj);
+		if ($obj->type == 2) { // Check to see if the part is an attached email message, as in the RFC-822 type
+			//print_r($obj);
+			if (sizeof($obj->parts) > 0) {    // Check to see if the email has parts
+				foreach ($obj->parts as $count => $part) {
+					// Iterate here again to compensate for the broken way that imap_fetchbody() handles attachments
+					if (sizeof($part->parts) > 0) {
+						foreach ($part->parts as $count2 => $part2) {
+							NotAProfile::add_part_to_array($part2, $partno.".".($count2+1), $part_array);
+						}
+					}else{    // Attached email does not have a seperate mime attachment for text
+						$part_array[] = array('part_number' => $partno.'.'.($count+1), 'part_object' => $obj);
+					}
+				}
+			}else{    // Not sure if this is possible
+				$part_array[] = array('part_number' => $prefix.'.1', 'part_object' => $obj);
+			}
+		}else{    // If there are more sub-parts, expand them out.
+			if (sizeof($obj->parts) > 0) {
+				foreach ($obj->parts as $count => $p) {
+					NotAProfile::add_part_to_array($p, $partno.".".($count+1), $part_array);
+				}
+			}
+		}
+	}
 }
 
 
