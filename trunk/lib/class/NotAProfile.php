@@ -815,8 +815,6 @@ class NotAProfile{
 		if ($url!=false) {
 			$txt = $url."\r\n\r\n";
 			NotAProfile::sendMail("",$data["from"],"your key in not_a_profile",$txt);
-		} else {
-			die("email does not exist");
 		}
 	}
 	
