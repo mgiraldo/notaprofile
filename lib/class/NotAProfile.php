@@ -802,19 +802,21 @@ class NotAProfile{
 
 		$data = NotAProfile::readMail($host,$login,$password,true);	
 		
-		$filename = $data["attachment"]["filename"];
-		$content = $data["attachment"]["string"];
-		$foto = NotAProfile::subirFotoEmail($content);
-		$textile = new Textile();
-		$texto = $textile->TextileThis($data["text"]);
-		// se asume que el mail es de la forma: Nombre <email@sitio.com>
-		$tmp = explode("<",$data["from"]);
-		$stripmail = $tmp[1];
-		$stripmail = substr($stripmail,0,strlen($stripmail)-1);
-		$url = NotAProfile::crearLlaveEmail(1,1,$texto,$foto,$stripmail); // luego sacar lat/long desde el EXIF
-		if ($url!=false) {
-			$txt = $url."\r\n\r\n";
-			NotAProfile::sendMail("",$data["from"],"your key in not_a_profile",$txt);
+		if ($data["from"]!="") {
+			$filename = $data["attachment"]["filename"];
+			$content = $data["attachment"]["string"];
+			$foto = NotAProfile::subirFotoEmail($content);
+			$textile = new Textile();
+			$texto = $textile->TextileThis($data["text"]);
+			// se asume que el mail es de la forma: Nombre <email@sitio.com>
+			$tmp = explode("<",$data["from"]);
+			$stripmail = $tmp[1];
+			$stripmail = substr($stripmail,0,strlen($stripmail)-1);
+			$url = NotAProfile::crearLlaveEmail(1,1,$texto,$foto,$stripmail); // luego sacar lat/long desde el EXIF
+			if ($url!=false) {
+				$txt = $url."\r\n\r\n";
+				NotAProfile::sendMail("",$data["from"],"your key in not_a_profile",$txt);
+			}
 		}
 	}
 	
