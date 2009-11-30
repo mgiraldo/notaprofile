@@ -35,9 +35,6 @@ body {
 #gmap {
 	height: 416px;
 }
-#bubble {
-	color: #000;
-}
 -->
 </style>
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=true&amp;key=<?php echo $app["apiKey"] ?>" type="text/javascript"></script>
@@ -78,14 +75,6 @@ function gMapper (position) {
     marker.openInfoWindowHtml("<div id=\"bubble\"><a href=\"mailto:upload@notaprofile.com?subject="+position.coords.latitude+","+position.coords.longitude+"&body=write_here_or_delete_this\">create a key here</a><br />or drag the pointer to your location</div>", {maxWidth:225});
 
 	map.addOverlay(marker);
-}
-function handler(location) {
-	var message = document.getElementById("gmap");
-	message.innerHTML ="<img src='http://maps.google.com/staticmap?center=" + location.coords.latitude + "," + location.coords.longitude + "&size=300x300&maptype=hybrid&zoom=16&key=<?php echo $app["apiKey"] ?>' />";
-	// message.innerHTML+="<p>Longitude: " + location.coords.longitude + "</p>";
-	// message.innerHTML+="<p>Latitude: " + location.coords.latitude + "</p>";
-	// message.innerHTML+="<p>Accuracy: " + location.coords.accuracy + "</p>";
-	message.innerHTML+="<p><a href=\"mailto:upload@notaprofile.com?subject="+location.coords.latitude+","+location.coords.longitude+"&body=write_here_or_delete_this\"><img src=\"/img/btn_create.gif\" /></a></p>";
 }
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head>

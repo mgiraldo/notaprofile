@@ -29,16 +29,13 @@ require_once 'lib/class/NotAProfile.php';
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="css/estilos.css" rel="stylesheet" type="text/css" />
+<link href="/css/estilos.css" rel="stylesheet" type="text/css" />
 <title>not_a_profile: <?php echo $primerosCaracteres ?></title>
 <style>
 #fotollave {
 	<?php 
 	if($llave[0]['reclamador_id'] == "" || $llave[0]['reclamador_id'] == $_SESSION['userid']){ ?>
-		background: url(<?php echo ($app['photoroot'].$llave[0]['foto'].".jpg") ?>) repeat-x;
-	<?php }
-	else{ ?>
-		background: url(/img/fotoejemplo.jpg) repeat-x;
+		background: url(/<?php echo ($app['photoroot'].$llave[0]['foto'].".jpg") ?>) repeat-x;
 	<?php } ?>		
 }
 </style>
@@ -92,8 +89,7 @@ require_once 'lib/class/NotAProfile.php';
 		}
 		else{?>
 			<div id="textollave">
-				Ups!
-				the key has already been claimed
+				the key has already been claimed :(
 			</div>
 		<?php } ?>
 	</div>
