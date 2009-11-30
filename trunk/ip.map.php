@@ -62,7 +62,7 @@ function gMapper (position) {
 		if (overlay==null && pos) {
 			marker.closeInfoWindow();
 			marker.setLatLng(pos);
-			marker.openInfoWindowHtml("<div id=\"bubble\"><a href=\"mailto:upload@notaprofile.com?subject="+pos.lat()+","+pos.lng()+"&body=write_here_or_delete_this\">create a key here</a></div>", {maxWidth:225});
+			marker.openInfoWindowHtml("<div id=\"bubble\"><a href=\"mailto:upload@notaprofile.com?from=<?php echo $_SESSION['username'] ?>&subject="+pos.lat()+","+pos.lng()+"&body=write_here_or_delete_this\">create a key here</a></div>", {maxWidth:225});
 		}
 	});
 	
@@ -72,17 +72,17 @@ function gMapper (position) {
 
     GEvent.addListener(marker, "dragend", function(pos) {
 							if (pos) {
-    							marker.openInfoWindowHtml("<div id=\"bubble\"><a href=\"mailto:upload@notaprofile.com?subject="+pos.lat()+","+pos.lng()+"&body=write_here_or_delete_this\">create a key here</a></div>", {maxWidth:225});
+    							marker.openInfoWindowHtml("<div id=\"bubble\"><a href=\"mailto:upload@notaprofile.com?from=<?php echo $_SESSION['username'] ?>&subject="+pos.lat()+","+pos.lng()+"&body=write_here_or_delete_this\">create a key here</a></div>", {maxWidth:225});
 							}
     });
 
     GEvent.addListener(marker, "click", function(pos) {
 							if (pos) {
-    							marker.openInfoWindowHtml("<div id=\"bubble\"><a href=\"mailto:upload@notaprofile.com?subject="+pos.lat()+","+pos.lng()+"&body=write_here_or_delete_this\">create a key here</a></div>", {maxWidth:225});
+    							marker.openInfoWindowHtml("<div id=\"bubble\"><a href=\"mailto:upload@notaprofile.com?from=<?php echo $_SESSION['username'] ?>&subject="+pos.lat()+","+pos.lng()+"&body=write_here_or_delete_this\">create a key here</a></div>", {maxWidth:225});
 							}
     });
 
-    marker.openInfoWindowHtml("<div id=\"bubble\"><a href=\"mailto:upload@notaprofile.com?subject="+position.coords.latitude+","+position.coords.longitude+"&body=write_here_or_delete_this\">create a key here</a><br />or drag the pointer to your location</div>", {maxWidth:225});
+    marker.openInfoWindowHtml("<div id=\"bubble\"><a href=\"mailto:upload@notaprofile.com?from=<?php echo $_SESSION['username'] ?>&subject="+position.coords.latitude+","+position.coords.longitude+"&body=write_here_or_delete_this\">create a key here</a><br />or drag the pointer to your location</div>", {maxWidth:225});
 
 	map.addOverlay(marker);
 }
