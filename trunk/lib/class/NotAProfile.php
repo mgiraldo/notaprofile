@@ -899,6 +899,8 @@ class NotAProfile{
 	 * FUNCIONES DE COMPATIBILIDAD
 	 */
 	public static function youLike($id_otro){
+		$id_otro = htmlentities($id_otro);
+		
 		$id_mio = $_SESSION['userid'];
 		// Llaves que el reclamo y a mi me gustaron
 		$sql = "SELECT COUNT(*) AS cuantas FROM llave WHERE creador_id = $id_otro AND reclamador_id = $id_mio AND flag_aceptado = 1";
@@ -939,8 +941,15 @@ class NotAProfile{
 		$idislike = NotAProfile::youDislike($id_otro);
 		$heLikes = NotAProfile::heLikes($id_otro);
 		$heDislike = NotAProfile::heDislikes($id_otro);
+		
+		
+		$sql = "SELECT COUNT(*) AS cuantas FROM llave WHERE (creador_id = $id_otro AND reclamador_id = $id_mio) OR (creador_id = $id_mio AND reclamador_id = $id_otro)";
+		$resp = DAO::doSQLAndReturn($sql);
+		$totalLlaves = $resp[0]['cuantas'];
 		$valor = 3*$ilike-$idislike+3*$heLikes-$heDislike;
-		return $valor;
+		$num = $valor==0? 0: $totalLlaves/(3*$ilike-$idislike+3*$heLikes-$heDislike)*100;
+	
+		return number_format($num, 1)."%";
 	}
 	
 	
