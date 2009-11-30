@@ -801,7 +801,6 @@ class NotAProfile{
 						mysql_real_escape_string($fecha, $conn),
 						mysql_real_escape_string($foto, $conn)
 						);
-			echo ($sql);
 			DAO::doSQL($sql);
 			$url = $app['url']."key/".$codigo;
 			return $url;
@@ -821,7 +820,7 @@ class NotAProfile{
 		require_once('classTextile.php');		
 		$textile = new Textile();
 
-		$mails = NotAProfile::readMail($host,$login,$password,false);
+		$mails = NotAProfile::readMail($host,$login,$password,true);
 		
 		// procesa todos los mails que haya
 		if (count($mails)>0) {
@@ -837,8 +836,8 @@ class NotAProfile{
 					}
 					$coords = explode(",",$data["subject"]);
 					if (count($coords)==2) {
-						$lat = floatval($coords[0]) ? floatval($coords[0]) : NULL;
-						$lng = floatval($coords[1]) ? floatval($coords[1]) : NULL;
+						$lat = $coords[0] ? $coords[0] : NULL;
+						$lng = $coords[1] ? $coords[1] : NULL;
 					}
 					$textile = new Textile();
 					$texto = $textile->TextileThis($data["text"]);
