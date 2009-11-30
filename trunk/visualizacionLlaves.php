@@ -66,13 +66,13 @@ if(!NotAProfile::estaLogeado())
 				class = dinámico
 				-->
 				<?php if($filtro==1){$class ="claimedactiva";}else{$class ="orphansactiva";}?>
-				<div id="mapatabs" class=<?php echo($class); ?>>
+				<div id="mapatabs" class="<?php echo($class); ?>">
 					<div class="orphans"><a href="/view/orphans">orphans</a></div>
 					<div class="claimed"><a href="/view/claimed">claimed</a></div>					
 				</div>
 				<ul id="listallaves">
-					<?php foreach ($llaves as &$llave) {
-						echo "					<li id = llave".$llave['id']."a";?>
+					<?php foreach ($llaves as &$llave) {?>
+						<li>
 						<div class="fotollave">
 							<!-- si la llave es mia o yo la reclame me sale la foto -->
 							<!-- si no es mia o no la reclame me sale generica -->
@@ -80,7 +80,7 @@ if(!NotAProfile::estaLogeado())
 								<img src=<?php if(isset($llave['foto'])||$llave['foto']!=""){echo("/photos/".$llave['foto']."_t.jpg");}else{echo("/img/fotogenerica.gif");}?> width="61" height="61" />
 							<?php }else{?>
 								<img src="/img/fotogenerica.gif" width="61" height="61" />
-							<?php } // Termina if puedeSerVista?>
+							<?php } // Termina if puedeSerVista ?>
 						</div>
 						<div class="textollave">
 							<!-- esto sale si la llave es MIA o YO LA RECLAME -->

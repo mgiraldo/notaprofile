@@ -1,8 +1,8 @@
 	<div id="cabezote">
 		<h1>not_a_profile</h1>
 		<ul id="nav">
-			<li><a href="#">keyring</a></li>
-			<li><a href="#">connections</a></li>
+			<li><a href="/view">keyring</a></li>
+			<li><a href="/connections">connections</a></li>
 		</ul>
 		<div id="userinfo">
 		<?php $email = $_SESSION['username'];

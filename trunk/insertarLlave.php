@@ -39,7 +39,8 @@ if(isset($_POST["latitude"])&&isset($_POST["longitude"]))
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="css/estilosInsertarLlave.css" rel="stylesheet" type="text/css" />
+<link href="/css/estilos.css" rel="stylesheet" type="text/css" />
+<link href="/css/estilosInsertarLlave.css" rel="stylesheet" type="text/css" />
 <title>not_a_profile</title>
 </head>
  <script src="http://maps.google.com/maps?file=api&v=2&key=<?php echo $app['apiKey'] ?>&sensor=true"
@@ -50,7 +51,8 @@ if(isset($_POST["latitude"])&&isset($_POST["longitude"]))
     function initialize() {
       if (GBrowserIsCompatible()) {
         map = new GMap2(document.getElementById("gmap"));
-        map.setCenter(new GLatLng(4.620913,-74.083643), 13);
+		var defaultLatLng = new GLatLng(4.620913,-74.083643);
+        map.setCenter(defaultLatLng, 13);
         map.addControl(new GSmallMapControl());
         map.addControl(new GMapTypeControl());
         map.enableScrollWheelZoom();
@@ -61,13 +63,20 @@ if(isset($_POST["latitude"])&&isset($_POST["longitude"]))
 				map.clearOverlays();
       	  		map.addOverlay(crearMarker(llave));
         	});
+		llave = defaultLatLng;
+		document.getElementById("latitude").value = defaultLatLng.lat();
+		document.getElementById("longitude").value = defaultLatLng.lng();
+		map.clearOverlays();
+		var marker = crearMarker(llave);
+		marker.openInfoWindowHtml("<div id=\"bubble\">your key will be created here or click your desired location</div>", {maxWidth:225});
+      	map.addOverlay(marker);
       }
     }
 
     function crearMarker(latlng)
     {
          var baseIcon = new GIcon(G_DEFAULT_ICON);
-         baseIcon.image = "llave.png";
+         baseIcon.image = "/img/llave.png";
          var tamanio = 16;
          baseIcon.iconSize = new GSize(tamanio, tamanio+tamanio*0.7);
          baseIcon.shadowSize = new GSize(37, 34);
@@ -97,9 +106,9 @@ if(isset($_POST["latitude"])&&isset($_POST["longitude"]))
             <div id="preview_image">
                 <img id="img" width='270' height='138' src="./img/nofoto.jpg" />
                 <!--
-                el div tiene el tamaño indicado, la pregunta concretamente es sí se muestra un preview de la imagen al sacarla del browser,
-                por lo que tocaría usar el convertidor de tamaños de imagen del que habla mauricio, o si simplemente no se muestra la imagen,
-                también debe haber un default que diga "please_select_a_image", y aquí mismo debe salir el error: "invalid image format""
+                el div tiene el tamaï¿½o indicado, la pregunta concretamente es sï¿½ se muestra un preview de la imagen al sacarla del browser,
+                por lo que tocarï¿½a usar el convertidor de tamaï¿½os de imagen del que habla mauricio, o si simplemente no se muestra la imagen,
+                tambiï¿½n debe haber un default que diga "please_select_a_image", y aquï¿½ mismo debe salir el error: "invalid image format""
                  -->
                  </div>
             <div id="browse">
@@ -121,13 +130,13 @@ if(isset($_POST["latitude"])&&isset($_POST["longitude"]))
             </div>
             <div id="location">
             	<div id="location_latitude_box">
-                	<input id="latitude" name="longitude" type="hidden" readonly="readonly"/>
+                	<input id="latitude" name="longitude" type="hidden" readonly="readonly" />
                 </div>
                 <div id="location_latitude">
                 	
                 </div>
                 <div id="location_latitude_box">
-                	<input id="longitude" name="latitude" type="hidden" readonly="readonly"/>
+                	<input id="longitude" name="latitude" type="hidden" readonly="readonly" />
                 </div>
                 <div id="location_longitude">
                 	
