@@ -944,6 +944,13 @@ class NotAProfile{
 	}
 	
 	
+	public static function darLlavesRelacion($id_otro){
+		$id_mio = $_SESSION['userid'];
+		$sql = "SELECT * FROM llave WHERE (creador_id = $id_otro AND reclamador_id = $id_mio) OR (creador_id = $id_mio AND reclamador_id = $id_otro)";
+		return DAO::doSQLAndReturn($sql);
+	}
+	
+	
 	
 	
 }
