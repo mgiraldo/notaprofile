@@ -6,12 +6,16 @@
 }
 body,td,th {
 	font-family: Courier New, Courier, monospace;
-	font-size: 18px;
+	font-size: 14px;
 	color: #FFF;
 	font-weight: normal;
 }
 body {
 	background-color: #000;
+}
+p {
+	line-height: 1.5em;
+	margin-bottom: 1.5em;
 }
 a:link {
 	color: #FCAF3F;
@@ -34,6 +38,8 @@ h1 {
 }
 h2 {
 	font-size: 24px;
+	font-weight: normal;
+	margin-bottom: 12px;
 }
 #contenido {
 	width: 960px;
@@ -47,7 +53,7 @@ h2 {
 }
 #cabezote h1 {
 	padding: 6px 0 12px 3px;
-	border-bottom: 3px solid #fff;
+	border-bottom: 1px solid #fff;
 }
 #nav {
 	float: left;
@@ -169,6 +175,7 @@ h2 {
 	font-size: 12px;
 	margin: 3px;
 	text-align: right;
+	padding-top: 63px;
 }
 /* LLAVE DETALLE */
 #fotollave {
@@ -328,6 +335,10 @@ h2 {
 #bubble {
 	color: #000;
 }
+#keyurl {
+	margin: 10px;
+	font-size: 10px;
+}
 #globo{
 background:#fff;
 color:#000;
@@ -344,4 +355,13 @@ margin-left:6px;
 #fotico {
 float:left;
 width:61px;
+}
+
+/* PAGINAS CON SOLO TEXTO */
+#textonly {
+	margin-bottom:0;
+	margin-left:138px;
+	margin-right:339px;
+	margin-top:0;
+	padding-left:4px;
 }
