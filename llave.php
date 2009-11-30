@@ -42,17 +42,20 @@ require_once 'lib/class/NotAProfile.php';
 }
 </style>
 
-        <?php if(!NotAProfile::estaLogeado()){ ?>
+        <?php if(!NotAProfile::estaLogeado()){ 
+        	header("Location: /index.php?r=/key/".$_GET['c']);
+        	?>
                         
-<script type="text/javascript" src="lib/javascript/jquery.js"></script>
-<script type="text/javascript" src="lib/javascript/thickbox.js"></script>
-<link rel="stylesheet" href="css/thickbox.css" type="text/css" media="screen" />
-<script> 
-        $(document).ready(function(){ 
-        tb_show("","index.php?tb=1&reclamollave=<?php echo($_GET['c']) ?>&KeepThis=true&TB_iframe=true&height=400&width=600&modal=true",""); 
-        }); 
-</script>
-                
+		<!--  
+		<script type="text/javascript" src="lib/javascript/jquery.js"></script>
+		<script type="text/javascript" src="lib/javascript/thickbox.js"></script>
+		<link rel="stylesheet" href="css/thickbox.css" type="text/css" media="screen" />
+		<script> 
+		        $(document).ready(function(){ 
+		        tb_show("","index.php?tb=1&reclamollave=<?php echo($_GET['c']) ?>&KeepThis=true&TB_iframe=true&height=400&width=600&modal=true",""); 
+		        }); 
+		</script>
+		            -->    
         <?php }?>
 
 </head>
@@ -85,7 +88,6 @@ require_once 'lib/class/NotAProfile.php';
                         <?php if($llave[0]['creador_id'] == $_SESSION['userid']){?>
                         <?php echo("www.notaprofile.com/key/".$_GET['c']);?>
                         <?php }?>
-                        
                         <?php echo($llave[0]['txt']);?>
                         </div>
                 
