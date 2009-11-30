@@ -66,7 +66,7 @@ $contactos = NotAProfile::darContactos();
         	}
         	?>
         	<?php if($foto!=NULL && $foto!="" && $llave['foto']!="error_nofile"){?>
-		  	<a href="#" class="imagen"><img src="<?php echo($foto)?>" alt="/img/btn_like.png" width="128" height="128" /></a>
+		  	<a href="#" class="imagen"><img src="<?php echo("/".$app['photoroot'].$foto."_m.jpg")?>" alt="/img/btn_like.png" width="128" height="128" /></a>
 			<?php 
         	}else{
 			?>
