@@ -939,7 +939,7 @@ class NotAProfile{
 		$idislike = NotAProfile::youDislike($id_otro);
 		$heLikes = NotAProfile::heLikes($id_otro);
 		$heDislike = NotAProfile::heDislikes($id_otro);
-		$valor = 2*$ilike-$idislike+3*$heLikes-$heDislike;
+		$valor = 3*$ilike-$idislike+3*$heLikes-$heDislike;
 		return $valor;
 	}
 	
