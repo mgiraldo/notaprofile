@@ -76,15 +76,16 @@ if(isset($_POST["latitude"])&&isset($_POST["longitude"]))
     function crearMarker(latlng)
     {
          var baseIcon = new GIcon(G_DEFAULT_ICON);
-         baseIcon.image = "/img/llave.png";
+         //baseIcon.image = "/img/llave.png";
          var tamanio = 16;
          baseIcon.iconSize = new GSize(tamanio, tamanio+tamanio*0.7);
          baseIcon.shadowSize = new GSize(37, 34);
          baseIcon.iconAnchor = new GPoint(9, 34);
          baseIcon.infoWindowAnchor = new GPoint(9, 2);
 
-         markerOptions = { icon:baseIcon };
-         var marker = new GMarker(latlng,markerOptions);
+         //markerOptions = { icon:baseIcon };
+         //var marker = new GMarker(latlng,markerOptions);
+         var marker = new GMarker(latlng);
          return marker;
     }
 
