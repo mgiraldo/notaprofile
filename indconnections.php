@@ -29,7 +29,7 @@ $usuariorelacion= $_GET['usr'];
 			Compatibility:
 			</div>
 			<div id="num_estadistica" class="bold">
-			<?php ?>
+			<?php echo(NotAProfile::compatibilidad($usuariorelacion));?>
 			</div>
 		</div>
 		<div id="contenedor">
@@ -37,7 +37,7 @@ $usuariorelacion= $_GET['usr'];
 			You like:
 			</div>
 			<div id="num_estadistica" class="me">
-			<?php  echo(NotAProfile::youLike($usuariorelacion)) ?>
+			<?php  echo(NotAProfile::youLike($usuariorelacion)); ?>
 			</div>
 		</div>
 		<div id="contenedor">
@@ -45,7 +45,7 @@ $usuariorelacion= $_GET['usr'];
 			You dislike:
 			</div>
 			<div id="num_estadistica" class="me">
-			<?php  echo(NotAProfile::youDislike($usuariorelacion)) ?>
+			<?php  echo(NotAProfile::youDislike($usuariorelacion)); ?>
 			</div>
 		</div>
 		<div id="contenedor">
@@ -53,7 +53,7 @@ $usuariorelacion= $_GET['usr'];
 			he/she likes:
 			</div>
 			<div id="num_estadistica" class="they">
-			<?php  echo(NotAProfile::heLikes($usuariorelacion)) ?>
+			<?php  echo(NotAProfile::heLikes($usuariorelacion)); ?>
 			</div>
 		</div>
 		<div id="contenedor">
@@ -61,7 +61,7 @@ $usuariorelacion= $_GET['usr'];
 			he/she dislikes:
 			</div>
 			<div id="num_estadistica"  class="they">
-			<?php  echo(NotAProfile::heDislikes($usuariorelacion)) ?>
+			<?php  echo(NotAProfile::heDislikes($usuariorelacion)); ?>
 			</div>
 		</div>
 	</div>
@@ -69,14 +69,23 @@ $usuariorelacion= $_GET['usr'];
 				<a class="createkey" href="/create"><span>create_a_key</span></a>
    </div>
     	<div id="contenedor_lista">	
-    	
+    		<?php $llaves =  NotAProfile::darLlavesRelacion($usuariorelacion);?>
 			<ul id="listaconexionindividual">
-			<li class="yo">
-				<a href="#" ><img src="img/btn_dislike.png" alt="123" width="128" height="128" /></a>
-			</li>
-			<li class="ellos">
-				<a href="#" ><img src="img/btn_dislike.png" alt="123" width="128" height="128" /></a>
-			</li>
+				<?php foreach ($llaves as $llave){?>
+				<li class="yo">
+					<a href="#" >
+					<?php $foto = $llave['foto'];?>
+					<?php if($foto!=NULL && $foto!="" && $llave['foto']!="error_nofile") {?>
+					<img src="<?php echo("/".$app['photoroot'].$foto."_m.jpg")?>" alt="123" width="128" height="128" /></a>
+					<?php }else{?>
+					<img src="img/btn_dislike.png" alt="123" width="128" height="128" />
+					<?php }?>
+					</a>
+				</li>
+				<li class="ellos">
+					<a href="#" ><img src="img/btn_dislike.png" alt="123" width="128" height="128" /></a>
+				</li>
+				<?php }?>
 			</ul>
 		</div>
 	  </div>
