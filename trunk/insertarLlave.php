@@ -130,13 +130,13 @@ if(isset($_POST["latitude"])&&isset($_POST["longitude"]))
             </div>
             <div id="location">
             	<div id="location_latitude_box">
-                	<input id="latitude" name="longitude" type="hidden" readonly="readonly" />
+                	<input id="latitude" name="latitude" type="hidden" readonly="readonly" />
                 </div>
                 <div id="location_latitude">
                 	
                 </div>
                 <div id="location_latitude_box">
-                	<input id="longitude" name="latitude" type="hidden" readonly="readonly" />
+                	<input id="longitude" name="longitude" type="hidden" readonly="readonly" />
                 </div>
                 <div id="location_longitude">
                 	

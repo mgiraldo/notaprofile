@@ -514,7 +514,10 @@ class NotAProfile{
 	 * Función que se encarga de devolver las llaves creadas por el usuario logeado que ya han sido reclamadas.
 	 */
 	public static function darLlavesCreadasReclamadas(){
-		$sql = sprintf("SELECT * FROM llave WHERE creador_id = %s AND reclamador_id IS NOT NULL",$_SESSION['userid']);
+		$conn = DAO::getConn();
+		$sql = sprintf("SELECT * FROM llave WHERE reclamador_id = %s OR (creador_id = %s AND reclamador_id > 0)",
+																		 mysql_real_escape_string($_SESSION['userid'], $conn),
+																		 mysql_real_escape_string($_SESSION['userid'], $conn));
 		return $llaves = DAO::doSQLAndReturn($sql);
 	}
 	/**
@@ -531,7 +534,7 @@ class NotAProfile{
 	 */
 	public static function darLlavesCreadasVencidas(){
 		global $app;
-		$sql = sprintf("SELECT * FROM llave WHERE creador_id = '%s' AND reclamador_id IS NULL AND DATEDIFF(NOW( ) , fecha_creado )> %s",$_SESSION['userid'], $app['dias_key_caduca']	);
+		$sql = sprintf("SELECT * FROM llave WHERE creador_id = %s AND reclamador_id IS NULL AND DATEDIFF(NOW( ) , fecha_creado )> %s",$_SESSION['userid'], $app['dias_key_caduca']	);
 		return $llaves = DAO::doSQLAndReturn($sql);
 	}
 	
@@ -540,7 +543,7 @@ class NotAProfile{
 	 * Función que se encarga de devolver las llaves que han sido reclamadas por el usuario logeado.
 	 */
 	public static function darLlavesReclamadas(){
-		$sql = sprintf("SELECT * FROM llave WHERE reclamador_id = '%s'",$_SESSION['userid']);
+		$sql = sprintf("SELECT * FROM llave WHERE reclamador_id = %s",$_SESSION['userid']);
 		return $llaves = DAO::doSQLAndReturn($sql);
 	}
 	
