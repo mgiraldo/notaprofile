@@ -172,7 +172,7 @@ h2 {
 }
 /* LLAVE DETALLE */
 #fotollave {
-	background: url(../img/fotoejemplo.jpg) repeat-x;
+	background: #000;
 	width: 100%;
 	height: 360px;
 	position: absolute;
