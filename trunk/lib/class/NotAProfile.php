@@ -900,6 +900,9 @@ class NotAProfile{
 	 */
 	public static function youLike($id_otro){
 		$id_otro = htmlentities($id_otro);
+		if(!is_numeric($id_otro)){
+			return "-";
+		}
 		
 		$id_mio = $_SESSION['userid'];
 		// Llaves que el reclamo y a mi me gustaron
@@ -909,6 +912,11 @@ class NotAProfile{
 	}
 	
 	public static function youDislike($id_otro){
+		$id_otro = htmlentities($id_otro);
+		if(!is_numeric($id_otro)){
+			return "-";
+		}
+		
 		$id_mio = $_SESSION['userid'];
 		// Llaves que el reclamo y a mi no me gustaron
 		$sql = "SELECT COUNT(*) AS cuantas FROM llave WHERE creador_id = $id_otro AND reclamador_id = $id_mio AND flag_aceptado = -1";
@@ -917,6 +925,11 @@ class NotAProfile{
 	}
 	
 	public static function heLikes($id_otro){
+		$id_otro = htmlentities($id_otro);
+		if(!is_numeric($id_otro)){
+			return "-";
+		}
+		
 		$id_mio = $_SESSION['userid'];
 		// Llaves que yo reclame y a el le gustaron
 		$sql = "SELECT COUNT(*) AS cuantas FROM llave WHERE creador_id = $id_mio AND reclamador_id = $id_otro AND flag_aceptado = 1";
@@ -925,6 +938,11 @@ class NotAProfile{
 	}
 	
 	public static function heDislikes($id_otro){
+		$id_otro = htmlentities($id_otro);
+		if(!is_numeric($id_otro)){
+			return "-";
+		}
+		
 		$id_mio = $_SESSION['userid'];
 		// Llaves que el reclamo y a mi me gustaron
 		$sql = "SELECT COUNT(*) AS cuantas FROM llave WHERE creador_id = $id_mio AND reclamador_id = $id_otro AND flag_aceptado = -1";
@@ -933,6 +951,12 @@ class NotAProfile{
 	}
 	
 	public static function compatibilidad($id_otro){
+		
+		$id_otro = htmlentities($id_otro);
+		if(!is_numeric($id_otro)){
+			return "-";
+		}
+		
 		$id_mio = $_SESSION['userid'];
 		
 		/* *  Calculo de compatiblidad:
@@ -954,6 +978,12 @@ class NotAProfile{
 	
 	
 	public static function darLlavesRelacion($id_otro){
+		
+		$id_otro = htmlentities($id_otro);
+		if(!is_numeric($id_otro)){
+			return array();
+		}
+		
 		$id_mio = $_SESSION['userid'];
 		$sql = "SELECT * FROM llave WHERE (creador_id = $id_otro AND reclamador_id = $id_mio) OR (creador_id = $id_mio AND reclamador_id = $id_otro)";
 		return DAO::doSQLAndReturn($sql);
