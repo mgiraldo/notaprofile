@@ -83,9 +83,9 @@ if(isset($_POST["latitude"])&&isset($_POST["longitude"]))
          baseIcon.iconAnchor = new GPoint(9, 34);
          baseIcon.infoWindowAnchor = new GPoint(9, 2);
 
-         //markerOptions = { icon:baseIcon };
-         //var marker = new GMarker(latlng,markerOptions);
-         var marker = new GMarker(latlng);
+         markerOptions = { icon:baseIcon };
+         var marker = new GMarker(latlng,markerOptions);
+         //var marker = new GMarker(latlng);
          return marker;
     }
 
