@@ -19,3 +19,5 @@ RewriteRule ^viewKeys/orphans$ /visualizacionLlaves.php?filtro=0
 RewriteRule ^viewkeys/claimed$ /visualizacionLlaves.php?filtro=1
 RewriteRule ^key/(.*)?$ /llave.php?c=$1
 ReWriteRule ^gps$ /ip.map.php
+
+ReWriteRule ^connections$ /connections.php

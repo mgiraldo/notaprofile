@@ -23,11 +23,11 @@ if(isset($_GET['tb']))
 <h1>Pagina de prueba!! </h1><br /><br />
 <?php echo("Bienvenido ".$_SESSION['username']); ?>
 <br>
-<br /> Nota: Coloque estas tablas para ver las llaves, obviamente no van en el diseño final! MV<br /> 
+<br /> Nota: Coloque estas tablas para ver las llaves, obviamente no van en el diseï¿½o final! MV<br /> 
 <b>Yours:</b>
 <br><br>
 <?php 
-//TODO llamar al método que devuelve las llaves creadas por esta persona.
+//TODO llamar al mï¿½todo que devuelve las llaves creadas por esta persona.
 
 	$llaves = NotAProfile::darLlavesCreadasReclamadas();
  	$numLlaves = count($llaves);
@@ -104,7 +104,7 @@ if(isset($_GET['tb']))
 <br>
 <br>
 <?php 
-//TODO llamar al método que devuelve las llaves reclamadas por esta persona.
+//TODO llamar al mï¿½todo que devuelve las llaves reclamadas por esta persona.
 
 	echo "<tr><table border=\"1\">";
  	echo "<th>id</th>";
@@ -136,13 +136,13 @@ if(isset($_GET['tb']))
 <br>
 <br>
 <br>
-<a href="insertarLlave.php">create_key</a>
+<a href="/create">create_key</a>
 <br>
-<a href="visualizacionLlaves.php">check_out_keys</a>
+<a href="/view">check_out_keys</a>
 <br>
 <br>
 <br>
-<a href="home.php?logout=si">log_out</a>
+<a href="/logout">log_out</a>
 
 <br /><br />
 </body>
