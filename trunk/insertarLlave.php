@@ -76,7 +76,7 @@ if(isset($_POST["latitude"])&&isset($_POST["longitude"]))
     function crearMarker(latlng)
     {
          var baseIcon = new GIcon(G_DEFAULT_ICON);
-         //baseIcon.image = "/img/llave.png";
+         baseIcon.image = "/img/llave.png";
          var tamanio = 16;
          baseIcon.iconSize = new GSize(tamanio, tamanio+tamanio*0.7);
          baseIcon.shadowSize = new GSize(37, 34);
