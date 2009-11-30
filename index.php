@@ -6,7 +6,7 @@ require_once 'lib/class/NotAProfile.php';
 
 if(isset($_GET['logout'])){
 	NotAProfile::cerrarSesion();
-	header("Location: ./index.php");
+	header("Location: ./");
 }
 
 
@@ -73,16 +73,24 @@ if(isset($_POST['submit'])){
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="/css/estilos.css" rel="stylesheet" type="text/css" />
 <link href="/css/estilosLogin.css" rel="stylesheet" type="text/css" />
 <title>not_a_profile</title>
 </head>
 <script languaje="javascript">
-function escondidoInicial(){
-
-	document.getElementById("englobador_sign_up").style.visibility = 'hidden';
-	document.getElementById("botonSignUp").disabled = false;
-	document.getElementById("botonSignIn").style.visibility = 'visible';
-	document.getElementById("botonSignIn").disabled = false;
+function escondidoInicial(caso){
+	if(caso==1)	{
+		document.getElementById("englobador_sign_up").style.visibility = 'hidden';
+		document.getElementById("botonSignUp").disabled = false;
+		document.getElementById("botonSignIn").style.visibility = 'visible';
+		document.getElementById("botonSignIn").disabled = false;
+	}else{
+		document.getElementById("checkbox").checked=true;
+		document.getElementById("botonSignIn").style.visibility = 'hidden';
+		document.getElementById("botonSignIn").disabled = true;
+    	document.getElementById("englobador_sign_up").style.visibility = 'visible';
+		document.getElementById("botonSignUp").disabled = false;
+	}
 }
 
 function habilitaDeshabilita(form){
@@ -100,7 +108,7 @@ function habilitaDeshabilita(form){
 }
 </script>
 
-<body onload="escondidoInicial();">
+<body onload="escondidoInicial(<?php if(isset($error)){if($error==3) echo($error); else echo (1);}else{echo(1);}?>);">
 <div id="contenido">
 	<div id="cabezote">
 		<h1>not_a_profile</h1>
@@ -112,31 +120,31 @@ function habilitaDeshabilita(form){
 if(isset($_POST['submit'])){
 switch($error){
 	case 1:
-		echo "<div id=\"errorLogin\">Email or Password can not be empty</div>";
+		echo "<div id=\"errorLogin\">email or password cannot be empty</div>";
 		break;
 	case 2:
-		echo "<div id=\"errorLogin\">Incorrect email format</div>";
+		echo "<div id=\"errorLogin\">incorrect email format</div>";
 		break;
 	case 3:
-		echo "<div id=\"errorLogin\">Wrong Email or/and password</div>";
+		echo "<div id=\"errorLogin\">wrong email or password</div>";
 		break;
 }}
 if(isset($_POST['signup'])){
 switch($error){
 	case 1:
-		echo "<div id=\"errorLogin\">Email or Password can not be empty </div>";
+		echo "<div id=\"errorLogin\">email or password cannot be empty </div>";
 		break;
 	case 2:
-		echo "<div id=\"errorLogin\">Incorrect email format </div>";
+		echo "<div id=\"errorLogin\">incorrect email format</div>";
 		break;
 	case 3:
-		echo "<div id=\"errorLogin\">The passwords do not match!</div>";
+		echo "<div id=\"errorLogin\">the passwords do not match!</div>";
 		break;
 	case 4:
-		echo "<div id=\"errorLogin\">Email already in use</div>";
+		echo "<div id=\"errorLogin\">email already registered (use another)</div>";
 		break;
 	case 5:
-		echo "<div id=\"errorLogin\">Error in Database procesing!! Contact webmaster righ now!!!!</div>";
+		echo "<div id=\"errorLogin\">error in database processing :(</div>";
 		break;
 		
 	case 0:
@@ -162,7 +170,7 @@ switch($error){
 		</div>
         <div id="englobador_sign_up">
             <div id="header"><h2>sign_up</h2></div>
-            <div id="info">just_rewrite_your_password!!</div>
+            <div id="info">just_rewrite_your_password:</div>
             <div id="boton"><input type="image" id="botonSignUp" src="/img/submit.png" name="signup" value ="Sign_Up" height="26" width="195" border="0" vspace="0" alt="Sign up"  tabindex="6" />  
             </div><div id="text_box"><input id="box" type="password" name="pass2" tabindex="5" /></div>
             <div id="sign"><h3>password:</h3></div>
@@ -174,6 +182,10 @@ switch($error){
 			<input type="hidden" value="<?php echo($_GET['r'])?>" name="r" id="r" />
 		<?php } ?>
     </form>
+	<div id="catch">
+		<h2>welcome!</h2>
+		<p>not_a_profile is about real connections with real people. we would like to avoid using passwords and emails but we need a way to distinguish you from the average Joe. Don't worry, we won't send you any spam (we hate it as much as you) and we will encrypt your password.</p>
+	</div>
     <?php include("./inc/pie.php"); ?>
 
 </div>
