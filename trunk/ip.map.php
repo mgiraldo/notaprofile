@@ -4,7 +4,7 @@ require_once('config/config.php');
 require_once 'lib/class/NotAProfile.php';
 
 if(!NotAProfile::estaLogeado()) {
-	header("Location: /");
+	header("Location: /?r=" . urlencode("/gps"));
 }
 
 ?>

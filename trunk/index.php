@@ -33,7 +33,11 @@ if(isset($_POST['submit'])){
 		$ll = NotAProfile::rereclamarLlave($_POST['reclamollave'],$idreclamador);
 	}
 	if($error==0){
-				header("Location: ./notprofile.php?tb=true");
+				if (!isset($_POST['r'])) {
+					header("Location: ./notprofile.php?tb=true");
+				} else {
+					header("Location: " . $_POST['r']);
+				}
 		}
 	
 }else if(isset($_POST['signup'])){
@@ -51,7 +55,11 @@ if(isset($_POST['submit'])){
 			$ll = NotAProfile::rereclamarLlave($_POST['reclamollave'],$idreclamador);
 		}
 		if($error==0){
-				header("Location: ./notprofile.php?tb=true");
+				if (!isset($_POST['r'])) {
+					header("Location: ./notprofile.php?tb=true");
+				} else {
+					header("Location: " . $_POST['r']);
+				}
 		}
 	}	
 }
@@ -147,7 +155,7 @@ switch($error){
             <div id="text_box"><input id="box" type="text" name="email" value="<?php echo isset($_POST['email'])?$_POST['email']:""; ?>" tabindex="1"></div>
             <div id="sign"><h3>your email:</h3></div>            
             <div id="boton"><input type="image" id="botonSignIn" src="/img/enter.png" name="submit" value="Sign_In" height="26" width="195" border="0" vspace="0"  alt="Sing in" tabindex="3" /></div>
-            <div id="text_box"><input id="box" type="password" name="pass" tabindex="2"></div>
+            <div id="text_box"><input id="box" type="password" name="pass" tabindex="2" /></div>
             <div id="sign"><h3>password:</h3></div>
 			<div id="boton">&nbsp;</div>
 			<div id="sign_link"><h4><a href="/forgotPassword.php">forgot_password</a></h4></div>
@@ -160,11 +168,14 @@ switch($error){
             <div id="header"><h2>sign_up</h2></div>
             <div id="info">just_rewrite_your_password!!</div>
             <div id="boton"><input type="image" id="botonSignUp" src="/img/submit.png" name="signup" value ="Sign_Up" height="26" width="195" border="0" vspace="0" alt="Sign up"  tabindex="6" />  
-            </div><div id="text_box"><input id="box" type="password" name="pass2" tabindex="5"></div>
+            </div><div id="text_box"><input id="box" type="password" name="pass2" tabindex="5" /></div>
             <div id="sign"><h3>password:</h3></div>
         </div>
         <?php if(isset($_GET['tb'])) { ?>
-			<input type="hidden" value="<?php echo($_GET['reclamollave'])?>" name="reclamollave" id="reclamollave"></input>
+			<input type="hidden" value="<?php echo($_GET['reclamollave'])?>" name="reclamollave" id="reclamollave" />
+		<?php } ?>
+        <?php if(isset($_GET['r'])) { ?>
+			<input type="hidden" value="<?php echo($_GET['r'])?>" name="r" id="r" />
 		<?php } ?>
     </form>
     <div id="pie">
