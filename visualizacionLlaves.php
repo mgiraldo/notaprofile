@@ -84,7 +84,7 @@ if(!NotAProfile::estaLogeado())
 								$txt = substr($llave['txt'], 0, 20);
 								$txt .= strlen($llave['txt'])>20 ? "...": "";
 							?>
-							<span class="texto"><?php echo($txt)?></span><br />
+							<span class="texto"><?php //echo($txt)?></span><br />
 							<span class="loc"><?php echo($llave['latitud'].",".$llave['longitud'])?> </span><br />
 							<?php }?>
 							<a href="javascript:void(0);" onclick= "mostrar(llave<?php echo $llave['id']; ?>);"> view </a>
