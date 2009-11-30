@@ -181,9 +181,7 @@ switch($error){
 			<input type="hidden" value="<?php echo($_GET['r'])?>" name="r" id="r" />
 		<?php } ?>
     </form>
-    <div id="pie">
-		<a href="#">help</a> | <a href="#">about this project</a> | <a href="#">google code</a> | <a href="#">copyright notice</a>
-	</div>
+    <?php include("./inc/pie.php"); ?>
 
 </div>
 </body>
