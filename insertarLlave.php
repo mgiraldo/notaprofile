@@ -3,7 +3,10 @@ require_once('lib/class/classTextile.php');
 require_once('config/config.php');
 require_once('lib/class/NotAProfile.php');
 //echo("id=".$_SESSION['userid']);
-
+if(!NotAProfile::estaLogeado())
+{
+	header("Location: /");
+}
 $textile = new Textile();
 $msg = "";
 if(isset($_POST["latitude"])&&isset($_POST["longitude"]))
