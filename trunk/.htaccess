@@ -21,3 +21,7 @@ RewriteRule ^key/(.*)?$ /llave.php?c=$1
 ReWriteRule ^gps$ /ip.map.php
 
 ReWriteRule ^connections$ /connections.php
+
+ReWriteRule ^about$ /about.php
+
+ReWriteRule ^help$ /help.php
