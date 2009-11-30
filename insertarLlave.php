@@ -90,9 +90,9 @@ if(isset($_POST["latitude"])&&isset($_POST["longitude"]))
 
     </script>
    <script>
-      function preview(img,obj) {
-         img.src = "file:///" + obj.value;
-      }
+    //  function preview(img,obj) {
+    //     img.src = "file:///" + obj.value;
+    //  }
    </script>
 
 <body onload="initialize()" onunload="GUnload()">
@@ -117,7 +117,7 @@ if(isset($_POST["latitude"])&&isset($_POST["longitude"]))
                 <div id="browse_button">
                 <!--  <a href="#"></a>-->
                <!-- <img src="img/browse.png" alt="enter" width="127" height="26" style="position:absolute;"/><input type="file" name="image" style="opacity: 0;"/>  -->
-               <input type="file" name="image" onchange = "preview(document.forms[0].img, this)">
+               <input type="file" name="image">
                </div>
             </div>
             <div id="message">
