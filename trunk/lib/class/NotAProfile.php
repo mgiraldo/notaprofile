@@ -933,10 +933,14 @@ class NotAProfile{
 	public static function compatibilidad($id_otro){
 		$id_mio = $_SESSION['userid'];
 		
-		/**
-		 *  Calculo de compatiblidad:
-		 *  x = 2*(youLike)-(youDislike)+(heLikes)-(heDisplikes)
-		 */
+		/* *  Calculo de compatiblidad:
+		 *  x = 2*(youLike)-1(youDislike)+3(heLikes)-2(heDisplikes)  */
+		$ilike = NotAProfile::youLike($id_otro);
+		$idislike = NotAProfile::youDislike($id_otro);
+		$heLikes = NotAProfile::heLikes($id_otro);
+		$heDislike = NotAProfile::heDislikes($id_otro);
+		$valor = 2*$ilike-$idislike+3*$heLikes-$heDislike;
+		return $valor;
 	}
 	
 	
