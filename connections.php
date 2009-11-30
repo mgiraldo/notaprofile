@@ -65,7 +65,7 @@ $contactos = NotAProfile::darContactos();
         		$foto = NotAProfile::darThumbnailRelacion($contactos[$index]['amigo_idc2']);
         	}
         	?>
-        	<?php if($foto!=NULL && $foto!=""){?>
+        	<?php if($foto!=NULL && $foto!="" && $llave['foto']!="error_nofile"){?>
 		  	<a href="#" class="imagen"><img src="<?php echo($foto)?>" alt="/img/btn_like.png" width="128" height="128" /></a>
 			<?php 
         	}else{
