@@ -893,6 +893,46 @@ class NotAProfile{
 			}
 		}
 	}
+	
+	
+	/**
+	 * FUNCIONES DE COMPATIBILIDAD
+	 */
+	public static function youLike($id_otro){
+		$id_mio = $_SESSION['userid'];
+		// Llaves que el reclamo y a mi me gustaron
+		$sql = "SELECT COUNT(*) AS cuantas FROM llave WHERE creador_id = $id_otro AND reclamador_id = $id_mio AND flag_aceptado = 1";
+		$resp = DAO::doSQLAndReturn($sql);
+		return $llaves[0]['cuantas'];	
+	}
+	
+	public static function youDislike($id_otro){
+		$id_mio = $_SESSION['userid'];
+		// Llaves que el reclamo y a mi me gustaron
+		$sql = "SELECT COUNT(*) AS cuantas FROM llave WHERE creador_id = $id_otro AND reclamador_id = $id_mio AND flag_aceptado = -1";
+		$resp = DAO::doSQLAndReturn($sql);
+		return $llaves[0]['cuantas'];	
+	}
+	
+	public static function heLikes($id_otro){
+		$id_mio = $_SESSION['userid'];
+		// Llaves que el reclamo y a mi me gustaron
+		$sql = "SELECT COUNT(*) AS cuantas FROM llave WHERE creador_id = $id_mio AND reclamador_id = $id_otro AND flag_aceptado = 1";
+		$resp = DAO::doSQLAndReturn($sql);
+		return $llaves[0]['cuantas'];	
+	}
+	
+	public static function heDislikes($id_otro){
+		$id_mio = $_SESSION['userid'];
+		// Llaves que el reclamo y a mi me gustaron
+		$sql = "SELECT COUNT(*) AS cuantas FROM llave WHERE creador_id = $id_mio AND reclamador_id = $id_otro AND flag_aceptado = -1";
+		$resp = DAO::doSQLAndReturn($sql);
+		return $llaves[0]['cuantas'];	
+	}
+	
+	
+	
+	
 }
 
 
