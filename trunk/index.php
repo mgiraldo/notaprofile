@@ -34,7 +34,8 @@ if(isset($_POST['submit'])){
 	}
 	if($error==0){
 				if (!isset($_POST['r'])) {
-					header("Location: ./notprofile.php?tb=true");
+					//header("Location: ./notprofile.php?tb=true");
+					header("Location: /view");
 				} else {
 					header("Location: " . $_POST['r']);
 				}
@@ -56,7 +57,8 @@ if(isset($_POST['submit'])){
 		}
 		if($error==0){
 				if (!isset($_POST['r'])) {
-					header("Location: ./notprofile.php?tb=true");
+					//header("Location: ./notprofile.php?tb=true");
+					header("Location: /view");
 				} else {
 					header("Location: " . $_POST['r']);
 				}
