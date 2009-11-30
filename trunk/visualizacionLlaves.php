@@ -98,7 +98,7 @@ if(!NotAProfile::estaLogeado())
 			
 		<div id="mapa">
 			<div id="navmapa">
-				<a class="createkey" href="insertarLlave.php"><span>create_a_key</span></a>
+				<a class="createkey" href="/create"><span>create_a_key</span></a>
 			</div>
 			<div id="gmap">
 				
