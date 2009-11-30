@@ -6,9 +6,13 @@ RewriteCond %{HTTP_HOST} ^www.notaprofile.com [NC]
 RewriteRule ^(.*)$ http://notaprofile.com/$1 [L,R=301]
 
 RewriteRule ^logout$ /index.php?logout=si
+RewriteRule ^view$ /visualizacionLlaves.php
 RewriteRule ^viewKeys$ /visualizacionLlaves.php
 RewriteRule ^viewkeys$ /visualizacionLlaves.php
 RewriteRule ^create$ /insertarLlave.php
+RewriteRule ^view/orphans$ /visualizacionLlaves.php?filtro=0
+RewriteRule ^view/claimed$ /visualizacionLlaves.php?filtro=1
+
 RewriteRule ^viewKeys/orphans$ /visualizacionLlaves.php?filtro=0
 RewriteRule ^viewkeys/claimed$ /visualizacionLlaves.php?filtro=1
 RewriteRule ^viewKeys/orphans$ /visualizacionLlaves.php?filtro=0
