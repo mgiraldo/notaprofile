@@ -37,7 +37,7 @@ $usuariorelacion= $_GET['usr'];
 			You like:
 			</div>
 			<div id="num_estadistica" class="me">
-			<?php ?>
+			<?php  echo(NotAProfile::youLike($usuariorelacion)) ?>
 			</div>
 		</div>
 		<div id="contenedor">
@@ -45,7 +45,7 @@ $usuariorelacion= $_GET['usr'];
 			You dislike:
 			</div>
 			<div id="num_estadistica" class="me">
-			<?php ?>
+			<?php  echo(NotAProfile::youDislike($usuariorelacion)) ?>
 			</div>
 		</div>
 		<div id="contenedor">
@@ -53,7 +53,7 @@ $usuariorelacion= $_GET['usr'];
 			he/she likes:
 			</div>
 			<div id="num_estadistica" class="they">
-			<?php ?>
+			<?php  echo(NotAProfile::heLikes($usuariorelacion)) ?>
 			</div>
 		</div>
 		<div id="contenedor">
@@ -61,7 +61,7 @@ $usuariorelacion= $_GET['usr'];
 			he/she dislikes:
 			</div>
 			<div id="num_estadistica"  class="they">
-			<?php ?>
+			<?php  echo(NotAProfile::heDislikes($usuariorelacion)) ?>
 			</div>
 		</div>
 	</div>
@@ -78,9 +78,6 @@ $usuariorelacion= $_GET['usr'];
 				<a href="#" ><img src="img/btn_dislike.png" alt="123" width="128" height="128" /></a>
 			</li>
 			</ul>
-			
-			
-			
 		</div>
 	  </div>
 	  <?php include("./inc/pie.php"); ?>
