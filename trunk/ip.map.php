@@ -1,7 +1,11 @@
 <?php
 
+require_once('config/config.php');
 require_once 'lib/class/NotAProfile.php';
-global $app;
+
+if(!NotAProfile::estaLogeado()) {
+	header("Location: /");
+}
 
 ?>
 <?php echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" ?>
