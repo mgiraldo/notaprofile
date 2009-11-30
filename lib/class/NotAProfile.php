@@ -366,19 +366,20 @@ class NotAProfile{
 	 */	 
 	 public static function crearLlave($lat, $long, $texto, $foto){
 	 	global $app;
+		$conn = DAO::getConn();
 		$codigo = NotAProfile::elegirCodigoUnico();
 		//El id del creador es siempre 1 para probar la creación de llaves.
 		$creador_id= $_SESSION['userid'];
 		if(!isset($creador_id)){echo("you need to be logged in");exit;}	
 			$fecha = date("c");
-			$sql = sprintf("INSERT INTO llave (txt,latitud,longitud,codigo,creador_id,fecha_creado,foto) VALUES ('%s','%s','%s','%s','%s','%s','%s')",
-						$texto,
-						$lat,
-						$long,
-						$codigo,
-						$creador_id,
-						$fecha,
-						$foto
+			$sql = sprintf("INSERT INTO llave (txt,latitud,longitud,codigo,creador_id,fecha_creado,foto) VALUES ('%s',%s,%s,'%s','%s','%s','%s')",
+						mysql_real_escape_string($texto, $conn),
+						mysql_real_escape_string($lat, $conn),
+						mysql_real_escape_string($long, $conn),
+						mysql_real_escape_string($codigo, $conn),
+						mysql_real_escape_string($creador_id, $conn),
+						mysql_real_escape_string($fecha, $conn),
+						mysql_real_escape_string($foto, $conn)
 						);
 			$exito = DAO::doSQL($sql);
 			if($exito!=1)
@@ -788,7 +789,7 @@ class NotAProfile{
 		if (count($q)>0) {
 			$creador_id= $q[0]['id'];
 			$fecha = date("c");
-			$sql = sprintf("INSERT INTO llave (txt,latitud,longitud,codigo,creador_id,fecha_creado,foto) VALUES ('%s','%s','%s','%s','%s','%s','%s')",
+			$sql = sprintf("INSERT INTO llave (txt,latitud,longitud,codigo,creador_id,fecha_creado,foto) VALUES ('%s',%s,%s,'%s','%s','%s','%s')",
 						mysql_real_escape_string($texto, $conn),
 						mysql_real_escape_string($lat, $conn),
 						mysql_real_escape_string($long, $conn),

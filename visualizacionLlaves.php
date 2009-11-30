@@ -29,7 +29,7 @@ if(!NotAProfile::estaLogeado())
 		var visibleInfoWindow = null;
 
 		// Definimos los iconos de las llaves
-		var iconoNoReclamado = 'llave.png';
+		var iconoNoReclamado = '/img/llave.png';
 
 		//Agregamos las llaves
 		
@@ -46,7 +46,7 @@ if(!NotAProfile::estaLogeado())
 		    <?php }?>
 		    var infoWindow<?php echo $llave['id'] ?> = new google.maps.InfoWindow({content: contenidoLlave<?php echo $llave['id']?>, maxWidth: 350 });
 		    llave<?php echo $llave['id'] ?> = new google.maps.Marker({position: posicionLlave<?php echo $llave['id'] ?>, map: map, icon: iconoNoReclamado });
-		    google.maps.event.addListener(llave<?php echo $llave['id'] ?>, 'click', function() {if(visibleInfoWindow){ visibleInfoWindow.close(); } infoWindow<?php echo $llave['id'] ?>.open(map,llave<?php echo $llave['id'] ?>);  visibleInfoWindow = infoWindow<?php echo $llave['id'] ?>; });
+		    google.maps.event.addListener(llave<?php echo $llave['id'] ?>, 'click', function() {if(visibleInfoWindow){ visibleInfoWindow.close(); } infoWindow<?php echo $llave['id'] ?>.open(map,llave<?php echo $llave['id'] ?>);  visibleInfoWindow = infoWindow<?php echo $llave['id'] ?>; map.setZoom(13);});
 	   <?php }?> 
 	}
 	function mostrar(id){  google.maps.event.trigger(id, 'click');  }
