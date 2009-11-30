@@ -389,7 +389,7 @@ class NotAProfile{
 				exit;
 			}
 	
-			$url = $app['url']."llave.php?c=".$codigo;
+			$url = $app['url']."key/".$codigo;
 			return $url;
 	}
 	
