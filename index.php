@@ -77,19 +77,12 @@ if(isset($_POST['submit'])){
 <title>not_a_profile</title>
 </head>
 <script languaje="javascript">
-function escondidoInicial(caso){
-	if(caso==1)	{
-		document.getElementById("englobador_sign_up").style.visibility = 'hidden';
-		document.getElementById("botonSignUp").disabled = false;
-		document.getElementById("botonSignIn").style.visibility = 'visible';
-		document.getElementById("botonSignIn").disabled = false;
-	}else{
-		document.getElementById("checkbox").checked=true;
-		document.getElementById("botonSignIn").style.visibility = 'hidden';
-		document.getElementById("botonSignIn").disabled = true;
-    	document.getElementById("englobador_sign_up").style.visibility = 'visible';
-		document.getElementById("botonSignUp").disabled = false;
-	}
+function escondidoInicial(){
+
+	document.getElementById("englobador_sign_up").style.visibility = 'hidden';
+	document.getElementById("botonSignUp").disabled = false;
+	document.getElementById("botonSignIn").style.visibility = 'visible';
+	document.getElementById("botonSignIn").disabled = false;
 }
 
 function habilitaDeshabilita(form){
@@ -107,7 +100,7 @@ function habilitaDeshabilita(form){
 }
 </script>
 
-<body onload="escondidoInicial(<?php if(isset($error)){if($error==3) echo($error); else echo (1);}else{echo(1);}?>);">
+<body onload="escondidoInicial();">
 <div id="contenido">
 	<div id="cabezote">
 		<h1>not_a_profile</h1>
