@@ -1,74 +1,3 @@
-/* ESTILOS BASE */
-* {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-}
-body,td,th {
-	font-family: Courier New, Courier, monospace;
-	font-size: 18px;
-	color: #FFF;
-	font-weight: normal;
-}
-body {
-	background-color: #000;
-}
-a img {
-border:none;
-}
-a:link {
-	color: #FCAF3F;
-	text-decoration: underline;
-}
-a:visited {
-	text-decoration: underline;
-	color: #C98B30;
-}
-a:hover {
-	text-decoration: none;
-	color: #FCAF3F;
-}
-a:active {
-	text-decoration: underline;
-}
-h1 {
-	font-size: 33px;
-	font-weight: normal;
-}
-h2 {
-	font-size: 24px;
-}
-#contenido {
-	width: 960px;
-	margin-left: auto;
-	margin-right: auto;
-	/*background: url(../img/columna.gif);*/
-}
-/* CABEZOTE */
-#cabezote {
-	height: 120px;
-}
-#cabezote h1 {
-	padding: 6px 0 12px 3px;
-	border-bottom: 3px solid #fff;
-}
-#nav {
-	float: left;
-	width: 408px;
-}
-#nav li {
-	float: left;
-	width: 138px;
-}
-#nav li a {
-	display: block;
-	padding: 3px;
-	text-decoration: none;
-}
-#nav li a:hover {
-	background-color: #FCAF3F;
-	color: #000;
-}
 #userinfo {
 	float: right;
 	width: 345px;
@@ -77,12 +6,12 @@ h2 {
 	margin: 3px;
 }
 /* CUERPO */
-#cuerpo {
-	height: 470px;
-	background:  #666666;
-}
 #cuerpo_sign {
 	height: 470px;
+	float:left;
+	top:10px;
+	width:546px;
+	margin-right: 6px;
 }
 #boton{
 	height:30px;
@@ -106,9 +35,6 @@ h2 {
 	width:546px;
 	margin-top:5px;
 	float:left;
-}
-#header h2{
-	color:#FCAF3F;
 }
 #box {
 	width:201px;
@@ -157,10 +83,8 @@ h2 {
 #englobador_sign_up{
 	width:546px;
 }
-/* PIE */
-#pie {
-	height: 20px;
-	font-size: 12px;
-	margin: 3px;
-	text-align: right;
+#catch {
+	float:left;
+	top:10px;
+	width:339px;
 }
