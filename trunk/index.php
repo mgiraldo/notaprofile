@@ -12,7 +12,8 @@ if(isset($_GET['logout'])){
 
 
 if(NotAProfile::estaLogeado()){
-	header("Location: ./notprofile.php");
+	//header("Location: ./notprofile.php");
+	header("Location: /view");
 }else{
 	
 
