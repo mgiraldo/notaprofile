@@ -81,7 +81,7 @@ require_once 'lib/class/NotAProfile.php';
                 <?php 
                 if($llave[0]['reclamador_id'] == "" || $llave[0]['reclamador_id'] == $_SESSION['userid'] || $llave[0]['creador_id'] == $_SESSION['userid']){
                         if($llave[0]['flag_aceptado'] == "0" && ($llave[0]['creador_id'] != $_SESSION['userid'])) {?>
-                        <div id="dislike"><a href="<?php echo $llave[0]['codigo']?>/?like=-1"><span>dislike</span></a></div>
+                        <div id="dislike"><a href="<?php echo $llave[0]['codigo']?>?like=-1"><span>dislike</span></a></div>
                         <?php }?>
                 
                         <div id="textollave">
@@ -92,7 +92,7 @@ require_once 'lib/class/NotAProfile.php';
                         </div>
                 
                         <?php if($llave[0]['flag_aceptado'] == "0" && ($llave[0]['creador_id'] != $_SESSION['userid'])) {?>
-                        <div id="like"><a href="<?php echo $llave[0]['codigo']?>/?like=1"><span>like</span></a></div>
+                        <div id="like"><a href="<?php echo $llave[0]['codigo']?>?like=1"><span>like</span></a></div>
                 <?php }
                 }
                 else{?>
