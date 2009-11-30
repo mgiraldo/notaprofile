@@ -46,7 +46,7 @@ if(isset($_GET['del']))
 			<?php } ?>
 
 			<?php if (NotAProfile::puedeSerVista($llave)&& ($filtro==0)) { ?>
-			contenidoLlave<?php echo $llave['id'] ?> += ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/visualizacionLlaves.php?filtro=0&del=<?php echo $llave['codigo'] ?>">delete</a>';
+			contenidoLlave<?php echo $llave['id'] ?> += ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/><a href="/visualizacionLlaves.php?filtro=0&del=<?php echo $llave['codigo'] ?>">delete</a>';
 			<?php } ?>
 	
 		    var infoWindow<?php echo $llave['id'] ?> = new google.maps.InfoWindow({content: contenidoLlave<?php echo $llave['id']?>, maxWidth: 350 });
