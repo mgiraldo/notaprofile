@@ -72,8 +72,8 @@ $usuariorelacion= $_GET['usr'];
     		<?php $llaves =  NotAProfile::darLlavesRelacion($usuariorelacion);?>
 			<ul id="listaconexionindividual">
 				<?php foreach ($llaves as $llave){?>
-				<li class="yo">
-					<a href="#" >
+				<li <?php if($llave['creador_id']==$_SESSION['userid']){echo("class=\"yo\"");}else{echo("class=\"ellos\"");}?>>
+					<a href="/key/<?php echo($llave['codigo'])?>" >
 					<?php $foto = $llave['foto'];?>
 					<?php if($foto!=NULL && $foto!="" && $llave['foto']!="error_nofile") {?>
 					<img src="<?php echo("/".$app['photoroot'].$foto."_m.jpg")?>" alt="123" width="128" height="128" /></a>
@@ -81,9 +81,6 @@ $usuariorelacion= $_GET['usr'];
 					<img src="img/btn_dislike.png" alt="123" width="128" height="128" />
 					<?php }?>
 					</a>
-				</li>
-				<li class="ellos">
-					<a href="#" ><img src="img/btn_dislike.png" alt="123" width="128" height="128" /></a>
 				</li>
 				<?php }?>
 			</ul>
