@@ -730,9 +730,6 @@ class NotAProfile{
 
 	public static function readMail ($host,$login,$password,$must_delete=false) {
 		$r = array();
-		$r["from"] = "";
-		$r["text"] = "";
-		$r["attachment"] = array();
 		// Open pop mailbox
 		if (!$mbox = imap_open ($host, $login, $password)) {
 			die ('Cannot connect/check pop mail! Exiting');
@@ -748,17 +745,23 @@ class NotAProfile{
 		$MN=$msgCount;
 		
 		for ($X = 1; $X <= $MN; $X++) {
+			$r[$X] = array();
+			$r[$X]["from"] = "";
+			$r[$X]["text"] = "";
+			$r[$X]["attachment"] = array();
 			$overview = imap_fetch_overview($mbox, $X);
-			$r["from"] = $overview[0]->from;
+			$r[$X]["from"] = $overview[0]->from;
+			$headers = imap_headerinfo($mbox, $X);
+			$r[$X]["subject"] = $headers->subject;
 			$struct = imap_fetchstructure($mbox, $X);
 			$parts = NotAProfile::create_part_array($struct);
 			foreach ($parts as $part) {
 				if ($part["part_object"]->type==0) {
 					// es texto... meter en el string
-					$r["text"] .= imap_fetchbody($mbox,$X,$part["part_number"]);
+					$r[$X]["text"] .= imap_fetchbody($mbox,$X,$part["part_number"]);
 				} else if ($part["part_object"]->type==5) {
-					$r["attachment"]["filename"] = $part["part_object"]->dparameters[0]->value;
-					$r["attachment"]["string"] = imap_fetchbody($mbox,$X,$part["part_number"]);
+					$r[$X]["attachment"]["filename"] = $part["part_object"]->dparameters[0]->value;
+					$r[$X]["attachment"]["string"] = imap_fetchbody($mbox,$X,$part["part_number"]);
 				}
 			}
 			if ($must_delete) {
@@ -813,22 +816,36 @@ class NotAProfile{
 		require_once('classTextile.php');		
 		$textile = new Textile();
 
-		$data = NotAProfile::readMail($host,$login,$password,true);	
-		
-		if ($data["from"]!="") {
-			$filename = $data["attachment"]["filename"];
-			$content = $data["attachment"]["string"];
-			$foto = NotAProfile::subirFotoEmail($content);
-			$textile = new Textile();
-			$texto = $textile->TextileThis($data["text"]);
-			// se asume que el mail es de la forma: Nombre <email@sitio.com>
-			$tmp = explode("<",$data["from"]);
-			$stripmail = $tmp[1];
-			$stripmail = substr($stripmail,0,strlen($stripmail)-1);
-			$url = NotAProfile::crearLlaveEmail(1,1,$texto,$foto,$stripmail); // luego sacar lat/long desde el EXIF
-			if ($url!=false) {
-				$txt = $url."\r\n\r\n";
-				NotAProfile::sendMail("",$data["from"],"your key in not_a_profile",$txt);
+		$mails = NotAProfile::readMail($host,$login,$password,true);
+		// procesa todos los mails que haya
+		if (count($mails)>0) {
+			for ($i=1;$i<=count($mails);$i++) {
+				$data = $mails[$i];
+				if ($data["from"]!="") {
+					$filename = $data["attachment"]["filename"];
+					$content = $data["attachment"]["string"];
+					if ($filename!="") {
+						$foto = NotAProfile::subirFotoEmail($content);
+					} else {
+						$foto = "";
+					}
+					$coords = explode(",",$data["subject"]);
+					if (count($coords)==2) {
+						$lat = floatval($coords[0]) ? floatval($coords[0]) : NULL;
+						$lng = floatval($coords[1]) ? floatval($coords[1]) : NULL;
+					}
+					$textile = new Textile();
+					$texto = $textile->TextileThis($data["text"]);
+					// se asume que el mail es de la forma: Nombre <email@sitio.com>
+					$tmp = explode("<",$data["from"]);
+					$stripmail = $tmp[1];
+					$stripmail = substr($stripmail,0,strlen($stripmail)-1);
+					$url = NotAProfile::crearLlaveEmail($lat,$lng,$texto,$foto,$stripmail); // luego sacar lat/long desde el EXIF
+					if ($url!=false) {
+						$txt = $url."\r\n\r\n";
+						NotAProfile::sendMail("",$data["from"],"your key in not_a_profile",$txt);
+					}
+				}
 			}
 		}
 	}

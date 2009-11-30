@@ -1,0 +1,13 @@
+AddDefaultCharset utf-8
+AddHandler php5-script .php
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^www.notaprofile.com [NC]
+RewriteRule ^(.*)$ http://notaprofile.com/$1 [L,R=301]
+
+RewriteRule ^logout$ /index.php?logout=si
+RewriteRule ^viewKeys$ /visualizacionLlaves.php
+RewriteRule ^viewKeys/orphans$ /visualizacionLlaves.php?filtro=0
+RewriteRule ^viewKeys/claimed$ /visualizacionLlaves.php?filtro=1
+RewriteRule ^key/(.*)?$ /llave.php?c=$1
+ReWriteRule ^gps$ /ip.map.php
