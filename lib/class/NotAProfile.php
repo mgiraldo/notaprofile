@@ -792,7 +792,7 @@ class NotAProfile{
 		if (count($q)>0) {
 			$creador_id= $q[0]['id'];
 			$fecha = date("c");
-			$sql = sprintf("INSERT INTO llave (txt,latitud,longitud,codigo,creador_id,fecha_creado,foto) VALUES ('%s',%s,%s,'%s','%s','%s','%s')",
+			$sql = sprintf("INSERT INTO llave (txt,latitud,longitud,codigo,creador_id,fecha_creado,foto) VALUES ('%s',%s,%s,'%s',%s,'%s','%s')",
 						mysql_real_escape_string($texto, $conn),
 						mysql_real_escape_string($lat, $conn),
 						mysql_real_escape_string($long, $conn),
@@ -801,6 +801,7 @@ class NotAProfile{
 						mysql_real_escape_string($fecha, $conn),
 						mysql_real_escape_string($foto, $conn)
 						);
+			echo ($sql);
 			DAO::doSQL($sql);
 			$url = $app['url']."key/".$codigo;
 			return $url;
@@ -820,7 +821,8 @@ class NotAProfile{
 		require_once('classTextile.php');		
 		$textile = new Textile();
 
-		$mails = NotAProfile::readMail($host,$login,$password,true);
+		$mails = NotAProfile::readMail($host,$login,$password,false);
+		
 		// procesa todos los mails que haya
 		if (count($mails)>0) {
 			for ($i=1;$i<=count($mails);$i++) {
