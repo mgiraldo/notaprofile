@@ -40,7 +40,7 @@ if(!NotAProfile::estaLogeado())
 			contenidoLlave<?php echo $llave['id'] ?> += '<a href="/key/<?php echo $llave['codigo'] ?>">view</a>';
 			<?php } ?>
 
-			<?php if (NotAProfile::puedeSerVista($llave))&& ($filtro==0)) { ?>
+			<?php if (NotAProfile::puedeSerVista($llave)&& ($filtro==0)) { ?>
 			contenidoLlave<?php echo $llave['id'] ?> += '<a href="/view/orphans/d/<?php echo $llave['codigo'] ?>">delete</a>';
 			<?php } ?>
 	
