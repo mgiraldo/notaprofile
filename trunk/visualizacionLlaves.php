@@ -41,7 +41,7 @@ if(!NotAProfile::estaLogeado())
 			<?php } ?>
 
 			<?php if (NotAProfile::puedeSerVista($llave)&& ($filtro==0)) { ?>
-			contenidoLlave<?php echo $llave['id'] ?> += '<a href="/view/orphans/d/<?php echo $llave['codigo'] ?>">delete</a>';
+			contenidoLlave<?php echo $llave['id'] ?> += ' <dd><a href="/view/orphans/d/<?php echo $llave['codigo'] ?>">delete</a></dd>';
 			<?php } ?>
 	
 		    var infoWindow<?php echo $llave['id'] ?> = new google.maps.InfoWindow({content: contenidoLlave<?php echo $llave['id']?>, maxWidth: 350 });
