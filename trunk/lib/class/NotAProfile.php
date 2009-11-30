@@ -989,6 +989,15 @@ class NotAProfile{
 		return DAO::doSQLAndReturn($sql);
 	}
 	
+	/**
+	 * ELIMINAR LLAVE
+	 */
+	public static function eliminarLllave($codigo){
+		$codigo = htmlentities($codigo);
+		$sql = "DELETE FROM llave WEHERE codigo = '$codigo'";
+		DAO::doSQL($sql); 
+	}
+	
 	
 	
 	
