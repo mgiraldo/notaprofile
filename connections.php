@@ -68,11 +68,11 @@ $contactos = NotAProfile::darContactos();
         	}
         	?>
         	<?php if($foto!=NULL && $foto!="" && $llave['foto']!="error_nofile"){?>
-		  	<a href="/indconnections.php?usr=<?php echo ($idotro); ?>" class="imagen"><img src="<?php echo("/".$app['photoroot'].$foto."_m.jpg")?>" alt="/img/btn_like.png" width="128" height="128" /></a>
+		  	<a href="/connection/<?php echo ($idotro); ?>" class="imagen"><img src="<?php echo("/".$app['photoroot'].$foto."_m.jpg")?>" alt="/img/btn_like.png" width="128" height="128" /></a>
 			<?php 
         	}else{
 			?>
-			<a href="/indconnections.php?usr=<?php echo ($idotro); ?>" class="imagen"><img src="img/btn_like.png" alt="123" width="128" height="128" /></a>
+			<a href="/connection/<?php echo ($idotro); ?>" class="imagen"><img src="img/btn_like.png" alt="123" width="128" height="128" /></a>
 			<?php }?>
 		  	<div><span class="yo"><?php echo($yo)?></span> / <span class="ella"><?php echo($ella)?></span></div>
 		</li>
