@@ -4,7 +4,7 @@ require_once('lib/class/NotAProfile.php');
 include('cerrarSiThickbox.php');
 //Cuando filtro es 1 se muestran las claimed, sino, las orphans.
 $filtro = isset($_GET['filtro'])?$_GET['filtro']:0;
-$llaves = $filtro==0? NotAProfile::darLlavesDisponibles() : NotAProfile::darLlavesCreadasReclamadas();
+$llaves = $filtro==0 ? NotAProfile::darLlavesDisponibles() : NotAProfile::darLlavesCreadasReclamadas();
 $count = count($llaves);
 if(!NotAProfile::estaLogeado())
 {
@@ -35,15 +35,10 @@ if(!NotAProfile::estaLogeado())
 		
 		<?php foreach ($llaves as &$llave) { ?>
 		    var posicionLlave<?php echo $llave['id'] ?> = new google.maps.LatLng(<?php echo $llave['latitud'] ?>, <?php echo $llave['longitud'] ?>);
-			<?php
-		    $txt = substr($llave['txt'], 0, 50);
-			$txt .= strlen($llave['txt'])>50 ? "...": "";
-		    if(NotAProfile::puedeSerVista($llave)){
-			?>
-		    	var contenidoLlave<?php echo $llave['id'] ?> = '<b> Location:</b> <?php echo $llave['latitud'] ?>/<?php echo $llave['longitud'] ?> <br /><b>Created:</b><?php echo date("M j/Y",strtotime($llave['fecha_creado'])) ?><br /><a href="/key/<?php echo $llave['codigo'] ?>">view</a>';
-		    <?php } else{ ?>
-		    	var contenidoLlave<?php echo $llave['id']  ?>= '<b>orphan!</b>';
-		    <?php }?>
+		    var contenidoLlave<?php echo $llave['id'] ?> = '<b> Location:</b> <?php echo $llave['latitud'] ?>,<?php echo $llave['longitud'] ?> <br /><b>Created:</b><?php echo date("M j/Y",strtotime($llave['fecha_creado'])) ?><br />';
+			<?php if (NotAProfile::puedeSerVista($llave)) { ?>
+			contenidoLlave<?php echo $llave['id'] ?> += '<a href="/key/<?php echo $llave['codigo'] ?>">view</a>';
+			<?php } ?>
 		    var infoWindow<?php echo $llave['id'] ?> = new google.maps.InfoWindow({content: contenidoLlave<?php echo $llave['id']?>, maxWidth: 350 });
 		    llave<?php echo $llave['id'] ?> = new google.maps.Marker({position: posicionLlave<?php echo $llave['id'] ?>, map: map, icon: iconoNoReclamado });
 		    google.maps.event.addListener(llave<?php echo $llave['id'] ?>, 'click', function() {if(visibleInfoWindow){ visibleInfoWindow.close(); } infoWindow<?php echo $llave['id'] ?>.open(map,llave<?php echo $llave['id'] ?>);  visibleInfoWindow = infoWindow<?php echo $llave['id'] ?>; map.setZoom(13);});
