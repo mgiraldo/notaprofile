@@ -39,6 +39,11 @@ if(!NotAProfile::estaLogeado())
 			<?php if (NotAProfile::puedeSerVista($llave)) { ?>
 			contenidoLlave<?php echo $llave['id'] ?> += '<a href="/key/<?php echo $llave['codigo'] ?>">view</a>';
 			<?php } ?>
+
+			<?php if (NotAProfile::puedeSerVista($llave))&& $filtro==0 { ?>
+			contenidoLlave<?php echo $llave['id'] ?> += '<a href="/view/orphans/d/<?php echo $llave['codigo'] ?>">delete</a>';
+			<?php } ?>
+	
 		    var infoWindow<?php echo $llave['id'] ?> = new google.maps.InfoWindow({content: contenidoLlave<?php echo $llave['id']?>, maxWidth: 350 });
 		    llave<?php echo $llave['id'] ?> = new google.maps.Marker({position: posicionLlave<?php echo $llave['id'] ?>, map: map, icon: iconoNoReclamado });
 		    google.maps.event.addListener(llave<?php echo $llave['id'] ?>, 'click', function() {if(visibleInfoWindow){ visibleInfoWindow.close(); } infoWindow<?php echo $llave['id'] ?>.open(map,llave<?php echo $llave['id'] ?>);  visibleInfoWindow = infoWindow<?php echo $llave['id'] ?>; map.setZoom(13);});
