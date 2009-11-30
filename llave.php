@@ -37,7 +37,7 @@ require_once 'lib/class/NotAProfile.php';
                 background: url(/<?php echo ($app['photoroot'].$llave[0]['foto'].".jpg") ?>) repeat-x;
         <?php }
         else{ ?>
-                background: url(/img/fotoejemplo.jpg) repeat-x;
+               
         <?php } ?>              
 }
 </style>
