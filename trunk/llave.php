@@ -86,7 +86,7 @@ require_once 'lib/class/NotAProfile.php';
                 
                         <div id="textollave">
                         <?php if($llave[0]['creador_id'] == $_SESSION['userid']){?>
-                        <?php echo("www.notaprofile.com/key/".$_GET['c']);?>
+                        <?php echo("notaprofile.com/key/".$_GET['c']);?>
                         <?php }?>
                         <?php echo($llave[0]['txt']);?>
                         </div>
