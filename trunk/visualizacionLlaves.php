@@ -64,8 +64,8 @@ if(!NotAProfile::estaLogeado())
 				-->
 				<?php if($filtro==1){$class ="claimedactiva";}else{$class ="orphansactiva";}?>
 				<div id="mapatabs" class=<?php echo($class); ?>>
-					<div class="orphans"><a href="/viewKeys/orphans">orphans</a></div>
-					<div class="claimed"><a href="/viewKeys/claimed">claimed</a></div>					
+					<div class="orphans"><a href="/view/orphans">orphans</a></div>
+					<div class="claimed"><a href="/view/claimed">claimed</a></div>					
 				</div>
 				<ul id="listallaves">
 					<?php foreach ($llaves as &$llave) {
