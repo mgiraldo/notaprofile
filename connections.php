@@ -20,7 +20,7 @@ $contactos = NotAProfile::darContactos();
 	<div id="cuerpo">
     
     <div id="navmapa">
-				<a class="createkey" href="#"><span>create_a_key</span></a>
+				<a class="createkey" href="/create"><span>create_a_key</span></a>
    </div>
     		
 		<ul id="listaconexiones">
@@ -66,7 +66,7 @@ $contactos = NotAProfile::darContactos();
         	}
         	?>
         	<?php if($foto!=NULL && $foto!=""){?>
-		  	<a href="#" class="imagen"><img src="<?php echo($foto)?>" alt="img/btn_like.png" width="128" height="128" /></a>
+		  	<a href="#" class="imagen"><img src="<?php echo($foto)?>" alt="/img/btn_like.png" width="128" height="128" /></a>
 			<?php 
         	}else{
 			?>
