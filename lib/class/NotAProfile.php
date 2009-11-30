@@ -658,7 +658,7 @@ class NotAProfile{
 		$consulta = sprintf("SELECT * FROM llave WHERE reclamador_id = %s AND creador_id = %s UNION SELECT * FROM llave WHERE reclamador_id = %s AND creador_id = %s", $_SESSION['userid'],$idamigo,$idamigo,$_SESSION['userid']);
 		$llaves = DAO::doSQLAndReturn($consulta);
 		$llave = rand(0,count($llaves)-1);
-		return "/".$app['photoroot'].$llaves[$llave]['foto']."_m.jpg";
+		return $llaves[$llave]['foto'];
 	}
 //----------------------------------------------------------------------------------------------
 // Funciones auxiliares
