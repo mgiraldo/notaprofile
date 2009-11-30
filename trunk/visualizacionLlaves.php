@@ -14,13 +14,13 @@ if(!NotAProfile::estaLogeado())
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>not_a_profile | Llaves</title>
+	<title>not_a_profile: keyring</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link href="/css/estilos.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 	<script type="text/javascript">
 	
-	<?php foreach ($llaves as &$llave) {echo "var".$llave['id']."; ";} ?>
+	<?php foreach ($llaves as &$llave) {echo "var llave".$llave['id'].";";} ?>
 
 	function initialize() {
 		var latlng = new google.maps.LatLng(4.620913,-74.083643);
@@ -33,18 +33,21 @@ if(!NotAProfile::estaLogeado())
 
 		//Agregamos las llaves
 		
-		<?php foreach ($llaves as &$llave) {
-		    echo "	var posicionLlave".$llave['id']." = new google.maps.LatLng(".$llave['latitud'].", ".$llave['longitud']."); \n";
-		    $txt = substr($llave['txt'], 0, 50);$txt .= strlen($llave['txt'])>50 ? "...</p>": "";
+		<?php foreach ($llaves as &$llave) { ?>
+		    var posicionLlave<?php echo $llave['id'] ?> = new google.maps.LatLng(<?php echo $llave['latitud'] ?>, <?php echo $llave['longitud'] ?>);
+			<?php
+		    $txt = substr($llave['txt'], 0, 50);
+			$txt .= strlen($llave['txt'])>50 ? "...": "";
 		    if(NotAProfile::puedeSerVista($llave)){
-		    	echo "	var contenidoLlave".$llave['id']." = '<b> Ubicacion: </b>".$llave['longitud']."/".$llave['latitud']." <br /><b>Fecha Creacion:</b>".$llave['fecha_creado']."<br /><a href=\"/key/".$llave['codigo']."\">Click para ver</a>';\n";
-		    } else{
-		    	echo "	var contenidoLlave".$llave['id']." = '<b>Unclaimed key!</b>';\n";
-		    }
-		    echo "	var infoWindow".$llave['id']." = new google.maps.InfoWindow({content: contenidoLlave".$llave['id'].", maxWidth: 350 }); \n";
-		    echo "	llave".$llave['id']." = new google.maps.Marker({position: posicionLlave".$llave['id'].", map: map, icon: iconoNoReclamado }); \n";
-		    echo "	google.maps.event.addListener(llave".$llave['id'].", 'click', function() {if(visibleInfoWindow){ visibleInfoWindow.close(); } infoWindow".$llave['id'].".open(map,llave".$llave['id'].");  visibleInfoWindow = infoWindow".$llave['id']."; });\n";
-	    }?> 
+			?>
+		    	var contenidoLlave<?php echo $llave['id'] ?> = '<b> Location:</b> <?php echo $llave['latitud'] ?>/<?php echo $llave['longitud'] ?> <br /><b>Created:</b><?php echo date("M j/Y",strtotime($llave['fecha_creado'])) ?><br /><a href="/key/<?php echo $llave['codigo'] ?>">view</a>';
+		    <?php } else{ ?>
+		    	var contenidoLlave<?php echo $llave['id']  ?>= '<b>orphan!</b>';
+		    <?php }?>
+		    var infoWindow<?php echo $llave['id'] ?> = new google.maps.InfoWindow({content: contenidoLlave<?php echo $llave['id']?>, maxWidth: 350 });
+		    llave<?php echo $llave['id'] ?> = new google.maps.Marker({position: posicionLlave<?php echo $llave['id'] ?>, map: map, icon: iconoNoReclamado });
+		    google.maps.event.addListener(llave<?php echo $llave['id'] ?>, 'click', function() {if(visibleInfoWindow){ visibleInfoWindow.close(); } infoWindow<?php echo $llave['id'] ?>.open(map,llave<?php echo $llave['id'] ?>);  visibleInfoWindow = infoWindow<?php echo $llave['id'] ?>; });
+	   <?php }?> 
 	}
 	function mostrar(id){  google.maps.event.trigger(id, 'click');  }
 	  
