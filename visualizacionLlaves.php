@@ -10,6 +10,11 @@ if(!NotAProfile::estaLogeado())
 {
 	header("Location: /");
 }
+if(isset($_GET['del']))
+{
+	NotAProfile::eliminarLlave($_GET['del']);
+	header("Location: /view/orphans");
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -41,7 +46,7 @@ if(!NotAProfile::estaLogeado())
 			<?php } ?>
 
 			<?php if (NotAProfile::puedeSerVista($llave)&& ($filtro==0)) { ?>
-			contenidoLlave<?php echo $llave['id'] ?> += ' <dd><a href="/view/orphans/d/<?php echo $llave['codigo'] ?>">delete</a></dd>';
+			contenidoLlave<?php echo $llave['id'] ?> += ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/visualizacionLlaves.php?filtro=0&del=<?php echo $llave['codigo'] ?>">delete</a>';
 			<?php } ?>
 	
 		    var infoWindow<?php echo $llave['id'] ?> = new google.maps.InfoWindow({content: contenidoLlave<?php echo $llave['id']?>, maxWidth: 350 });
