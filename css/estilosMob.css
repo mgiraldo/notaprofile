@@ -1,0 +1,78 @@
+* {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+body,td,th {
+	font-family: Courier New, Courier, monospace;
+	font-size: 14px;
+	color: #FFF;
+}
+body {
+	background-color: #000;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+a:link {
+	color: #FCAF3F;
+	text-decoration: underline;
+}
+a:visited {
+	text-decoration: underline;
+	color: #C98B30;
+}
+a:hover {
+	text-decoration: none;
+	color: #FCAF3F;
+}
+a:active {
+	text-decoration: underline;
+}
+#cabezote {
+	height: 33px;
+}
+#cabezote h1 {
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	font-weight: normal;
+	float: left;
+	width: 120px;
+	margin-top: 5px;
+	font-size: 14px;
+	margin-left: 5px;
+}
+#nav  {
+	float: right;
+	width: 165px;
+	margin-right: 5px;
+}
+#nav li  {
+	width: 35px;
+	float: right;
+	margin-top: 5px;
+	margin-left: 10px;
+}
+#nav li.logout  {
+	width: 50px;
+}
+#gmap {
+	height: 383px;
+	color: #000;
+}
+#cuerpo_sign {
+	padding: 5px;
+	margin-left: 69px;
+}
+#englobador_sign_in div , #englobador_sign_up div{
+	margin-bottom: 10px;
+}
+#cuerpo_sign input.text {
+	width: 195px;
+	font-size: 18px;
+	font-family: "Courier New", Courier, monospace;
+	padding: 4px;
+}
