@@ -33,7 +33,15 @@ if(!NotAProfile::estaLogeado()||!isset($usuariorelacion)||$usuariorelacion=="")
 			Compatibility:
 			</div>
 			<div id="num_estadistica" class="bold">
-			<div><p style="width: <?php echo(NotAProfile::compatibilidad($usuariorelacion));?>%;"><span><?php echo(NotAProfile::compatibilidad($usuariorelacion));?>%</span></p></div>
+			<?php 
+			$compatibilidad=NotAProfile::compatibilidad($usuariorelacion);
+			echo($compatibilidad);
+			
+			//if($compatibilidad>0){?>
+			<!--  <div class="divbarra"><p class="barrapositiva" style="width: <?php //echo($compatibilidad)*5;?>%;"><span><?php //echo($compatibilidad);?>%</span></p></div> -->
+			<?php // }else if($compatibilidad<0){?>
+			<!-- <div class="divbarra"><p class="barranegativa" style="width: <?php //echo($compatibilidad)*-5;?>%;"><span><?php //echo($compatibilidad);?>%</span></p></div> -->
+			<?php // }?>
 			</div>
 		</div>
 		<div id="contenedor">
