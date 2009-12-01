@@ -418,6 +418,7 @@ class NotAProfile{
 	public static function elegirCodigoUnico(){
 		$codigo= substr(md5(rand()), 5, 6);
 		
+		
 		$sql = "SELECT codigo FROM llave";
 		$cods= DAO::doSQLAndReturn($sql);
 		$noesunico=1;
@@ -441,7 +442,10 @@ class NotAProfile{
 	 * @return unknown_type
 	 */
 	public static function reclamarLlave($codigoLlave, $idUuario){
-		$sql=sprintf("SELECT * FROM llave WHERE codigo='%s'",$codigoLlave);
+		global $app;
+		$conn = DAO::getConn();
+		$sql=sprintf("SELECT * FROM llave WHERE codigo='%s'",
+			(mysql_real_escape_string($codigoLlave, $conn)));
 		$llave = DAO::doSQLAndReturn($sql);
 		if(!isset($llave[0]['id']))
 		{
@@ -983,14 +987,23 @@ class NotAProfile{
 		$heLikes = NotAProfile::heLikes($id_otro);
 		$heDislike = NotAProfile::heDislikes($id_otro);
 		
-		
-		$sql = "SELECT COUNT(*) AS cuantas FROM llave WHERE (creador_id = $id_otro AND reclamador_id = $id_mio) OR (creador_id = $id_mio AND reclamador_id = $id_otro)";
+		global $app;
+		$conn = DAO::getConn();
+		$sql = sprintf("SELECT COUNT(*) AS cuantas FROM llave WHERE (creador_id = %s AND reclamador_id = %s) OR (creador_id = %s AND reclamador_id = %s)",
+				(mysql_real_escape_string($id_otro, $conn)),
+				(mysql_real_escape_string($id_mio, $conn)),
+				(mysql_real_escape_string($id_otro, $conn)),
+				(mysql_real_escape_string($id_mio, $conn)));
+				
 		$resp = DAO::doSQLAndReturn($sql);
 		$totalLlaves = $resp[0]['cuantas'];
-		$valor = 3*$ilike-$idislike+3*$heLikes-$heDislike;
-		$num = $valor==0? 0: $totalLlaves/(3*$ilike-$idislike+3*$heLikes-$heDislike)*100;
+		
+		
+		
+		$valor = $ilike-$idislike+$heLikes-$heDislike;
+		$valor = $valor>=100? 100: $valor;
+		$valor = $valor<=-100? -100: $valor;
 		return $valor;
-		//return number_format($num, 1)."%";
 	}
 	
 	
