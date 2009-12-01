@@ -4,11 +4,11 @@
 <?php
 if(NotAProfile::estaLogeado()){
 ?>
-		<li class="logout"><a href="/m?logout">logout</a></li>
+		<li class="wide"><a href="/m?logout">logout</a></li>
 <?php
 }
 ?>
-		<li><a href="/m/create">new</a></li>
+		<li class="wide"><a href="/m/create">create</a></li>
 		<li><a href="/m/view">view</a></li>
 	</ul>
 </div>

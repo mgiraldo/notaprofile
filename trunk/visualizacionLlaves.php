@@ -24,6 +24,12 @@ if(isset($_GET['del']))
 	<link href="/css/estilos.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 	<script type="text/javascript">
+var agent=navigator.userAgent.toLowerCase();
+var is_iphone = ((agent.indexOf('iphone')!=-1));
+if (is_iphone)
+{ 	
+	window.location = "/m/view" 
+}
 	
 	<?php foreach ($llaves as &$llave) {echo "var llave".$llave['id'].";";} ?>
 
