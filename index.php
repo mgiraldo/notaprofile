@@ -117,7 +117,7 @@ function habilitaDeshabilita(form){
 	<div id="cabezote">
 		<h1>not_a_profile</h1>
 	</div>
-    <form id="cuerpo_sign" method="post" name="loginsignupform" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    <form id="cuerpo_sign" method="post" name="loginsignupform" action="">
 		<input type="hidden" name="typesubmit" id="typesubmit" value="1" />
 		<div id="englobador_sign_in">
 <?php
