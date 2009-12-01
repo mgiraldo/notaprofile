@@ -75,7 +75,7 @@ if(NotAProfile::estaLogeado() && ($llave[0]['creador_id'] != $_SESSION['userid']
                 
                         <div id="textollave">
                         <?php if($llave[0]['creador_id'] == $_SESSION['userid']){?>
-                        	<div id="keyurl"><?php echo("key_url:<br />notaprofile.com/key/".$_GET['c']);?></div>
+                        	<div id="keyurl"><?php echo("key_url (write it down and paste it somewhere!):<br />http://notaprofile.com/key/".$_GET['c']);?></div>
                         <?php }?>
                         <?php echo($llave[0]['txt']);?>
                         </div>
