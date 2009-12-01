@@ -37,6 +37,7 @@ if(!NotAProfile::estaLogeado()||!isset($usuariorelacion)||$usuariorelacion=="")
 			$compatibilidad=NotAProfile::compatibilidad($usuariorelacion);
 			echo($compatibilidad);
 			
+			//INTENTO DE BARRITA
 			//if($compatibilidad>0){?>
 			<!--  <div class="divbarra"><p class="barrapositiva" style="width: <?php //echo($compatibilidad)*5;?>%;"><span><?php //echo($compatibilidad);?>%</span></p></div> -->
 			<?php // }else if($compatibilidad<0){?>
