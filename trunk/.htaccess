@@ -18,8 +18,13 @@ RewriteRule ^viewkeys/claimed$ /visualizacionLlaves.php?filtro=1
 RewriteRule ^viewKeys/orphans$ /visualizacionLlaves.php?filtro=0
 RewriteRule ^viewkeys/claimed$ /visualizacionLlaves.php?filtro=1
 RewriteRule ^key/(.*)?$ /llave.php?c=$1
-ReWriteRule ^gps$ /ip.map.php
 
+ReWriteRule ^gps$ /ip.map.php
+ReWriteRule ^m/create$ /ip.map.php
+ReWriteRule ^m/view$ /ip.view.php
+ReWriteRule ^m/connections$ /ip.connections.php
+
+ReWriteRule ^connection/(.*)?$ /indconnections.php?usr=$1
 ReWriteRule ^connections$ /connections.php
 
 ReWriteRule ^about$ /about.php
