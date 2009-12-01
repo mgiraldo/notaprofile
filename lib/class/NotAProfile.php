@@ -973,8 +973,9 @@ class NotAProfile{
 		$totalLlaves = $resp[0]['cuantas'];
 		$valor = 3*$ilike-$idislike+3*$heLikes-$heDislike;
 		$num = $valor==0? 0: $totalLlaves/(3*$ilike-$idislike+3*$heLikes-$heDislike)*100;
-	
-		return number_format($num, 1)."%";
+		
+		return $valor;
+		//return number_format($num, 1)."%";
 	}
 	
 	
