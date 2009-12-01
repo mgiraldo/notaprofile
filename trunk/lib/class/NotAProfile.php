@@ -1015,7 +1015,14 @@ class NotAProfile{
 		}
 		
 		$id_mio = $_SESSION['userid'];
-		$sql = "SELECT * FROM llave WHERE (creador_id = $id_otro AND reclamador_id = $id_mio) OR (creador_id = $id_mio AND reclamador_id = $id_otro)";
+		global $app;
+		$conn = DAO::getConn();
+		$sql = sprintf("SELECT * FROM llave WHERE (creador_id = %s AND reclamador_id = %s) OR (creador_id = %s AND reclamador_id = %s)",
+				(mysql_real_escape_string($id_otro, $conn)),
+				(mysql_real_escape_string($id_mio, $conn)),
+				(mysql_real_escape_string($id_otro, $conn)),
+				(mysql_real_escape_string($id_mio, $conn)));
+				
 		return DAO::doSQLAndReturn($sql);
 	}
 	
@@ -1024,7 +1031,9 @@ class NotAProfile{
 	 */
 	public static function eliminarLlave($codigo){
 		$codigo = htmlentities($codigo);
-		$sql = "DELETE FROM llave WHERE codigo = '$codigo'";
+		global $app;
+		$conn = DAO::getConn();
+		$sql = sprintf("DELETE FROM llave WHERE codigo = '%s'", (mysql_real_escape_string($codigo, $conn)));
 		DAO::doSQL($sql); 
 	}
 	
