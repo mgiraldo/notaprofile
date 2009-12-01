@@ -208,7 +208,11 @@ class NotAProfile{
 		$codigoUnico = md5(uniqid($email.mt_rand(), true));
 		
 		//ingresa a la base de datos el id relacionado al correo
-		$sql=sprintf("UPDATE usuario SET id_activacion = '%s' WHERE id = '%s'", $codigoUnico, $id);
+		global $app;
+		$conn = DAO::getConn();
+		$sql=sprintf("UPDATE usuario SET id_activacion = '%s' WHERE id = '%s'",
+				(mysql_real_escape_string($codigoUnico, $conn)),
+				(mysql_real_escape_string($id, $conn)));
 		DAO::doSQL($sql);
 				
 		// enviar correo con este codigo dentro de un link
@@ -236,12 +240,9 @@ class NotAProfile{
 	 */
 	public static function puedeSerVista($llave)
 	{
-		if($llave['reclamador_id']==$_SESSION['userid']||$llave['creador_id']==$_SESSION['userid'])
-		{
+		if($llave['reclamador_id']==$_SESSION['userid']||$llave['creador_id']==$_SESSION['userid']){
 			return true;
-		}
-		else
-		{
+		}else{
 			return false;
 		}
 	}
@@ -257,12 +258,15 @@ class NotAProfile{
 		// con aumento de la entropia activado.
 		$codigoUnico = md5(uniqid($email.mt_rand(), true));
 		$usuario = NotAProfile::infoUsuario($email);
-		if(!isset($usuario[0]['email']))
-		{
+		if(!isset($usuario[0]['email'])){
 			return false;
 		}
 		//ingresa a la base de datos el id relacionado al correo
-		$sql=sprintf("UPDATE usuario SET token_reactivacion = '%s' WHERE id = '%s'", $codigoUnico, $usuario[0]['id']);
+		global $app;
+		$conn = DAO::getConn();
+		$sql=sprintf("UPDATE usuario SET token_reactivacion = '%s' WHERE id = '%s'", 
+				(mysql_real_escape_string($codigoUnico, $conn)),
+				(mysql_real_escape_string($usuario[0]['id'], $conn)));
 		DAO::doSQL($sql);
 				
 		// enviar correo con este codigo dentro de un link
@@ -293,7 +297,11 @@ class NotAProfile{
 	public static function existeCambioClave($param)
 	{
 		list($email, $token) =split("-", $param);
-		$sql = sprintf("SELECT * FROM usuario WHERE token_reactivacion='%s'",$token);
+		
+		global $app;
+		$conn = DAO::getConn();
+		$sql = sprintf("SELECT * FROM usuario WHERE token_reactivacion='%s'",
+			(mysql_real_escape_string($token, $conn)));
 		$usuario = DAO::doSQLAndReturn($sql);	
 		if(md5($usuario[0]['email']) == $email)	{
 			$emailUsuario = $usuario[0]['email'];
