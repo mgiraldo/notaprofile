@@ -4,7 +4,7 @@ require_once('config/config.php');
 require_once 'lib/class/NotAProfile.php';
 
 if(!NotAProfile::estaLogeado()) {
-	header("Location: /?r=" . urlencode("/gps"));
+	header("Location: /m?r=" . urlencode("/gps"));
 }
 
 ?>
@@ -13,31 +13,8 @@ if(!NotAProfile::estaLogeado()) {
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>not_a_profile : gps key</title>
-<link href="/css/estilos.css" rel="stylesheet" type="text/css" />
+<link href="/css/estilosMob.css" rel="stylesheet" type="text/css" />
 <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" name="viewport"/>
-<style type="text/css">
-<!--
-* {
-	margin: 0;
-	padding: 0;
-}
-body,td,th {
-	font-family: Courier New, Courier, monospace;
-	font-size: 16px;
-	color: #FFF;
-}
-body {
-	background-color: #000;
-	margin-left: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-}
-#gmap {
-	height: 416px;
-}
--->
-</style>
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=true&amp;key=<?php echo $app["apiKey"] ?>" type="text/javascript"></script>
 <script>
 var map;
@@ -89,7 +66,7 @@ function gMapper (position) {
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head>
 <body onload="initialize()" onunload="GUnload()">
+<?php include("./inc/cabezoteMob.php"); ?>
 <div id="gmap">Location unknown</div>
-<!-- <div id="button"><a href="#"><img src="img/submit.png" width="195" height="26" alt="submit_key" /></a></div> -->
 </body>
 </html>
