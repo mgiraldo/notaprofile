@@ -1020,8 +1020,8 @@ class NotAProfile{
 		$sql = sprintf("SELECT * FROM llave WHERE (creador_id = %s AND reclamador_id = %s) OR (creador_id = %s AND reclamador_id = %s)",
 				(mysql_real_escape_string($id_otro, $conn)),
 				(mysql_real_escape_string($id_mio, $conn)),
-				(mysql_real_escape_string($id_otro, $conn)),
-				(mysql_real_escape_string($id_mio, $conn)));
+				(mysql_real_escape_string($id_mio, $conn)),
+				(mysql_real_escape_string($id_otro, $conn)));
 				
 		return DAO::doSQLAndReturn($sql);
 	}
