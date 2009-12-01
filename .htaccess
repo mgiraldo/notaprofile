@@ -18,7 +18,7 @@ RewriteRule ^viewkeys/claimed$ /visualizacionLlaves.php?filtro=1
 RewriteRule ^viewKeys/orphans$ /visualizacionLlaves.php?filtro=0
 RewriteRule ^viewkeys/claimed$ /visualizacionLlaves.php?filtro=1
 RewriteRule ^key/([^/]+)$ /llave.php?c=$1
-RewriteRule ^key/([^/]+)/([^/]+)?$ /llave.php?c=$1?like=$2
+RewriteRule ^key/([^/]+)/([^/]+)?$ /llave.php?c=$1&like=$2
 
 ReWriteRule ^gps$ /ip.map.php
 ReWriteRule ^m/create$ /ip.map.php
