@@ -173,15 +173,16 @@ switch($error){
         <?php if(isset($_GET['tb'])) { ?>
 			<input type="hidden" value="<?php echo($_GET['reclamollave'])?>" name="reclamollave" id="reclamollave" />
 		<?php } ?>
-        <?php if(isset($_GET['r'])) { ?>
-			<input type="hidden" value="<?php echo($_GET['r'])?>" name="r" id="r" />
+        <?php if((isset($_GET['r']) || isset($_POST['r'])) && strpos($_GET['r'], "key") || strpos($_POST['r'], "key" )) { ?>
+			<input type="hidden" value="<?php if(isset($_GET['r'])){ echo($_GET['r']);} else{ echo($_POST['r']); }?>" name="r" id="r" />
 		<?php } ?>
     </form>
 	<div id="catch">
-	<?php if(isset($_GET['r'])){ ?>
+	<?php if((isset($_GET['r']) || isset($_POST['r'])) && strpos($_GET['r'], "key") || strpos($_POST['r'], "key" )){?>
 		<h2>there is a key for you!</h2>
 		<p>but you need to log in...</p>
 		<p>not_a_profile is about real connections with real people. we would like to avoid using passwords and emails but we need a way to distinguish you from the average Joe. Don't worry, we won't send you any spam (we hate it as much as you) and we will encrypt your password.</p>
+		<input type="hidden" value="<?php if(isset($_GET['r'])){ echo($_GET['r']);} else{ echo($_POST['r']); }?>" name="r" id="r" />
 	<?php }
 	else {?>
 		<h2>welcome!</h2>
