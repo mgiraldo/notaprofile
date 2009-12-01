@@ -23,7 +23,7 @@ $email = "";
 $passw = "";
 $pass2 = "";
 
-if(isset($_POST['submit'])){
+if(isset($_POST['typesubmit']) && $_POST['typesubmit']==1){
 	// Se ha enviado el formulario para iniciar sesion
 	$email = isset($_POST['email'])?$_POST['email']:"";
 	$passw = isset($_POST['pass'])?$_POST['pass']:"";
@@ -42,7 +42,7 @@ if(isset($_POST['submit'])){
 				}
 		}
 	
-}else if(isset($_POST['signup'])){
+}else if(isset($_POST['typesubmit']) && $_POST['typesubmit']==2){
 	// Se ha enviado el formulario para registrarse
 
 	$email = isset($_POST['email'])?$_POST['email']:"";
@@ -84,12 +84,14 @@ function escondidoInicial(caso){
 		document.getElementById("botonSignUp").disabled = false;
 		document.getElementById("botonSignIn").style.visibility = 'visible';
 		document.getElementById("botonSignIn").disabled = false;
+		document.getElementById("typesubmit").value = 1;
 	}else{
 		document.getElementById("checkbox").checked=true;
 		document.getElementById("botonSignIn").style.visibility = 'hidden';
 		document.getElementById("botonSignIn").disabled = true;
     	document.getElementById("englobador_sign_up").style.visibility = 'visible';
 		document.getElementById("botonSignUp").disabled = false;
+		document.getElementById("typesubmit").value = 2;
 	}
 }
 
@@ -99,11 +101,13 @@ function habilitaDeshabilita(form){
 		document.getElementById("botonSignIn").disabled = true;		
     	document.getElementById("englobador_sign_up").style.visibility = 'visible';
 		document.getElementById("botonSignUp").disabled = false;
+		document.getElementById("typesubmit").value = 2;
     } else{
 		document.getElementById("botonSignIn").style.visibility = 'visible';
 		document.getElementById("botonSignIn").disabled = false;
     	document.getElementById("englobador_sign_up").style.visibility = 'hidden';
 		document.getElementById("botonSignUp").disabled = true;
+		document.getElementById("typesubmit").value = 1;
     }
 }
 </script>
@@ -114,10 +118,10 @@ function habilitaDeshabilita(form){
 		<h1>not_a_profile</h1>
 	</div>
     <form id="cuerpo_sign" method="post" name="loginsignupform" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+		<input type="hidden" name="typesubmit" id="typesubmit" value="1" />
 		<div id="englobador_sign_in">
 <?php
-
-if(isset($_POST['submit'])){
+if(isset($_POST['typesubmit']) && $_POST['typesubmit']==1){
 switch($error){
 	case 1:
 		echo "<div id=\"errorLogin\">email or password cannot be empty</div>";
@@ -129,7 +133,7 @@ switch($error){
 		echo "<div id=\"errorLogin\">wrong email or password</div>";
 		break;
 }}
-if(isset($_POST['signup'])){
+if(isset($_POST['typesubmit']) && $_POST['typesubmit']==2){
 switch($error){
 	case 1:
 		echo "<div id=\"errorLogin\">email or password cannot be empty </div>";
@@ -158,7 +162,7 @@ switch($error){
             <div id="boton">&nbsp;</div>
             <div id="text_box"><input id="box" type="text" name="email" value="<?php echo isset($_POST['email'])?$_POST['email']:""; ?>" tabindex="1"></div>
             <div id="sign"><h3>your email:</h3></div>            
-            <div id="boton"><input type="image" id="botonSignIn" src="/img/enter.png" name="submit" value="Sign_In" height="26" width="195" border="0" vspace="0"  alt="Sing in" tabindex="3" /></div>
+            <div id="boton"><input type="image" id="botonSignIn" src="/img/enter.png" value="Sign_In" height="26" width="195" border="0" vspace="0"  alt="Sing in" tabindex="3" /></div>
             <div id="text_box"><input id="box" type="password" name="pass" tabindex="2" /></div>
             <div id="sign"><h3>password:</h3></div>
 			<div id="boton">&nbsp;</div>
@@ -171,7 +175,7 @@ switch($error){
         <div id="englobador_sign_up">
             <div id="header"><h2>sign_up</h2></div>
             <div id="info">just_rewrite_your_password:</div>
-            <div id="boton"><input type="image" id="botonSignUp" src="/img/submit.png" name="signup" value ="Sign_Up" height="26" width="195" border="0" vspace="0" alt="Sign up"  tabindex="6" />  
+            <div id="boton"><input type="image" id="botonSignUp" src="/img/submit.png" value ="Sign_Up" height="26" width="195" border="0" vspace="0" alt="Sign up"  tabindex="6" />  
             </div><div id="text_box"><input id="box" type="password" name="pass2" tabindex="5" /></div>
             <div id="sign"><h3>password:</h3></div>
         </div>
