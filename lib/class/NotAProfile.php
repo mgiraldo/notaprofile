@@ -1001,9 +1001,9 @@ class NotAProfile{
 		
 		
 		$valor = $ilike-$idislike+$heLikes-$heDislike;
-		$valor+=50;
+		//$valor+=50;
 		$valor = $valor>=100? 100: $valor;
-		$valor = $valor<=0? 0: $valor;
+		$valor = $valor<=-100? -100: $valor;
 		return $valor;
 	}
 	
