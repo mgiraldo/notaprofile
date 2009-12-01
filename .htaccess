@@ -20,6 +20,7 @@ RewriteRule ^viewkeys/claimed$ /visualizacionLlaves.php?filtro=1
 RewriteRule ^key/(.*)?$ /llave.php?c=$1
 
 ReWriteRule ^gps$ /ip.map.php
+ReWriteRule ^m$ /ip.index.php
 ReWriteRule ^m/create$ /ip.map.php
 ReWriteRule ^m/view$ /ip.view.php
 ReWriteRule ^m/connections$ /ip.connections.php
