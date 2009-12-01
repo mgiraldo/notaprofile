@@ -72,6 +72,7 @@ class NotAProfile{
 	 *   3 - El email ingresado no existe o la contraseña no coincide
 	 */
 	public static function login($email, $clave){
+		session_start();
 		$email = trim($email);
 		$clave = trim($clave);
 		
