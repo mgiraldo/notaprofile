@@ -78,6 +78,12 @@ if(isset($_POST['typesubmit']) && $_POST['typesubmit']==1){
 <title>not_a_profile</title>
 </head>
 <script languaje="javascript">
+var agent=navigator.userAgent.toLowerCase();
+var is_iphone = ((agent.indexOf('iphone')!=-1));
+if (is_iphone)
+{ 	
+	window.location = "/m" 
+}
 function escondidoInicial(caso){
 		document.getElementById("englobador_sign_up").style.visibility = 'hidden';
 		document.getElementById("botonSignUp").disabled = false;

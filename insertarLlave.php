@@ -46,9 +46,14 @@ if(isset($_POST["latitude"])&&isset($_POST["longitude"]))
 <link href="/css/estilosInsertarLlave.css" rel="stylesheet" type="text/css" />
 <title>not_a_profile</title>
 </head>
- <script src="http://maps.google.com/maps?file=api&v=2&key=<?php echo $app['apiKey'] ?>&sensor=true"
-            type="text/javascript"></script>
+ <script src="http://maps.google.com/maps?file=api&v=2&key=<?php echo $app['apiKey'] ?>&sensor=true" type="text/javascript"></script>
     <script type="text/javascript">
+var agent=navigator.userAgent.toLowerCase();
+var is_iphone = ((agent.indexOf('iphone')!=-1));
+if (is_iphone)
+{ 	
+	window.location = "/m/create" 
+}
     var map;
     var llave;
     function initialize() {
