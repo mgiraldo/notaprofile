@@ -975,7 +975,7 @@ class NotAProfile{
 		
 		$id_otro = htmlentities($id_otro);
 		if(!is_numeric($id_otro)){
-			return "-";
+			return 0;
 		}
 		
 		$id_mio = $_SESSION['userid'];
@@ -1001,8 +1001,9 @@ class NotAProfile{
 		
 		
 		$valor = $ilike-$idislike+$heLikes-$heDislike;
+		$valor+=50;
 		$valor = $valor>=100? 100: $valor;
-		$valor = $valor<=-100? -100: $valor;
+		$valor = $valor<=0? 0: $valor;
 		return $valor;
 	}
 	
