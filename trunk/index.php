@@ -79,20 +79,11 @@ if(isset($_POST['typesubmit']) && $_POST['typesubmit']==1){
 </head>
 <script languaje="javascript">
 function escondidoInicial(caso){
-	if(caso==1)	{
 		document.getElementById("englobador_sign_up").style.visibility = 'hidden';
 		document.getElementById("botonSignUp").disabled = false;
 		document.getElementById("botonSignIn").style.visibility = 'visible';
 		document.getElementById("botonSignIn").disabled = false;
 		document.getElementById("typesubmit").value = 1;
-	}else{
-		document.getElementById("checkbox").checked=true;
-		document.getElementById("botonSignIn").style.visibility = 'hidden';
-		document.getElementById("botonSignIn").disabled = true;
-    	document.getElementById("englobador_sign_up").style.visibility = 'visible';
-		document.getElementById("botonSignUp").disabled = false;
-		document.getElementById("typesubmit").value = 2;
-	}
 }
 
 function habilitaDeshabilita(form){
@@ -112,12 +103,12 @@ function habilitaDeshabilita(form){
 }
 </script>
 
-<body onload="escondidoInicial(<?php if(isset($error)){if($error==3) echo($error); else echo (1);}else{echo(1);}?>);">
+<body onload="escondidoInicial();">
 <div id="contenido">
 	<div id="cabezote">
 		<h1>not_a_profile</h1>
 	</div>
-    <form id="cuerpo_sign" method="post" name="loginsignupform" action="">
+    <form id="cuerpo_sign" method="post" name="loginsignupform" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<input type="hidden" name="typesubmit" id="typesubmit" value="1" />
 		<div id="englobador_sign_in">
 <?php
@@ -182,16 +173,15 @@ switch($error){
         <?php if(isset($_GET['tb'])) { ?>
 			<input type="hidden" value="<?php echo($_GET['reclamollave'])?>" name="reclamollave" id="reclamollave" />
 		<?php } ?>
-        <?php if((isset($_GET['r']) || isset($_POST['r'])) && strpos($_GET['r'], "key") || strpos($_POST['r'], "key" )) { ?>
-			<input type="hidden" value="<?php if(isset($_GET['r'])){ echo($_GET['r']);} else{ echo($_POST['r']); }?>" name="r" id="r" />
+        <?php if(isset($_GET['r'])) { ?>
+			<input type="hidden" value="<?php echo($_GET['r'])?>" name="r" id="r" />
 		<?php } ?>
     </form>
 	<div id="catch">
-	<?php if((isset($_GET['r']) || isset($_POST['r'])) && strpos($_GET['r'], "key") || strpos($_POST['r'], "key" )){?>
+	<?php if(isset($_GET['r'])){ ?>
 		<h2>there is a key for you!</h2>
 		<p>but you need to log in...</p>
 		<p>not_a_profile is about real connections with real people. we would like to avoid using passwords and emails but we need a way to distinguish you from the average Joe. Don't worry, we won't send you any spam (we hate it as much as you) and we will encrypt your password.</p>
-		<input type="hidden" value="<?php if(isset($_GET['r'])){ echo($_GET['r']);} else{ echo($_POST['r']); }?>" name="r" id="r" />
 	<?php }
 	else {?>
 		<h2>welcome!</h2>
