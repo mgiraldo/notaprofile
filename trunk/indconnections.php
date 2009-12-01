@@ -33,7 +33,7 @@ if(!NotAProfile::estaLogeado()||!isset($usuariorelacion)||$usuariorelacion=="")
 			Compatibility:
 			</div>
 			<div id="num_estadistica" class="bold">
-			<?php echo(NotAProfile::compatibilidad($usuariorelacion));?>
+			<div class="amount"><?php echo(NotAProfile::compatibilidad($usuariorelacion));?></div>
 			</div>
 		</div>
 		<div id="contenedor">
