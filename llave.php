@@ -97,7 +97,7 @@ if(NotAProfile::estaLogeado() && ($llave[0]['creador_id'] != $_SESSION['userid']
                         </div>
                 <?php } ?>
         </div>
-        <?php include("./inc/pie.php");?>
+        <!--<?php include("./inc/pie.php");?> -->
 </div>
 </body>
 </html>
