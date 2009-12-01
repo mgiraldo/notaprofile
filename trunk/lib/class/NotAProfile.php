@@ -41,17 +41,18 @@ class NotAProfile{
 		// Verfica que las dos contraseñas sean iguales
 		if($clave2!=$clave){return 3;}
 		
-		//Agrega caracteres de control XSS
-		$email = strip_tags(addslashes(htmlspecialchars(htmlentities($email))));
-		$clave = strip_tags(addslashes(htmlspecialchars(htmlentities($clave))));
-		
 		// Verifica que no exista un usuario con ese email registrado
 		if(NotAProfile::existeUsuario($email)){
 			return 4;
 		}
 
 		// Ingresa a la base de datos el nuevo usuario.
-		$sql = "INSERT INTO usuario (id, email, clave, flag_activo, fecha_creado) VALUES (NULL, '$email', '".md5($clave)."', '0', NOW() )";
+		
+		global $app;
+		$conn = DAO::getConn();
+		$sql = sprintf("INSERT INTO usuario (id, email, clave, flag_activo, fecha_creado) VALUES (NULL, '%s', '%s', '0', NOW() )",
+						(mysql_real_escape_string($email, $conn)),
+						(mysql_real_escape_string(md5($clave), $conn))); 
 		if(DAO::doSQL($sql)){
 			// Enviar email
 			$id = DAO::lastId();
@@ -82,10 +83,7 @@ class NotAProfile{
 		// Valida que el email ingresado tenga un formato valido
 		$regex = "/[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))/";
 		if(!(preg_match($regex,$email))){return 2;}
-		
-		//Agrega caracteres de control XSS
-		$email = strip_tags(addslashes(htmlspecialchars(htmlentities($email))));
-		$clave = strip_tags(addslashes(htmlspecialchars(htmlentities($clave))));
+
 		
 		// Verifica que exista un registro asociado a un emai, y si existe, que la coincida la cllave
 		if(!(NotAProfile::validarUsuario($email, md5($clave)))){return 3;}
@@ -109,7 +107,10 @@ class NotAProfile{
 	 */
 	public static function validarUsuario($email, $clave)
 	{
-		$sql = "SELECT clave FROM usuario WHERE email='$email'";
+		global $app;
+		$conn = DAO::getConn();
+		$sql = sprintf("SELECT clave FROM usuario WHERE email='%s'",
+				(mysql_real_escape_string($email, $conn)));
 		$usuario = DAO::doSQLAndReturn($sql);
 		if(count($usuario)==1)
 			// Existe un único registro asociado al email
@@ -149,10 +150,6 @@ class NotAProfile{
 		// Verfica que las dos contraseñas sean iguales
 		if($clave2!=$clave){return 3;}
 		
-		//Agrega caracteres de control XSS
-		$email = strip_tags(addslashes(htmlspecialchars(htmlentities($email))));
-		$clave = strip_tags(addslashes(htmlspecialchars(htmlentities($clave))));
-		
 		// Verifica que no exista un usuario con ese email registrado
 		$user = NotAProfile::infoUsuario($email);
 		if(!isset($user[0]['email'])||$user[0]['token_reactivacion']!=$token){
@@ -160,7 +157,11 @@ class NotAProfile{
 		}
 		
 		// Ingresa a la base de datos el nuevo usuario.
-		$sql = sprintf("UPDATE usuario SET clave = '%s', token_reactivacion = NULL  WHERE email ='%s'",md5($clave),$email);
+		global $app;
+		$conn = DAO::getConn();
+		$sql = sprintf("UPDATE usuario SET clave = '%s', token_reactivacion = NULL  WHERE email ='%s'",
+				(mysql_real_escape_string(md5($clave), $conn)),
+				(mysql_real_escape_string($email, $conn)));
 		return DAO::doSQL($sql)? 0:5;
 
 	}
@@ -172,7 +173,10 @@ class NotAProfile{
 	 * @return unknown_type - Vector con los datos de tabla usuario de BD
 	 */
 	public static function infoUsuario($email){
-		$sql = "SELECT * FROM usuario WHERE email= '$email'";
+		global $app;
+		$conn = DAO::getConn();
+		$sql = sprintf("SELECT * FROM usuario WHERE email= '%s'",
+			(mysql_real_escape_string($email, $conn)));
 		return DAO::doSQLAndReturn($sql);
 	}
 	
@@ -183,7 +187,11 @@ class NotAProfile{
 	 * @return boolean, true o false en caso de existir o no en el sistema. 
 	 */
 	 public static function existeUsuario($email){
-	   $resultados=DAO::doSQLAndReturn("SELECT count(*) as Contador FROM usuario WHERE email='$email'");
+	 	global $app;
+		$conn = DAO::getConn();
+		$sql = sprintf("SELECT count(*) as Contador FROM usuario WHERE email='%s'",
+			(mysql_real_escape_string($email, $conn)));
+	   $resultados=DAO::doSQLAndReturn($sql);
 	   return $resultados[0]["Contador"]==0?false:true;
 	}
 	
@@ -973,7 +981,6 @@ class NotAProfile{
 		$totalLlaves = $resp[0]['cuantas'];
 		$valor = 3*$ilike-$idislike+3*$heLikes-$heDislike;
 		$num = $valor==0? 0: $totalLlaves/(3*$ilike-$idislike+3*$heLikes-$heDislike)*100;
-		
 		return $valor;
 		//return number_format($num, 1)."%";
 	}
