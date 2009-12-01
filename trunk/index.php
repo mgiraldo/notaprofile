@@ -187,8 +187,15 @@ switch($error){
 		<?php } ?>
     </form>
 	<div id="catch">
+	<?php if(isset($_GET['r'])){ ?>
+		<h2>there is a key for you!</h2>
+		<p>but you need to log in...</p>
+		<p>not_a_profile is about real connections with real people. we would like to avoid using passwords and emails but we need a way to distinguish you from the average Joe. Don't worry, we won't send you any spam (we hate it as much as you) and we will encrypt your password.</p>
+	<?php }
+	else {?>
 		<h2>welcome!</h2>
 		<p>not_a_profile is about real connections with real people. we would like to avoid using passwords and emails but we need a way to distinguish you from the average Joe. Don't worry, we won't send you any spam (we hate it as much as you) and we will encrypt your password.</p>
+	<?php }?>
 	</div>
     <?php include("./inc/pie.php"); ?>
 
