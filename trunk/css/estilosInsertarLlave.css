@@ -1,0 +1,115 @@
+#userinfo {
+	float: right;
+	width: 345px;
+	text-align: right;
+	font-size: 12px;
+	margin: 3px;
+}
+/* CUERPO */
+#cuerpo {
+	height: 470px;
+	background:  #666666;
+}
+#create_key{
+	width:270px;
+	height: 470px;
+	margin-right:6px;
+	float:left;
+}
+#gmap{
+	width: 684px;
+	height: 470px;
+	float:left;
+	background:#333333;
+}
+#preview_image{
+width:270px;
+height:138px;
+}
+#browse{
+width:270px;
+height:30px;
+}
+#message{
+width:270px;
+height:212px;
+margin-bottom: 5px;
+}
+#location{
+width:270px;
+height:95px;
+}
+#browse_text{
+float:right;
+}
+#browse_button{
+float:right;
+position: relative;
+}
+#browse_location{
+float:right;
+width:132px;
+margin-left:6px;
+height:24px;
+font-family:"Courier New", Courier, monospace;
+font-size:20px;
+text-align:left;
+}
+#message_header{
+width:270px;
+height: 20px;
+margin-top:6px;
+margin-bottom:6px;
+}
+#message_container{
+width:270px;
+height: 180px;
+}
+#message_text{
+width:268px;
+height: 180px;
+font-family:"Courier New", Courier, monospace;
+}
+#location_latitude{
+float:right;
+text-align:right;
+}
+#location_latitude_box{
+float:right;
+width:132px;
+margin-left:6px;
+height:24px;
+}
+#location_longitude{
+float:right;
+text-align:right;
+}
+#location_longitude_box{
+float:right;
+width:132px;
+margin-left:6px;
+height:24px;
+}
+#latitude{
+float:right;
+width:132px;
+margin-left:6px;
+height:18px;
+font-family:"Courier New", Courier, monospace;
+font-size:16px;
+text-align:left;
+}
+#longitude{
+float:right;
+width:132px;
+margin-left:6px;
+height:18px;
+font-family:"Courier New", Courier, monospace;
+font-size:16px;
+text-align:left;
+}
+#button_create_key{
+float:right;
+width:195px;
+margin-top:5px;
+}
