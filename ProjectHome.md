@@ -1,0 +1,5 @@
+Es un proyecto iniciado por estudiantes de la Universidad de los Andes, cuyo objetivo es el desarrollo de una dinámica que permite el encuentro entre personas que comparten gustos.
+
+Contraria a redes sociales que establecen relaciones entre personas de acuerdo a un perfil, not\_a\_profile pretende generar vínculos con base en características mas reales que las encontradas en los perfiles de los usuarios (es muy alta la probabilidad de que estos sean manipulados por la imagen propia que se quiere proyectar), generando vínculos entre personas que tienen intereses en común y siendo los gustos los únicos referentes para establecer la afinidad entre los individuos.
+
+La mecánica del proyecto está pensada para un público joven, que disfruta de los recursos tecnológicos actuales que permiten una conexión constante entre el mundo virtual y real. Así, esta procura abarcar ambos escenarios, buscando alimentar el objetivo de dar una nueva dimensión a la forma en que se generan las relaciones y finalmente a toda la red social.
